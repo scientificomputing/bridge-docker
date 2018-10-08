@@ -1,0 +1,1299 @@
+* Parameters for D- aminoacids 
+* 
+ 
+!ATOMS 
+!MASS  -1  CTD1      12.01100 ! added for D-amino acids
+!MASS  -1  CPD1      12.01100 ! added for D-proline 
+ 
+BONDS 
+! 
+!V(bond) = Kb(b - b0)**2 
+! 
+!Kb: kcal/mole/A**2 
+!b0: A 
+! 
+!atom type Kb          b0 
+! 
+ 
+! Added CTD1 -- new atom type for alpha carbon for d-amino acid, necessary 
+! for CMAP.  Just duplicated the CT1 parameters. 
+ 
+CTD1 C     250.000     1.4900 ! ALLOW   ALI PEP POL ARO 
+CTD1 CC    200.000     1.5220 ! ALLOW   POL 
+CTD1 CD    200.000     1.5220 ! ALLOW   POL 
+CT1  CTD1  222.500     1.5000 ! ALLOW   ALI 
+CT2  CTD1  222.500     1.5380 ! ALLOW   ALI 
+CT3  CTD1  222.500     1.5380 ! ALLOW   ALI 
+CT2A CTD1  222.500     1.5380 ! from CT2  CT1, Zhu 
+HA   CTD1  309.000     1.1110 ! ALLOW   ALI 
+HB1  CTD1  330.000     1.0800 ! ALLOW   PEP 
+NH1  CTD1  320.000     1.4300 ! ALLOW   ALI PEP POL ARO 
+NH3  CTD1  200.000     1.4800 ! ALLOW   ALI POL 
+OH1  CTD1  428.000     1.4200 ! ALLOW   ALI ALC ARO 
+CPD1 C     250.000     1.4900 ! ALLOW PRO 
+CP2  CPD1  222.500     1.5270 ! ALLOW PRO 
+HB1  CPD1  330.000     1.0800 ! ALLOW PRO 
+N    CPD1  320.000     1.4340 ! ALLOW PRO 
+ 
+ 
+ANGLES 
+! 
+!V(angle) = Ktheta(Theta - Theta0)**2 
+! 
+!V(Urey-Bradley) = Kub(S - S0)**2 
+! 
+!Ktheta: kcal/mole/rad**2 
+!Theta0: degrees 
+!Kub: kcal/mole/A**2 (Urey-Bradley) 
+!S0: A 
+! 
+ 
+! Added CTD1 -- new atom type for alpha carbon for d-amino acid, necessary 
+! for CMAP.  Just duplicated the CT1 parameters.  AMG 2/27/08 
+ 
+HA3  CT3  CTD1   33.430  110.10   22.53   2.17900 ! ALLOW   ALI 
+                ! alkane frequencies (MJF), alkane geometries (SF) 
+ 
+CT1  CTD1 C      52.000   108.0000 ! ALLOW   ALI PEP POL ARO 
+CTD1 CT2  CA     51.800   107.5000 ! ALLOW   ALI ARO 
+CTD1 CT2  CC     52.000   108.0000 ! ALLOW   ALI PEP POL ARO 
+CTD1 CT2  CD     52.000   108.0000 ! ALLOW   ALI PEP POL ARO 
+CTD1 CT2  CPH1   58.350   113.0000 ! ALLOW ARO 
+CTD1 CT2  CT1    58.350   113.50   11.16   2.56100 ! ALLOW   ALI 
+CTD1 CD   OH1    55.000   110.50              ! From ASPP CT2-CD-OH1 
+CTD1 NH1  C      50.000   120.0000 ! ALLOW   ALI PEP POL ARO 
+CT2  CTD1 C      52.000   108.0000 ! ALLOW   ALI PEP POL ARO 
+CT2  CTD1 CC     52.000   108.0000 ! ALLOW   ALI PEP POL ARO 
+CT2  CTD1 CD     52.000   108.0000 ! ALLOW   ALI PEP POL ARO 
+CT2  CT1  CTD1   53.350   111.00    8.00   2.56100 ! ALLOW   ALI 
+CT2  CT2  CTD1   58.350   113.50   11.16   2.56100 ! ALLOW   ALI 
+CT2  CT3  CTD1   58.350   113.50   11.16   2.56100 ! ALLOW   ALI 
+CT2A CTD1 CC     52.000   108.0000 ! ALLOW   ALI PEP POL ARO 
+CT3  CTD1 C      52.000   108.0000 ! ALLOW   ALI PEP POL ARO 
+CT3  CTD1 CC     52.000   108.0000 ! ALLOW   ALI PEP POL ARO 
+CT3  CTD1 CT1    53.350   108.50    8.00   2.56100 ! ALLOW   ALI 
+CT3  CTD1 CT2    53.350   114.00    8.00   2.56100 ! ALLOW   ALI 
+CT3  CTD1 CT3    53.350   114.00    8.00   2.56100 ! ALLOW   ALI 
+CT3  CT2  CTD1   58.350   113.50   11.16   2.56100 ! ALLOW   ALI 
+CT3  CT1  CTD1   53.350   108.50    8.00   2.56100 ! ALLOW   ALI 
+CY   CT2  CTD1   58.350   114.0000 ! ALLOW ARO 
+H    NH1  CTD1   35.000   117.0000 ! ALLOW   PEP POL ARO ALI 
+H    OH1  CTD1   57.500   106.0000 ! ALLOW   ALC ARO ALI 
+HA   CTD1 C      33.000   109.50   30.00   2.16300 ! ALLOW   ALI PEP POL ARO 
+HA   CTD1 CD     33.000   109.50   30.00   2.16300 ! ALLOW   ALI PEP POL ARO 
+HA   CTD1 CT1    34.500   110.10   22.53   2.17900 ! ALLOW   ALI 
+HA   CTD1 CT2    34.500   110.10   22.53   2.17900 ! ALLOW   ALI 
+HA   CTD1 CT3    34.500   110.10   22.53   2.17900 ! ALLOW   ALI 
+HA   CTD1 HA     35.500   109.00    5.40   1.80200 ! TEST for test cpd 
+HA   CT2  CTD1   33.430   110.10   22.53   2.17900 ! ALLOW   ALI 
+HA   CT3  CTD1   33.430   110.10   22.53   2.17900 ! ALLOW   ALI 
+HA1  CT1  CTD1   34.500   110.10   22.53   2.17900 ! ALLOW   ALI 
+HA2  CT2  CTD1   26.500   110.10   22.53   2.17900 ! ALLOW   ALI 
+HB1  CTD1 C      50.000   109.5000 ! ALLOW  PEP 
+HB1  CTD1 CC     50.000   109.5000 ! ALLOW  PEP POL 
+HB1  CTD1 CD     50.000   109.5000 ! ALLOW  PEP POL 
+HB1  CTD1 CT1    35.000   111.0000 ! ALLOW  PEP 
+HB1  CTD1 CT2    35.000   111.0000 ! ALLOW  PEP 
+HB1  CTD1 CT3    35.000   111.0000 ! ALLOW  PEP 
+HC   NH3  CTD1   30.000   109.50   20.00   2.07400 ! ALLOW   POL ALI 
+N    C    CTD1   20.000   112.5000 ! ALLOW ALI PEP POL ARO PRO 
+NH1  C    CTD1   80.000   116.5000 ! ALLOW   ALI PEP POL ARO 
+NH1  CTD1 C      50.000   107.0000 ! ALLOW   PEP POL ARO ALI 
+NH1  CTD1 CC     50.000   107.0000 ! ALLOW   PEP POL ARO ALI 
+NH1  CTD1 CD     50.000   107.0000 ! ALLOW   PEP POL ARO ALI 
+NH1  CTD1 CT1    70.000   113.5000 ! ALLOW   ALI PEP POL ARO 
+NH1  CTD1 CT2    70.000   113.5000 ! ALLOW   ALI PEP POL ARO 
+NH1  CTD1 CT3    70.000   113.5000 ! ALLOW   ALI PEP POL ARO 
+NH1  CTD1 HB1    48.000   108.0000 ! ALLOW PEP 
+NH2  CC   CTD1   50.000   116.50   50.00   2.45000 ! ALLOW   ALI PEP POL ARO 
+NH3  CTD1 C      43.700   110.0000 ! ALLOW   PEP POL ARO ALI 
+NH3  CTD1 CC     43.700   110.0000 ! ALLOW   PEP POL ARO ALI 
+NH3  CTD1 CT1    67.700   110.0000 ! ALLOW   ALI POL 
+NH3  CTD1 CT2    67.700   110.0000 ! ALLOW   ALI POL 
+NH3  CTD1 CT3    67.700   110.0000 ! ALLOW   ALI POL 
+NH3  CTD1 HB1    51.500   107.5000 ! ALLOW   ALI POL PEP 
+O    C    CTD1   80.000   121.0000 ! ALLOW   ALI PEP POL ARO 
+O    CC   CTD1   15.000   121.00   50.00   2.44000 ! ALLOW   ALI PEP POL ARO 
+OB   CD   CTD1   70.000   125.00   20.00   2.44200 ! ALLOW   ALI PEP POL ARO 
+OC   CC   CTD1   40.000   118.00   50.00   2.38800 ! ALLOW   ALI PEP POL ARO ION 
+OH1  CT1  CTD1   75.700   110.1000 ! ALLOW   ALI ALC ARO 
+OH1  CT2  CTD1   75.700   110.1000 ! ALLOW   ALI ALC ARO 
+ 
+OS   CD   CTD1   55.000   109.00   20.00   2.32600 ! ALLOW POL PEP 
+S    CT2  CTD1   58.000   112.5000 ! ALLOW   ALI SUL ION 
+SM   CT2  CTD1   58.000   112.5000 ! ALLOW   ALI SUL ION 
+ 
+!For GLU/HSP, Zhu transfer to D-FORM 
+NH1  CTD1 CT2A   70.000   113.5000 ! from NH1  CT1  CT2 
+HB1  CTD1 CT2A   35.000   111.0000 ! from HB1  CT1  CT2 
+CT2A CTD1 C      52.000   108.0000 ! from CT2  CT1  C 
+CTD1 CT2A HA2    26.500   110.1000  22.53   2.17900 ! from HA2  CT2  CT1 
+CTD1 CT2A CT2    58.350   113.5000  11.16   2.56100 ! from CT2  CT2  CT1 
+CTD1 CT2A CPH1   58.350   113.0000 ! from CT1  CT2  CPH1 
+ 
+!D-Proline 
+C    N    CPD1   60.000   117.0000 
+N    C    CPD1   20.000   112.5000 
+N    CPD1 HB1    48.000   112.0000 
+N    CPD1 CP2    70.000   110.8000 
+N    CPD1 C      50.000   108.2000 
+N    CPD1 CC     50.000   108.2000 
+N    CPD1 CD     50.000   108.2000 
+NH1  C    CPD1   80.000   116.5000 
+NH2  CC   CPD1   80.000   112.5000 
+NP   CPD1 C      50.000   106.0000 
+NP   CPD1 CC     50.000   106.0000 
+NP   CPD1 CD     50.000   106.0000 
+NP   CPD1 CP2    70.000   108.5000 
+NP   CPD1 HB1    51.500   107.5000 
+HB1  CPD1 CP2    35.000   118.0000 
+HB1  CPD1 C      50.000   112.0000 
+HB1  CPD1 CC     50.000   112.0000 
+HB1  CPD1 CD     50.000   112.0000 
+HC   NP   CPD1   33.000   109.50    4.00   2.05600 
+CP2  CPD1 C      52.000   112.3000 
+CP2  CPD1 CC     52.000   112.3000 
+CP2  CPD1 CD     50.000   112.3000 
+CP2  CP2  CPD1   70.000   108.5000 
+CPD1 CP2  HA2    33.430   110.10   22.53   2.17900 
+CPD1 C    O      80.000   118.0000 
+CPD1 CC   O      80.000   118.0000 
+CP3  N    CPD1  100.000   114.2000 
+CP3  NP   CPD1  100.000   111.0000 
+OB   CD   CPD1  70.000    125.00   20.00   2.44200 
+OC   CC   CPD1  40.000    118.00   50.00   2.38800 
+OS   CD   CPD1  55.000    109.00   20.00   2.32600 
+ 
+DIHEDRALS 
+! 
+!V(dihedral) = Kchi(1 + cos(n(chi) - delta)) 
+! 
+!Kchi: kcal/mole 
+!n: multiplicity 
+!delta: degrees 
+! 
+!atom types             Kchi    n   delta 
+! 
+ 
+! Added CTD1 -- new atom type for alpha carbon for d-amino acid, necessary 
+C    CTD1 NH1  C        0.2000  1   180.00 ! ALLOW PEP 
+CC   CTD1 CT2  CA       0.0400  3     0.00 ! ALLOW   ARO 
+CC   CTD1 NH1  C        0.2000  1   180.00 ! ALLOW PEP POL 
+CD   CTD1 NH1  C        0.2000  1   180.00 ! ALLOW PEP POL 
+CTD1 C    N    CP1      2.7500  2   180.00 ! ALLOW PRO 
+CTD1 C    N    CP1      0.3000  4     0.00 ! ALLOW PRO 
+CTD1 C    N    CP3      2.7500  2   180.00 ! ALLOW PRO 
+CTD1 C    N    CP3      0.3000  4     0.00 ! ALLOW PRO 
+CTD1 C    NH1  CTD1     1.6000  1     0.00 ! ALLOW PEP 
+CTD1 C    NH1  CTD1     2.5000  2   180.00 ! ALLOW PEP 
+CT1  NH1  C    CTD1     1.6000  1     0.00 ! ALLOW PEP ! mix L and D 
+CT1  NH1  C    CTD1     2.5000  2   180.00 ! ALLOW PEP ! mix L and D 
+CT1  C    NH1  CTD1     1.6000  1     0.00 ! ALLOW PEP ! mix L and D 
+CT1  C    NH1  CTD1     2.5000  2   180.00 ! ALLOW PEP ! mix L and D 
+CT1  CTD1 NH1  C        1.8000  1     0.00 ! ALLOW PEP ! mix L and D 
+CTD1 CT1  NH1  C        1.8000  1     0.00 ! ALLOW PEP ! mix L and D 
+CTD1 NH1  C    CP1      1.6000  1     0.00 ! ALLOW PEP PRO 
+CTD1 NH1  C    CP1      2.5000  2   180.00 ! ALLOW PEP PRO 
+CT2  C    NH1  CTD1     1.6000  1     0.00 ! ALLOW PEP 
+CT2  C    NH1  CTD1     2.5000  2   180.00 ! ALLOW PEP 
+CT2  CTD1 NH1  C        1.8000  1     0.00 ! ALLOW PEP 
+CT2  NH1  C    CTD1     1.6000  1     0.00 ! ALLOW PEP 
+CT2  NH1  C    CTD1     2.5000  2   180.00 ! ALLOW PEP 
+CT3  C    NH1  CTD1     1.6000  1     0.00 ! ALLOW PEP 
+CT3  C    NH1  CTD1     2.5000  2   180.00 ! ALLOW PEP 
+CT3  CTD1 NH1  C        1.8000  1     0.00 ! ALLOW PEP 
+CT3  NH1  C    CTD1     1.6000  1     0.00 ! ALLOW PEP 
+CT3  NH1  C    CTD1     2.5000  2   180.00 ! ALLOW PEP 
+H    NH1  C    CTD1     2.5000  2   180.00 ! ALLOW PEP 
+H    NH1  CTD1 C        0.0000  1     0.00 ! ALLOW PEP 
+H    NH1  CTD1 CC       0.0000  1     0.00 ! ALLOW PEP POL 
+H    NH1  CTD1 CD       0.0000  1     0.00 ! ALLOW PEP POL 
+H    NH1  CTD1 CTD1     0.0000  1     0.00 ! ALLOW PEP 
+H    NH1  CT1  CTD1     0.0000  1     0.00 ! ALLOW PEP ! mix L and D 
+H    NH1  CTD1 CT1      0.0000  1     0.00 ! ALLOW PEP 
+H    NH1  CTD1 CT2      0.0000  1     0.00 ! ALLOW PEP 
+H    NH1  CTD1 CT3      0.0000  1     0.00 ! ALLOW PEP 
+H    NH2  CC   CTD1     1.4000  2   180.00 ! ALLOW   PEP POL ARO PRO 
+H    OH1  CTD1 CT1      1.3300  1     0.00 ! ALLOW ALC ! mix L and D 
+H    OH1  CTD1 CT1      0.1800  2     0.00 ! ALLOW ALC ! mix L and D 
+H    OH1  CTD1 CT1      0.3200  3     0.00 ! ALLOW ALC ! mix L and D 
+H    OH1  CTD1 CT3      1.3300  1     0.00 ! ALLOW ALC 
+H    OH1  CTD1 CT3      0.1800  2     0.00 ! ALLOW ALC 
+H    OH1  CTD1 CT3      0.3200  3     0.00 ! ALLOW ALC 
+HA   CTD1 CT2  CA       0.0400  3     0.00 ! ALLOW   ARO 
+HB1  CTD1 NH1  C        0.0000  1     0.00 ! ALLOW PEP 
+HB1  CTD1 NH1  H        0.0000  1     0.00 ! ALLOW PEP 
+N    C    CT1  CTD1     0.0000  1     0.00 ! ALLOW PEP PRO ! mix L and D 
+N    C    CTD1 CT1      0.0000  1     0.00 ! ALLOW PEP PRO ! mix L and D 
+N    C    CTD1 CT2      0.0000  1     0.00 ! ALLOW PEP PRO 
+N    C    CTD1 CT3      0.0000  1     0.00 ! ALLOW PEP PRO 
+N    C    CTD1 HB1      0.0000  1     0.00 ! ALLOW PEP PRO 
+N    CTD1  CT2 CA       0.0400  3     0.00 ! ALLOW   ARO 
+NH1  C    CT1  CTD1     0.0000  1     0.00 ! ALLOW PEP ! mix L and D 
+NH1  C    CTD1 CT1      0.0000  1     0.00 ! ALLOW PEP ! mix L and D 
+NH1  C    CTD1 CT2      0.0000  1     0.00 ! ALLOW PEP 
+NH1  C    CTD1 CT3      0.0000  1     0.00 ! ALLOW PEP 
+NH1  C    CTD1 HB1      0.0000  1     0.00 ! ALLOW PEP 
+NH1  C    CTD1 NH1      0.6000  1     0.00 ! ALLOW PEP 
+NH1  CTD1 C    N        0.4000  1     0.00 ! ALLOW PEP PRO 
+NH3  CTD1 C    N        0.4000  1     0.00 ! ALLOW PEP PRO 
+NH3  CTD1 C    NH1      0.6000  1     0.00 ! ALLOW PEP PRO 
+NH3  CTD1 CC   NH2      0.4000  1     0.00 ! ALLOW PEP PRO 
+NR3  CPH1 CT2  CTD1     0.1900  3     0.00 ! ALLOW ARO 
+!!!!O    C    CTD1  CTD1      1.4000  1     0.00 !   ALLOW PEP 
+O    C    CT1  CTD1     1.4000  1     0.00 ! ALLOW PEP ! mix L and D 
+O    C    CTD1 CT1      1.4000  1     0.00 ! ALLOW PEP ! mix L and D 
+O    C    CTD1 CT2      1.4000  1     0.00 ! ALLOW PEP 
+O    C    CTD1 CT3      1.4000  1     0.00 ! ALLOW PEP 
+O    C    CTD1 HB1      0.0000  1     0.00 ! ALLOW PEP 
+O    C    CTD1 NH1      0.0000  1     0.00 ! ALLOW PEP 
+O    C    CTD1 NH3      0.0000  1     0.00 ! ALLOW PEP PRO 
+O    C    NH1  CTD1     2.5000  2   180.00 ! ALLOW PEP 
+OC   CC   CTD1 NH3      3.2000  2   180.00 ! ALLOW PEP PRO 
+SM   SM   CT2  CTD1     0.3100  3     0.00 ! ALLOW  SUL ALI 
+ 
+X    CTD1 CT2  X        0.2000  3     0.00 ! ALLOW   ALI
+X    CTD1 CT3  X        0.2000  3     0.00 ! ALLOW   ALI
+X    CTD1 CD   X        0.0000  6   180.00 ! ALLOW   POL PEP
+X    CTD1 CC   X        0.0500  6   180.00 ! ALLOW   POL PEP
+ 
+!D-amino acid side chain parameters 
+!chi1/chi2 fitting, Zhu, 2011 for D-FORM 
+!directly transferred parameters 
+NH1  CTD1 CT1  HA1      0.2000  3     0.00 ! From X    CT1  CT1  X 
+HB1  CTD1 CT1  HA1      0.2000  3     0.00 ! From X    CT1  CT1  X 
+HB1  CTD1 CT1  CT3      0.2000  3     0.00 ! From X    CT1  CT1  X 
+HA1  CT1  CTD1 C        0.2000  3     0.00 ! From X    CT1  CT1  X 
+NH1  CTD1 CT2  HA2      0.2000  3     0.00 ! From X    CT1  CT2  X 
+HB1  CTD1 CT2  HA2      0.2000  3     0.00 ! From X    CT1  CT2  X 
+HB1  CTD1 CT2  OH1      0.2000  3     0.00 ! From X    CT1  CT2  X 
+HB1  CTD1 CT2  CT2      0.2000  3     0.00 ! From X    CT1  CT2  X 
+HA2  CT2  CTD1  C       0.2000  3     0.00 ! From X    CT1  CT2  X 
+HB1  CTD1 CT2  S        0.2000  3     0.00 ! From X    CT1  CT2  X 
+!Asn 
+HB1  CTD1 CT2  CC       0.2000  3     0.00 ! From X    CT1  CT2  X 
+!Trp 
+HB1  CTD1 CT2  CY       0.2000  3     0.00 ! From X    CT1  CT2  X 
+!Hsd/Hse 
+HB1  CTD1 CT2  CPH1     0.2000  3     0.00 ! From X    CT1  CT2  X 
+!Ile,Leu,Val 
+HB1  CTD1 CT1  CT2      0.2000  3     0.00 ! From X    CT1  CT1  X 
+HB1  CTD1 CT2  CT1      0.2000  3     0.00 ! From X    CT1  CT2  X 
+!Tyr/Phe 
+HB1  CTD1 CT2  CA       0.2000  3     0.00 ! From X    CT1  CT2  X 
+!Thr 
+HB1  CTD1 CT1  OH1      0.2000  3     0.00 ! From X    CT1  CT1  X 
+!Glu/Hsp 
+NH1  CTD1 CT2A HA2      0.2000  3     0.00 ! From X    CT1  CT2  X 
+CTD1 CT2A CT2  HA2      0.1900  3     0.00 ! From X    CT2  CT2  X 
+HB1  CTD1 CT2A HA2      0.2000  3     0.00 ! From X    CT1  CT2  X 
+HB1  CTD1 CT2A CT2      0.2000  3     0.00 ! From X    CT1  CT2  X 
+HA2  CT2A CTD1 C        0.2000  3     0.00 ! From X    CT1  CT2  X 
+HA2  CT2A CTD1 CC       0.2000  3     0.00 ! RB: added for C-ter Glu 
+HB1  CTD1 CT2A CPH1     0.2000  3     0.00 ! From X    CT1  CT2  X 
+C    NH1  CTD1 CT2A     1.8000  1     0.00 ! from CT2  CT1  NH1  C 
+H    NH1  CTD1 CT2A     0.0000  1     0.00 ! from H    NH1  CT1  CT2 
+CT2A CTD1 C    O        1.4000  1     0.00 ! from O    C    CT1  CT2 
+CT2A CTD1 C    NH1      0.0000  1     0.00 ! NH1  C    CT1  CT2 
+CT2A CTD1 C    N        0.0000  1     0.00 ! RB: added for GLU-PRO in UBQ 
+! Glup 
+CTD1 CT2A CT2  CD       0.1900  3     0.00 ! From X    CT2  CT2  X 
+! Sidechain dihedrals: PEML transfered from L- to D- form 
+! Group-fitted for Lys/Arg/Gln/Met 
+C    CTD1 CT2  CT2      0.3500  1   180.00 ! -180, +60 
+C    CTD1 CT2  CT2      0.4200  2   180.00 ! -180, +60 
+C    CTD1 CT2  CT2      1.9100  3   180.00 
+CT2  CT2  CTD1 NH1      0.8800  1   180.00 
+CT2  CT2  CTD1 NH1      0.0000  2   180.00 ! (-180), +60 
+CT2  CT2  CTD1 NH1      1.9000  3     0.00 
+CC   CT2  CT2  CTD1     1.8400  1   180.00 ! (-180), -60, +60 
+CC   CT2  CT2  CTD1     0.8400  2   180.00 
+CC   CT2  CT2  CTD1     0.3900  3   180.00 
+CTD1 CT2  CT2  CT2      0.6300  1   180.00 
+CTD1 CT2  CT2  CT2      0.0100  2     0.00 
+CTD1 CT2  CT2  CT2      0.1500  3     0.00 
+CTD1 CT2  CT2  S        0.1400  1   180.00 
+CTD1 CT2  CT2  S        0.5400  2     0.00 
+CTD1 CT2  CT2  S        0.6900  3     0.00 
+! Group-fitted for Asn/Asp 
+C    CTD1 CT2  CC       1.4100  1   180.00     !     | 
+C    CTD1 CT2  CC       1.2900  2   180.00     !  HN-N 
+C    CTD1 CT2  CC       0.5900  3   180.00     !     |   HB1 OD1    HD21 (cis to OD1) 
+CC   CT2  CTD1 NH1      0.2800  1   180.00     !     |   |   ||    / 
+CC   CT2  CTD1 NH1      0.5000  2   180.00     !  HA-CA--CB--CG--ND2 
+CC   CT2  CTD1 NH1      0.3800  3     0.00     !     |   |         \ 
+CTD1 CT2  CC   NH2      0.6200  1   180.00     !     |   HB2        HD22 (trans to OD1) 
+CTD1 CT2  CC   NH2      0.6600  2   180.00     !   O=C 
+CTD1 CT2  CC   NH2      0.7200  3   180.00     !     | 
+CTD1 CT2  CC   O        0.4200  1   180.00 
+CTD1 CT2  CC   O        0.1500  2   180.00 
+CTD1 CT2  CC   O        0.9500  3   180.00 
+CTD1 CT2  CC   OC       0.8400  1     0.00 
+CTD1 CT2  CC   OC       0.9800  2   180.00 
+CTD1 CT2  CC   OC       1.4600  3     0.00 
+! Fitted Cys 
+CTD1 CT2  S    HS       0.2000  1     0.00                           !     | 
+CTD1 CT2  S    HS       0.6500  2     0.00                           !  HN-N 
+CTD1 CT2  S    HS       0.2200  3     0.00                           !     |   HB1 
+C    CTD1 CT2  S        0.2400  1   180.00                           !     |   | 
+C    CTD1 CT2  S        0.7500  2   180.00                           !  HA-CA--CB--SG 
+C    CTD1 CT2  S        1.3500  3   180.00                           !     |   |     \ 
+NH1  CTD1 CT2  S        0.3400  1     0.00                           !     |   HB2    HG1 
+NH1  CTD1 CT2  S        0.5000  2   180.00                           !   O=C 
+NH1  CTD1 CT2  S        1.4300  3     0.00                           !     | 
+! Fitted Glu, 1/12 adjustment
+CC   CT2  CT2A CTD1     0.0000  1   180.00                           !     |
+CC   CT2  CT2A CTD1     0.3800  2   180.00                           !  HN-N
+CC   CT2  CT2A CTD1     0.5900  3   180.00                           !     |   HB1 HG1   OE1
+C    CTD1 CT2A CT2      0.1100  1     0.00                           !     |   |   |    //
+C    CTD1 CT2A CT2      0.9800  2   180.00                           !  HA-CA--CB--CG--CD
+C    CTD1 CT2A CT2      1.6000  3   180.00                           !     |   |   |    \
+CC   CTD1 CT2A CT2      1.6000  3   180.00                           !     |   HB2 HG2   OE2(-)
+CT2  CT2A CTD1 NH1      0.3000  1     0.00 ! (-180), (-60)           !   O=C
+CT2  CT2A CTD1 NH1      0.3500  2     0.00 ! -180                    !     |
+CT2  CT2A CTD1 NH1      1.7600  3     0.00
+! Group-fitted for Hsd/Hse 
+CPH1 CPH1 CT2  CTD1     1.7400  1     0.00                           !     |          HD1    HE1 
+CPH1 CPH1 CT2  CTD1     0.1500  2     0.00                           !  HN-N           |     / 
+CPH1 CPH1 CT2  CTD1     0.7700  3   180.00                           !     |   HB1    ND1--CE1 
+CTD1 CT2  CPH1 NR1      1.4900  1     0.00                           !     |   |     /      || 
+CTD1 CT2  CPH1 NR1      0.0900  2   180.00                           !  HA-CA--CB--CG       || 
+CTD1 CT2  CPH1 NR1      0.7900  3   180.00                           !     |   |     \\     || 
+CTD1 CT2  CPH1 NR2      1.0900  1     0.00                           !     |   HB2    CD2--NE2 
+CTD1 CT2  CPH1 NR2      0.0900  2     0.00                           !   O=C           | 
+CTD1 CT2  CPH1 NR2      0.6700  3   180.00                           !     |          HD2 
+C    CTD1 CT2  CPH1     0.1800  1   180.00 
+C    CTD1 CT2  CPH1     0.6400  2   180.00 
+C    CTD1 CT2  CPH1     0.8700  3   180.00 
+CPH1 CT2  CTD1 NH1      0.0000  1     0.00 
+CPH1 CT2  CTD1 NH1      0.0000  2   180.00 
+CPH1 CT2  CTD1 NH1      0.9000  3     0.00 
+! Group-fitted for Hsp 
+CPH1 CPH1 CT2A CTD1     2.0400  1     0.00 
+CPH1 CPH1 CT2A CTD1     0.4400  2     0.00                           !     |          HD1    HE1 
+CPH1 CPH1 CT2A CTD1     0.1300  3   180.00                           !  HN-N           |     / 
+CTD1 CT2A CPH1 NR3      0.5300  1   180.00                           !     |   HB1    ND1--CE1 
+CTD1 CT2A CPH1 NR3      0.4200  2   180.00                           !     |   |     /      || 
+CTD1 CT2A CPH1 NR3      0.3000  3   180.00                           !  HA-CA--CB--CG       || 
+C    CTD1 CT2A CPH1     1.7500  1   180.00                           !     |   |     \\     || 
+C    CTD1 CT2A CPH1     0.1300  2     0.00                           !     |   HB2    CD2--NE2(+) 
+C    CTD1 CT2A CPH1     1.8600  3   180.00                           !   O=C           |     \ 
+CPH1 CT2A CTD1 NH1      1.0900  1   180.00                           !     |          HD2    HE2 
+CPH1 CT2A CTD1 NH1      0.2200  2   180.00 
+CPH1 CT2A CTD1 NH1      2.3200  3     0.00 
+! Group-fitted for Ile/Thr 
+CTD1 CT1  CT2  CT3      0.3800  1   180.00                           !     |    HG21 HG22 
+CTD1 CT1  CT2  CT3      0.1300  2   180.00                           !  HN-N      | / 
+CTD1 CT1  CT2  CT3      0.2900  3   180.00                           !     |     CG2--HG23 
+C    CTD1 CT1  CT2      0.1000  1   180.00 ! -180,-,+60              !     |    / 
+C    CTD1 CT1  CT2      0.5200  2   180.00                           !  HA-CA--CB-HB    HD1 
+C    CTD1 CT1  CT2      0.2900  3   180.00                           !     |    \       / 
+CT2  CT1  CTD1 NH1      0.1200  1   180.00                           !     |     CG1--CD--HD2 
+CT2  CT1  CTD1 NH1      0.3600  2   180.00 ! -180,-,-                !   O=C    / \     \	 
+CT2  CT1  CTD1 NH1      0.4100  3     0.00                           !     | HG11 HG12  HD3 
+! Fitted Leu 
+CTD1 CT2  CT1  CT3      0.0500  1     0.00                           !     |        HD11 HD12 
+CTD1 CT2  CT1  CT3      0.1000  2   180.00                           !  HN-N          | / 
+CTD1 CT2  CT1  CT3      0.0100  3   180.00                           !     |   HB1   CD1--HD13 
+C    CTD1 CT2  CT1      0.3200  1   180.00                           !     |   |    / 
+C    CTD1 CT2  CT1      0.6100  2   180.00 ! -60                     !  HA-CA--CB--CG-HG 
+C    CTD1 CT2  CT1      0.7200  3   180.00                           !     |   |    \ 
+CT1  CT2  CTD1 NH1      0.4800  1   180.00                           !     |   HB2   CD2--HD23 
+CT1  CT2  CTD1 NH1      0.4200  2   180.00                           !   O=C          | \ 
+CT1  CT2  CTD1 NH1      0.6500  3     0.00                           !     |        HD21 HD22 
+! Group-fitted for Phe/Tyr 
+CA   CA   CT2  CTD1     1.0700  1     0.00 
+CA   CA   CT2  CTD1     0.2400  2   180.00 
+CA   CA   CT2  CTD1     0.1700  3   180.00 
+C    CTD1 CT2  CA       1.2800  1   180.00 ! (-180),-60,+60 
+C    CTD1 CT2  CA       0.9400  2   180.00 ! -60 
+C    CTD1 CT2  CA       1.5700  3   180.00 ! all 
+CA   CT2  CTD1 NH1      0.5200  1   180.00 ! -60,+60 
+CA   CT2  CTD1 NH1      0.6200  2   180.00 ! -60,+60 
+CA   CT2  CTD1 NH1      1.5800  3     0.00 ! none 
+! Fitted Ser 
+CTD1 CT2  OH1  H        0.0200  1     0.00                           !     | 
+CTD1 CT2  OH1  H        0.5600  2     0.00                           !  HN-N 
+CTD1 CT2  OH1  H        0.4900  3     0.00                           !     |   HB1 
+C    CTD1 CT2  OH1      0.6500  1   180.00                           !     |   | 
+C    CTD1 CT2  OH1      0.2500  2   180.00                           !  HA-CA--CB--OG 
+C    CTD1 CT2  OH1      1.1700  3   180.00                           !     |   |     \ 
+NH1  CTD1 CT2  OH1      0.1800  1   180.00                           !     |   HB2    HG1 
+NH1  CTD1 CT2  OH1      0.1900  2   180.00                           !   O=C 
+NH1  CTD1 CT2  OH1      1.4600  3     0.00                           !     | 
+! Group-fitted for Ile/Thr 
+CTD1 CT1  OH1  H        0.1800  1     0.00                              !     | 
+CTD1 CT1  OH1  H        0.0600  2     0.00                              !  HN-N 
+CTD1 CT1  OH1  H        0.2500  3     0.00                              !     |     OG1--HG1 
+C    CTD1 CT1  OH1      0.7900  1   180.00 ! raise                      !     |    / 
+C    CTD1 CT1  OH1      0.3900  2   180.00 !lower this value if needed  !  HA-CA--CB-HB 
+C    CTD1 CT1  OH1      0.9900  3   180.00                              !     |    \ 
+NH1  CTD1 CT1  OH1      0.0900  1     0.00 ! raise to lower -180        !     |     CG2--HG21 
+NH1  CTD1 CT1  OH1      0.1900  2   180.00                              !   O=C    / \ 
+NH1  CTD1 CT1  OH1      0.1700  3     0.00                              !     | HG21 HG22 
+! Fitted Trp side-chain 
+CA   CY   CT2  CTD1     0.0300  1     0.00 
+CA   CY   CT2  CTD1     0.5500  2     0.00                              !     |                  HE3 
+CA   CY   CT2  CTD1     0.3900  3   180.00                              !  HN-N                   | 
+CPT  CY   CT2  CTD1     0.3600  1   180.00                              !     |   HB1            CE3 
+CPT  CY   CT2  CTD1     0.0500  2     0.00                              !     |   |             /  \\ 
+CPT  CY   CT2  CTD1     0.1900  3   180.00                              !  HA-CA--CB---CG-----CD2   CZ3-HZ3 
+C    CTD1 CT2  CY       1.0900  1   180.00 ! modulates -180, +60        !     |   |    ||     ||     | 
+C    CTD1 CT2  CY       0.5000  2   180.00 ! modulates -180, +60        !     |   HB2  CD1    CE2   CH2-HH2 
+C    CTD1 CT2  CY       1.1700  3   180.00                              !   O=C       /   \   / \  // 
+CY   CT2  CTD1 NH1      0.2900  1   180.00 ! modulates -180             !     |     HD1    NE1   CZ2 
+CY   CT2  CTD1 NH1      0.6600  2   180.00 ! modulates -60,60           !                   |     | 
+CY   CT2  CTD1 NH1      1.1700  3     0.00                              !                  HE1   HZ2 
+! Fitted Val 
+C    CTD1 CT1  CT3      0.1400  1   180.00                              !     |    HG11 HG12 
+C    CTD1 CT1  CT3      0.2600  2   180.00                              !  HN-N      | / 
+C    CTD1 CT1  CT3      0.3300  3   180.00                              !     |     CG1--HG13 
+CT3  CT1  CTD1 NH1      0.1800  1     0.00                              !     |    / 
+CT3  CT1  CTD1 NH1      0.0600  2     0.00                              !  HA-CA--CB-HB 
+CT3  CT1  CTD1 NH1      0.5900  3     0.00                              !     |    \ 
+!                                                                       !     |     CG2--HG21 
+!D-proline 
+C    N    CPD1 C        0.8000  3     0.00 
+CC   CPD1 N    C        0.8000  3     0.00 
+CD   CPD1 N    C        0.0000  1   180.00 
+CP1  C    N    CPD1     2.7500  2   180.00 
+CP1  C    N    CPD1     0.3000  4     0.00 
+CPD1 C    N    CPD1     2.7500  2   180.00 
+CPD1 C    N    CPD1     0.3000  4     0.00 
+CP2  CPD1 N    C        0.8000  3     0.00 
+CP2  CP3  N    CPD1     0.1000  3     0.00 
+CP2  CP3  NP   CPD1     0.0800  3     0.00 
+CP3  N    C    CPD1     2.7500  2   180.00 
+CP3  N    C    CPD1     0.3000  4     0.00 
+CP3  N    CPD1 C        0.1000  3     0.00 
+CP3  N    CPD1 CC       0.1000  3     0.00 
+CP3  N    CPD1 CP2      0.1000  3     0.00 
+CP3  NP   CPD1 C        0.0800  3     0.00 
+CP3  NP   CPD1 CC       0.0800  3     0.00 
+CP3  NP   CPD1 CD       0.0800  3     0.00 
+CP3  NP   CPD1 CP2      0.0800  3     0.00 
+CT1  C    N    CPD1     2.7500  2   180.00 
+CT1  C    N    CPD1     0.3000  4     0.00 
+CTD1 C    N    CPD1     2.7500  2   180.00 
+CTD1 C    N    CPD1     0.3000  4     0.00 
+CT1  NH1  C    CPD1     1.6000  1     0.00 
+CT1  NH1  C    CPD1     2.5000  2   180.00 
+CTD1 NH1  C    CPD1     1.6000  1     0.00 
+CTD1 NH1  C    CPD1     2.5000  2   180.00 
+CT2  C    N    CPD1     2.7500  2   180.00 
+CT2  C    N    CPD1     0.3000  4     0.00 
+CT2  NH1  C    CPD1     1.6000  1     0.00 
+CT2  NH1  C    CPD1     2.5000  2   180.00 
+CT3  C    N    CPD1     2.7500  2   180.00 
+CT3  C    N    CPD1     0.3000  4     0.00 
+CT3  NH1  C    CPD1     1.6000  1     0.00 
+CT3  NH1  C    CPD1     2.5000  2   180.00 
+H    NH1  C    CPD1     2.5000  2   180.00 
+H    NH2  CC   CPD1     2.5000  2   180.00 
+HA2  CP3  N    CPD1     0.1000  3     0.00 
+HA2  CP3  NP   CPD1     0.0800  3     0.00 
+HB1  CPD1 N    C        0.8000  3     0.00 
+HB1  CPD1 N    CP3      0.1000  3     0.00 
+HB1  CPD1 NP   CP3      0.0800  3     0.00 
+HC   NP   CPD1 C        0.0800  3     0.00 
+HC   NP   CPD1 CC       0.0800  3     0.00 
+HC   NP   CPD1 CD       0.0800  3     0.00 
+HC   NP   CPD1 CP2      0.0800  3     0.00 
+HC   NP   CPD1 HB1      0.0800  3     0.00 
+N    C    CPD1 CP2      0.4000  1     0.00 
+N    C    CPD1 CP2      0.6000  2     0.00 
+N    C    CPD1 HB1      0.4000  1   180.00 
+N    C    CPD1 HB1      0.6000  2     0.00 
+N    C    CPD1 N        0.3000  1     0.00 
+N    C    CPD1 N       -0.3000  4     0.00 
+NH1  C    CPD1 CP2      0.4000  1     0.00 
+NH1  C    CPD1 CP2      0.6000  2     0.00 
+NH1  C    CPD1 HB1      0.4000  1   180.00 
+NH1  C    CPD1 HB1      0.6000  2     0.00 
+NH1  C    CPD1 N        0.3000  1     0.00 
+NH1  C    CPD1 N       -0.3000  4     0.00 
+NH2  CC   CPD1 CP2      0.4000  1     0.00 
+NH2  CC   CPD1 CP2      0.6000  2     0.00 
+NH2  CC   CPD1 HB1      0.4000  1   180.00 
+NH2  CC   CPD1 HB1      0.6000  2     0.00 
+NH2  CC   CPD1 N        0.3000  1     0.00 
+NH2  CC   CPD1 N       -0.3000  4     0.00 
+NP   CPD1 C    N        0.3000  1     0.00 
+NP   CPD1 C    NH1      0.3000  1     0.00 
+NP   CPD1 CC   NH2      0.3000  1     0.00 
+O    C    CPD1 CP2      0.4000  1   180.00 
+O    C    CPD1 CP2      0.6000  2     0.00 
+O    C    CPD1 HB1      0.4000  1     0.00 
+O    C    CPD1 HB1      0.6000  2     0.00 
+O    C    CPD1 N       -0.3000  4     0.00 
+O    C    N    CPD1     2.7500  2   180.00 
+O    C    N    CPD1     0.3000  4     0.00 
+O    CC   CPD1 CP2      0.4000  1   180.00 
+O    CC   CPD1 CP2      0.6000  2     0.00 
+O    CC   CPD1 HB1      0.4000  1     0.00 
+O    CC   CPD1 HB1      0.6000  2     0.00 
+O    CC   CPD1 N       -0.3000  4     0.00 
+OC   CC   CPD1 CP2      0.1600  3     0.00 
+OC   CC   CPD1 HB1      0.1600  3     0.00 
+OC   CC   CPD1 N        0.1600  3     0.00 
+OC   CC   CPD1 NP       0.1600  3     0.00 
+X    CPD1 C    X        0.0000  6   180.00 
+X    CPD1 CC   X        0.0000  6   180.00 
+X    CPD1 CD   X        0.0000  6   180.00 
+X    CPD1 CP2  X        0.1400  3     0.00 
+ 
+IMPROPER 
+! 
+!V(improper) = Kpsi(psi - psi0)**2 
+! 
+!Kpsi: kcal/mole/rad**2 
+!psi0: degrees 
+!note that the second column of numbers (0) is ignored 
+! 
+!atom types           Kpsi                   psi0 
+! 
+ 
+! Added CTD1 -- new atom type for alpha carbon for d-amino acid, necessary 
+CC   X    X    CTD1   96.0000         0      0.0000 
+O    CTD1  NH2  CC    45.0000         0      0.0000 
+O    NH2  CTD1  CC    45.0000         0      0.0000 
+!D-proline 
+N    C    CPD1 CP3     0.0000         0      0.0000 
+O    CPD1 NH2  CC     45.0000         0      0.0000 
+O    NH2  CPD1 CC     45.0000         0      0.0000 
+ 
+CMAP 
+! 2D grid correction data. 
+! Finalfix3, Feig/Best/MacKerell 2010 
+
+!The following D CMAPs were generated by Jared Ostmeyer in the laboratory 
+!of Benoit Roux. The values for the tables below were generated simply by 
+!inverting the CMAP tables from the corresponding L-residues. To test the 
+!force fields of the D residues, a Molecular Dynamic simulation of the 
+!peptide fragment "D-Ala D-Ala" was compared against an equivalent 
+!simulation of the peptide fragment "Ala Ala". The results of the two 
+!simulations exactly mirrored each other to within roundoff error as would 
+!be expected.
+
+!Additional tests based on alanine dipeptide phi, psi surface verified
+!the new D CMAPs. adm jr.
+
+!CMAPS needed for D-proline 
+!C    N    CPD1 C    N    CPD1   C    NH1 24 
+!C    N    CPD1 C    N    CPD1   C    N 24 
+ 
+! D-alanine map--
+! note the new type for the alpha carbon 
+C    NH1  CTD1  C    NH1  CTD1  C    NH1   24 
+ 
+! phi = -180.0
+     0.126790     -0.036650     -0.951542     -1.522656     -2.335350
+    -2.346991     -2.454589     -2.784200     -2.766446     -3.591106
+    -4.913223     -4.821447     -4.827670     -2.200520      1.001130
+    -0.688474      0.780870      1.789790      2.089440      2.720430
+     2.121010      1.250970      0.971260      0.768700 
+
+! phi = -165.0
+    -0.810590     -1.814368     -2.751289     -3.246995     -3.548722
+    -3.555000     -3.843450     -3.666490     -4.194970     -5.141750
+    -5.889450     -6.408350     -4.563830     -0.735240     -2.736530
+    -1.088670      0.631950      1.519950      1.698840      1.641310
+     1.277880      0.543310      0.378890     -0.071500 
+
+! phi = -150.0
+    -1.757590     -2.937910     -4.026100     -4.028550     -4.125570
+    -4.042280     -4.115420     -4.190630     -4.783930     -5.390070
+    -5.744830     -5.093660     -1.762860      1.835120     -3.152820
+    -1.483560     -0.073680      0.948420      1.361360      1.264920
+     0.634520      0.362390      0.023920     -0.403620 
+
+! phi = -135.0
+    -2.111250     -3.183510     -4.163570     -4.442210     -4.494620
+    -4.300540     -4.886620     -4.842690     -4.996730     -4.996740
+    -4.047310     -1.915580     -6.112560     -4.946030     -3.469470
+    -1.830310     -0.166360      0.625340      0.939170      1.086270
+     0.316660     -0.006920     -0.322790     -1.168960 
+
+! phi = -120.0
+    -1.969230     -2.751230     -3.415720     -4.004260     -4.444320
+    -4.847490     -5.361620     -5.185650     -4.510620     -3.700200
+    -6.724320     -7.034830     -6.124810     -5.008260     -3.366270
+    -1.872770     -0.333050      0.313530      0.758480      1.038890
+     0.763520     -0.150330     -0.540250     -1.116650 
+
+! phi = -105.0
+    -1.850640     -2.410940     -3.274630     -4.086721     -4.600554
+    -4.715990     -5.034640     -4.802110     -3.912230     -5.728240
+    -6.871130     -6.865400     -6.053510     -4.481110     -3.014400
+    -1.682330     -0.857670     -0.218470      0.485850      0.884820
+     1.005520      0.128490     -0.445020     -1.092420 
+
+! phi = -90.0
+    -1.720840     -2.651694     -3.157300     -3.769822     -4.099325
+    -4.473413     -4.158306     -3.911450     -5.072995     -5.763953
+    -6.617221     -6.294328     -5.211800     -3.828560     -2.793220
+    -1.774070     -0.786270     -0.336900      0.482510      0.803260
+     0.807900      0.277730     -0.428430     -1.177830 
+
+! phi = -75.0
+    -2.248733     -2.620673     -3.736732     -3.725589     -4.170739
+    -4.151360     -3.685150     -3.819378     -4.740525     -5.727739
+    -5.601264     -5.597237     -4.484960     -3.420580     -2.305650
+    -1.192809     -0.370910     -0.013120      0.517140      0.823710
+     0.636063      0.039656     -1.010583     -1.641080 
+
+! phi = -60.0
+    -3.353683     -3.342810     -3.451845     -3.640810     -3.756430
+    -3.508820     -2.840678     -3.777879     -5.005312     -5.526955
+    -5.096776     -4.568574     -3.915080     -3.218100     -2.041450
+     1.632470      2.395330      0.438130      0.668070      0.722610
+    -0.257890     -1.240143     -2.317412     -2.984416 
+
+! phi = -45.0
+    -4.021496     -3.595217     -3.666490     -3.416560     -2.860490
+    -2.368170     -2.865450     -4.038627     -5.146239     -5.287977
+    -4.611550     -3.875270     -3.286310     -0.416420      0.770220
+     1.903420      0.502370      0.754110      0.814380      0.362000
+    -0.984725     -2.334377     -3.365327     -3.836549 
+
+! phi = -30.0
+    -2.963810     -2.445320     -1.599580     -1.071260     -1.963850
+    -2.959140     -3.764540     -4.496271     -4.709721     -4.159810
+    -3.613920     -1.482950     -0.407380      0.553620      1.522430
+     2.462720      0.970370      1.394630      1.428450      0.336200
+    -1.125083     -2.400349     -3.441809     -3.483730 
+
+! phi = -15.0
+    -0.778340      0.313410      1.755370     -2.773970     -3.455620
+    -3.908210     -4.269270     -4.195110     -3.251140     -2.182580
+    -0.790380     -0.535320     -0.237060      0.678570      1.436920
+     2.448660      1.358370      2.223500      1.682950      0.183400
+    -1.047430     -1.846280     -2.052140     -1.912680 
+
+! phi = 0.0
+     2.832310     -0.924170     -2.675750     -3.615930     -3.934880
+    -3.792530     -2.744510     -1.846360     -1.213010     -1.569230
+     0.121170      0.070390      0.119780      0.776350      1.606970
+     2.520340      1.645480      1.671950      1.238750      0.976330
+     0.628600      0.479230      0.323280      0.787990 
+
+! phi = 15.0
+     0.293590     -1.749204     -3.155346     -3.807325     -3.786839
+    -2.558037     -0.613920      0.181770     -0.342400      1.616580
+     1.021020      0.740760      0.511070      0.846920      1.616970
+     0.655170      0.856410      1.381760      1.588700      2.517320
+     3.272450      3.217620      3.732620      5.588070 
+
+! phi = 30.0
+    -1.174720     -2.655135     -3.277369     -3.550465     -2.849141
+    -1.595147      0.331780      0.534000      0.194290      2.223490
+     1.915550      1.522590      1.314360     -0.707140      0.276860
+    -0.008448      0.765978      1.320806      2.783340      4.806470
+     6.070770      6.741610      4.180460      1.067030 
+
+! phi = 45.0
+    -1.184837     -2.000433     -1.980965     -1.954532     -1.582430
+    -0.890956      0.247770      0.379430     -0.045570      0.271580
+     0.082910     -0.582210     -0.797230     -0.149443      0.007574
+     0.107016      1.123713      2.461506      4.380200      5.389940
+     5.376000      4.211350      2.347410      0.078060 
+
+! phi = 60.0
+     0.237754     -0.204264     -1.479968     -1.534365     -0.948631
+    -0.666399      0.309664      0.322420      0.267796      0.139806
+    -0.173146     -0.823341     -0.357600     -0.038919     -0.406695
+    -0.482789      2.272295      3.673107      4.276080      4.391860
+     4.208190      3.168570      1.716960      1.229980 
+
+! phi = 75.0
+     1.378160      0.468922     -0.253412     -0.190548     -0.253585
+     0.191719      0.551890      0.301999      0.423308      0.226352
+    -0.598368     -0.427765     -0.123614     -0.682452      0.095172
+     1.693809      3.536425      4.212293      3.580310      3.700796
+     3.814070      3.063543      2.352424      3.345958 
+
+! phi = 90.0
+     1.451735      0.748823      0.280839      0.017622     -0.071054
+     0.145910      0.459433      0.908250      0.415153     -0.020653
+    -0.962798     -1.620864     -1.511772     -0.606502      0.912671
+     2.440579      3.335030      3.898724      3.180200      3.344157
+     3.450028      3.156796      2.738185      2.748481 
+
+! phi = 105.0
+     2.045006      0.733747      0.314474     -0.164333     -0.316550
+    -0.124647      1.040241      0.771710      0.082195      0.206160
+    -1.456524     -2.241579     -2.090819     -0.823628      0.906487
+     2.124759      2.956634      2.903794      3.073520      3.551568
+     3.370620      3.088582      2.818030      2.544424 
+
+! phi = 120.0
+     1.357468      0.449309     -0.250116     -0.856791     -0.968118
+    -0.546994      0.910952      0.439040     -0.062320     -0.425969
+    -1.803113     -2.628489     -2.118268     -0.785637      0.705667
+     1.627997      2.719664      2.773853      2.639296      3.558453
+     3.698960      3.037857      2.698894      1.959160 
+
+! phi = 135.0
+     0.927992     -0.442565     -0.566518     -0.983285     -1.152891
+    -0.517358      0.313725      0.021790     -0.932949     -1.340467
+    -1.959136     -2.278329     -1.995479     -1.183897      0.115935
+     1.852278      2.058314      2.187970      2.460813      2.918410
+     3.111384      2.546305      2.242218      1.521370 
+
+! phi = 150.0
+     0.084069     -0.816303     -1.293226     -1.283444     -0.765479
+    -0.225016      0.068512     -0.727243     -1.354215     -1.890683
+    -2.551995     -3.006154     -2.583256     -1.815886     -0.225720
+     2.463293      1.557466      1.985454      2.321416      2.716410
+     2.653910      2.047200      1.624350      1.420317 
+
+! phi = 165.0
+    -0.127133     -1.122030     -1.076344     -0.207701     -0.640168
+    -0.861434     -1.101780     -1.501241     -2.299128     -2.602140
+    -3.420090     -4.135306     -4.009477     -2.800440      0.258676
+     0.643400      1.086456      1.929070      2.436754      2.486630
+     2.398990      1.872290      1.577020      1.377090 
+
+! alanine before proline map 
+! D-alanine map--
+! note the new type for the alpha carbon
+C    NH1  CTD1  C    NH1  CTD1  C    N     24 
+
+! phi = -180.0
+     0.126790     -0.036650     -0.951542     -1.522656     -2.335350
+    -2.346991     -2.454589     -2.784200     -2.766446     -3.591106
+    -4.913223     -4.821447     -4.827670     -2.200520      1.001130
+    -0.688474      0.780870      1.789790      2.089440      2.720430
+     2.121010      1.250970      0.971260      0.768700 
+
+! phi = -165.0
+    -0.810590     -1.814368     -2.751289     -3.246995     -3.548722
+    -3.555000     -3.843450     -3.666490     -4.194970     -5.141750
+    -5.889450     -6.408350     -4.563830     -0.735240     -2.736530
+    -1.088670      0.631950      1.519950      1.698840      1.641310
+     1.277880      0.543310      0.378890     -0.071500 
+
+! phi = -150.0
+    -1.757590     -2.937910     -4.026100     -4.028550     -4.125570
+    -4.042280     -4.115420     -4.190630     -4.783930     -5.390070
+    -5.744830     -5.093660     -1.762860      1.835120     -3.152820
+    -1.483560     -0.073680      0.948420      1.361360      1.264920
+     0.634520      0.362390      0.023920     -0.403620 
+
+! phi = -135.0
+    -2.111250     -3.183510     -4.163570     -4.442210     -4.494620
+    -4.300540     -4.886620     -4.842690     -4.996730     -4.996740
+    -4.047310     -1.915580     -6.112560     -4.946030     -3.469470
+    -1.830310     -0.166360      0.625340      0.939170      1.086270
+     0.316660     -0.006920     -0.322790     -1.168960 
+
+! phi = -120.0
+    -1.969230     -2.751230     -3.415720     -4.004260     -4.444320
+    -4.847490     -5.361620     -5.185650     -4.510620     -3.700200
+    -6.724320     -7.034830     -6.124810     -5.008260     -3.366270
+    -1.872770     -0.333050      0.313530      0.758480      1.038890
+     0.763520     -0.150330     -0.540250     -1.116650 
+
+! phi = -105.0
+    -1.850640     -2.410940     -3.274630     -4.086721     -4.600554
+    -4.715990     -5.034640     -4.802110     -3.912230     -5.728240
+    -6.871130     -6.865400     -6.053510     -4.481110     -3.014400
+    -1.682330     -0.857670     -0.218470      0.485850      0.884820
+     1.005520      0.128490     -0.445020     -1.092420 
+
+! phi = -90.0
+    -1.720840     -2.651694     -3.157300     -3.769822     -4.099325
+    -4.473413     -4.158306     -3.911450     -5.072995     -5.763953
+    -6.617221     -6.294328     -5.211800     -3.828560     -2.793220
+    -1.774070     -0.786270     -0.336900      0.482510      0.803260
+     0.807900      0.277730     -0.428430     -1.177830 
+
+! phi = -75.0
+    -2.248733     -2.620673     -3.736732     -3.725589     -4.170739
+    -4.151360     -3.685150     -3.819378     -4.740525     -5.727739
+    -5.601264     -5.597237     -4.484960     -3.420580     -2.305650
+    -1.192809     -0.370910     -0.013120      0.517140      0.823710
+     0.636063      0.039656     -1.010583     -1.641080 
+
+! phi = -60.0
+    -3.353683     -3.342810     -3.451845     -3.640810     -3.756430
+    -3.508820     -2.840678     -3.777879     -5.005312     -5.526955
+    -5.096776     -4.568574     -3.915080     -3.218100     -2.041450
+     1.632470      2.395330      0.438130      0.668070      0.722610
+    -0.257890     -1.240143     -2.317412     -2.984416 
+
+! phi = -45.0
+    -4.021496     -3.595217     -3.666490     -3.416560     -2.860490
+    -2.368170     -2.865450     -4.038627     -5.146239     -5.287977
+    -4.611550     -3.875270     -3.286310     -0.416420      0.770220
+     1.903420      0.502370      0.754110      0.814380      0.362000
+    -0.984725     -2.334377     -3.365327     -3.836549 
+
+! phi = -30.0
+    -2.963810     -2.445320     -1.599580     -1.071260     -1.963850
+    -2.959140     -3.764540     -4.496271     -4.709721     -4.159810
+    -3.613920     -1.482950     -0.407380      0.553620      1.522430
+     2.462720      0.970370      1.394630      1.428450      0.336200
+    -1.125083     -2.400349     -3.441809     -3.483730 
+
+! phi = -15.0
+    -0.778340      0.313410      1.755370     -2.773970     -3.455620
+    -3.908210     -4.269270     -4.195110     -3.251140     -2.182580
+    -0.790380     -0.535320     -0.237060      0.678570      1.436920
+     2.448660      1.358370      2.223500      1.682950      0.183400
+    -1.047430     -1.846280     -2.052140     -1.912680 
+
+! phi = 0.0
+     2.832310     -0.924170     -2.675750     -3.615930     -3.934880
+    -3.792530     -2.744510     -1.846360     -1.213010     -1.569230
+     0.121170      0.070390      0.119780      0.776350      1.606970
+     2.520340      1.645480      1.671950      1.238750      0.976330
+     0.628600      0.479230      0.323280      0.787990 
+
+! phi = 15.0
+     0.293590     -1.749204     -3.155346     -3.807325     -3.786839
+    -2.558037     -0.613920      0.181770     -0.342400      1.616580
+     1.021020      0.740760      0.511070      0.846920      1.616970
+     0.655170      0.856410      1.381760      1.588700      2.517320
+     3.272450      3.217620      3.732620      5.588070 
+
+! phi = 30.0
+    -1.174720     -2.655135     -3.277369     -3.550465     -2.849141
+    -1.595147      0.331780      0.534000      0.194290      2.223490
+     1.915550      1.522590      1.314360     -0.707140      0.276860
+    -0.008448      0.765978      1.320806      2.783340      4.806470
+     6.070770      6.741610      4.180460      1.067030 
+
+! phi = 45.0
+    -1.184837     -2.000433     -1.980965     -1.954532     -1.582430
+    -0.890956      0.247770      0.379430     -0.045570      0.271580
+     0.082910     -0.582210     -0.797230     -0.149443      0.007574
+     0.107016      1.123713      2.461506      4.380200      5.389940
+     5.376000      4.211350      2.347410      0.078060 
+
+! phi = 60.0
+     0.237754     -0.204264     -1.479968     -1.534365     -0.948631
+    -0.666399      0.309664      0.322420      0.267796      0.139806
+    -0.173146     -0.823341     -0.357600     -0.038919     -0.406695
+    -0.482789      2.272295      3.673107      4.276080      4.391860
+     4.208190      3.168570      1.716960      1.229980 
+
+! phi = 75.0
+     1.378160      0.468922     -0.253412     -0.190548     -0.253585
+     0.191719      0.551890      0.301999      0.423308      0.226352
+    -0.598368     -0.427765     -0.123614     -0.682452      0.095172
+     1.693809      3.536425      4.212293      3.580310      3.700796
+     3.814070      3.063543      2.352424      3.345958 
+
+! phi = 90.0
+     1.451735      0.748823      0.280839      0.017622     -0.071054
+     0.145910      0.459433      0.908250      0.415153     -0.020653
+    -0.962798     -1.620864     -1.511772     -0.606502      0.912671
+     2.440579      3.335030      3.898724      3.180200      3.344157
+     3.450028      3.156796      2.738185      2.748481 
+
+! phi = 105.0
+     2.045006      0.733747      0.314474     -0.164333     -0.316550
+    -0.124647      1.040241      0.771710      0.082195      0.206160
+    -1.456524     -2.241579     -2.090819     -0.823628      0.906487
+     2.124759      2.956634      2.903794      3.073520      3.551568
+     3.370620      3.088582      2.818030      2.544424 
+
+! phi = 120.0
+     1.357468      0.449309     -0.250116     -0.856791     -0.968118
+    -0.546994      0.910952      0.439040     -0.062320     -0.425969
+    -1.803113     -2.628489     -2.118268     -0.785637      0.705667
+     1.627997      2.719664      2.773853      2.639296      3.558453
+     3.698960      3.037857      2.698894      1.959160 
+
+! phi = 135.0
+     0.927992     -0.442565     -0.566518     -0.983285     -1.152891
+    -0.517358      0.313725      0.021790     -0.932949     -1.340467
+    -1.959136     -2.278329     -1.995479     -1.183897      0.115935
+     1.852278      2.058314      2.187970      2.460813      2.918410
+     3.111384      2.546305      2.242218      1.521370 
+
+! phi = 150.0
+     0.084069     -0.816303     -1.293226     -1.283444     -0.765479
+    -0.225016      0.068512     -0.727243     -1.354215     -1.890683
+    -2.551995     -3.006154     -2.583256     -1.815886     -0.225720
+     2.463293      1.557466      1.985454      2.321416      2.716410
+     2.653910      2.047200      1.624350      1.420317 
+
+! phi = 165.0
+    -0.127133     -1.122030     -1.076344     -0.207701     -0.640168
+    -0.861434     -1.101780     -1.501241     -2.299128     -2.602140
+    -3.420090     -4.135306     -4.009477     -2.800440      0.258676
+     0.643400      1.086456      1.929070      2.436754      2.486630
+     2.398990      1.872290      1.577020      1.377090 
+
+! D-proline
+!mp2/aug-cc-pVDZ//RIMP2/VTZ/VQZ CBS map
+C    N    CPD1 C    N    CPD1   C    NH1 24 
+
+! phi = -180.0
+     2.973500      1.560000     -0.292800     -1.256600     -0.950000
+    -0.135600      0.348900      0.211700     -0.173500     -0.151200
+     0.177100      0.259100      0.000000     -0.292600     -0.463800
+    -0.583000     -0.479000      0.263300      0.785200      0.770600
+     1.040500      2.113400      3.062900      3.348200 
+
+! phi = -165.0
+     0.000000      0.000000      0.000000      0.000000      0.000000
+     0.000000      0.000000      0.000000      0.000000      0.000000
+     0.000000      0.000000      0.000000      0.000000      0.000000
+     0.000000      0.000000      0.000000      0.000000      0.000000
+     0.000000      0.000000      0.000000      0.000000 
+
+! phi = -150.0
+     0.000000      0.000000      0.000000      0.000000      0.000000
+     0.000000      0.000000      0.000000      0.000000      0.000000
+     0.000000      0.000000      0.000000      0.000000      0.000000
+     0.000000      0.000000      0.000000      0.000000      0.000000
+     0.000000      0.000000      0.000000      0.000000 
+
+! phi = -135.0
+     0.000000      0.000000      0.000000      0.000000      0.000000
+     0.000000      0.000000      0.000000      0.000000      0.000000
+     0.000000      0.000000      0.000000      0.000000      0.000000
+     0.000000      0.000000      0.000000      0.000000      0.000000
+     0.000000      0.000000      0.000000      0.000000 
+
+! phi = -120.0
+     0.000000      0.000000      0.000000      0.000000      0.000000
+     0.000000      0.000000      0.000000      0.000000      0.000000
+     0.000000      0.000000      0.000000      0.000000      0.000000
+     0.000000      0.000000      0.000000      0.000000      0.000000
+     0.000000      0.000000      0.000000      0.000000 
+
+! phi = -105.0
+     0.000000      0.000000      0.000000      0.000000      0.000000
+     0.000000      0.000000      0.000000      0.000000      0.000000
+     0.000000      0.000000      0.000000      0.000000      0.000000
+     0.000000      0.000000      0.000000      0.000000      0.000000
+     0.000000      0.000000      0.000000      0.000000 
+
+! phi = -90.0
+     0.000000      0.000000      0.000000      0.000000      0.000000
+     0.000000      0.000000      0.000000      0.000000      0.000000
+     0.000000      0.000000      0.000000      0.000000      0.000000
+     0.000000      0.000000      0.000000      0.000000      0.000000
+     0.000000      0.000000      0.000000      0.000000 
+
+! phi = -75.0
+     0.000000      0.000000      0.000000      0.000000      0.000000
+     0.000000      0.000000      0.000000      0.000000      0.000000
+     0.000000      0.000000      0.000000      0.000000      0.000000
+     0.000000      0.000000      0.000000      0.000000      0.000000
+     0.000000      0.000000      0.000000      0.000000 
+
+! phi = -60.0
+     0.000000      0.000000      0.000000      0.000000      0.000000
+     0.000000      0.000000      0.000000      0.000000      0.000000
+     0.000000      0.000000      0.000000      0.000000      0.000000
+     0.000000      0.000000      0.000000      0.000000      0.000000
+     0.000000      0.000000      0.000000      0.000000 
+
+! phi = -45.0
+     0.000000      0.000000      0.000000      0.000000      0.000000
+     0.000000      0.000000      0.000000      0.000000      0.000000
+     0.000000      0.000000      0.000000      0.000000      0.000000
+     0.000000      0.000000      0.000000      0.000000      0.000000
+     0.000000      0.000000      0.000000      0.000000 
+
+! phi = -30.0
+     7.548800      7.977800      3.474200      2.327600      2.199900
+     2.055600      1.522700      0.815300      0.978300      2.491300
+     3.113400      3.210000      3.266000      2.939300      2.394400
+     2.150900      2.565500      3.223200      2.733300      1.318700
+     0.444500      0.955200      2.747000      5.095500 
+
+! phi = -15.0
+     6.639500      4.915000      3.039100      2.555600      2.051200
+     1.631400      1.322300      1.557900      2.562100      2.917100
+     2.662400      2.795200      2.820200      2.395400      1.777400
+     1.578600      2.178600      2.442300      1.505400      0.888300
+     1.078400      1.952700      3.252300      5.177400 
+
+! phi = 0.0
+     8.085900      4.853100      2.794900      1.494200      0.792600
+     0.958600      2.082200      3.615600      4.069900      3.472300
+     3.374500      3.543500      3.467500      2.921300      2.188400
+     1.945200      2.039300      1.456300      1.566200      2.192500
+     2.836100      3.450800      5.023600      8.051100 
+
+! phi = 15.0
+     3.061500      5.031900      3.212300      1.669800      1.357100
+     2.569400      4.759500      6.169000      5.943300      5.641600
+     5.694800      5.728800      5.337500      4.443600      3.562100
+     3.145900      2.291600      2.461500      3.705600      4.826500
+     5.323400      6.295200     12.179500      5.603800 
+
+! phi = 30.0
+     5.466700      3.860800      1.955800      1.064900      1.719800
+     3.751300      5.833400      6.646400      6.488900      6.191100
+     6.229300      6.422600      6.214900      5.451700      4.485300
+     3.023700      2.674800      4.193100      6.031600      7.047000
+     7.413500      8.347200      8.908800      7.116000 
+
+! phi = 45.0
+     6.913200      5.435200      4.215800      3.830500      4.680400
+     6.320500      7.642700      8.082200      7.878100      7.512500
+     7.438700      7.598500      7.565400      7.118800      5.793100
+     4.742700      5.456400      7.297900      8.828800      9.408400
+     9.388500      9.316600      8.610800      7.937400 
+
+! phi = 60.0
+     8.422900      7.746300      6.802500      6.317000      6.651800
+     7.436800      8.055600      8.291000      8.192900      7.988200
+     8.103500      8.512000      8.786400      8.222400      7.038700
+     6.624600      7.566000      9.283500     11.510800     11.025900
+    10.239400      9.306400      8.608500      8.529200 
+
+! phi = 75.0
+    10.955200      9.894000      8.498100      7.612400      7.872500
+     8.795900      9.282800      8.664700      7.504000      6.733700
+     6.616400      7.104500      8.009800      7.871600      6.267600
+     5.102700      5.361500      6.965100      9.279600     10.044500
+    10.062400     10.428700     11.173300     11.455400 
+
+! phi = 90.0
+     9.335600      8.570700      7.391700      6.579300      6.404700
+     6.449700      6.347300      6.227500      6.242000      6.529900
+     7.407200      8.295000      8.195300      7.484700      6.651300
+     6.474200      7.306500      8.429100      8.737100      8.212200
+     7.885100      8.010200      8.564600      9.208000 
+
+! phi = 105.0
+     9.249700      8.192800      6.651500      5.581700      5.710100
+     6.625400      7.196700      6.652400      5.540200      5.248700
+     5.842000      6.885600      6.537600      5.100300      3.464800
+     2.640300      3.320600      5.287600      6.822100      6.834600
+     7.003200      7.525300      8.668500      9.483000 
+
+! phi = 120.0
+     8.115600      6.931500      5.284900      4.094600      4.066800
+     4.872300      5.716700      5.820200      5.512200      5.726100
+     6.217600      6.055500      5.018000      3.359900      1.769300
+     1.257800      2.336100      4.421200      4.929000      4.964300
+     5.537900      6.585000      7.754300      8.477200 
+
+! phi = 135.0
+     7.627800      6.311700      4.617700      3.449800      3.495500
+     4.292100      4.918000      5.211000      5.588500      5.988600
+     5.830800      5.274900      3.932900      2.152300      0.790000
+     0.776300      2.222200      4.442800      4.551500      4.433400
+     4.799200      5.893500      7.342500      8.153400 
+
+! phi = 150.0
+     6.752800      5.624800      4.060200      3.031800      3.099200
+     3.849600      4.549500      4.837200      4.702100      4.546200
+     4.603600      4.362800      3.778300      3.162200      2.838100
+     3.010000      3.303500      3.442400      3.832800      4.046000
+     4.438600      5.389800      6.444300      6.973200 
+
+! phi = 165.0
+     5.674100      4.339800      2.517100      1.422700      1.647200
+     2.547600      3.232900      3.328500      3.016100      2.869000
+     2.989100      2.799500      2.113200      1.437400      1.142700
+     1.468400      1.661400      2.311200      2.848600      3.008800
+     3.390800      4.467300      5.562700      6.011400 
+
+
+!2 adjacent prolines
+! mp2/aug-cc-pVDZ//RIMP2/VTZ/VQZ CBS map
+C    N    CPD1 C    N    CPD1   C    N 24 
+
+! phi = -180.0
+     2.973500      1.560000     -0.292800     -1.256600     -0.950000
+    -0.135600      0.348900      0.211700     -0.173500     -0.151200
+     0.177100      0.259100      0.000000     -0.292600     -0.463800
+    -0.583000     -0.479000      0.263300      0.785200      0.770600
+     1.040500      2.113400      3.062900      3.348200 
+
+! phi = -165.0
+     0.000000      0.000000      0.000000      0.000000      0.000000
+     0.000000      0.000000      0.000000      0.000000      0.000000
+     0.000000      0.000000      0.000000      0.000000      0.000000
+     0.000000      0.000000      0.000000      0.000000      0.000000
+     0.000000      0.000000      0.000000      0.000000 
+
+! phi = -150.0
+     0.000000      0.000000      0.000000      0.000000      0.000000
+     0.000000      0.000000      0.000000      0.000000      0.000000
+     0.000000      0.000000      0.000000      0.000000      0.000000
+     0.000000      0.000000      0.000000      0.000000      0.000000
+     0.000000      0.000000      0.000000      0.000000 
+
+! phi = -135.0
+     0.000000      0.000000      0.000000      0.000000      0.000000
+     0.000000      0.000000      0.000000      0.000000      0.000000
+     0.000000      0.000000      0.000000      0.000000      0.000000
+     0.000000      0.000000      0.000000      0.000000      0.000000
+     0.000000      0.000000      0.000000      0.000000 
+
+! phi = -120.0
+     0.000000      0.000000      0.000000      0.000000      0.000000
+     0.000000      0.000000      0.000000      0.000000      0.000000
+     0.000000      0.000000      0.000000      0.000000      0.000000
+     0.000000      0.000000      0.000000      0.000000      0.000000
+     0.000000      0.000000      0.000000      0.000000 
+
+! phi = -105.0
+     0.000000      0.000000      0.000000      0.000000      0.000000
+     0.000000      0.000000      0.000000      0.000000      0.000000
+     0.000000      0.000000      0.000000      0.000000      0.000000
+     0.000000      0.000000      0.000000      0.000000      0.000000
+     0.000000      0.000000      0.000000      0.000000 
+
+! phi = -90.0
+     0.000000      0.000000      0.000000      0.000000      0.000000
+     0.000000      0.000000      0.000000      0.000000      0.000000
+     0.000000      0.000000      0.000000      0.000000      0.000000
+     0.000000      0.000000      0.000000      0.000000      0.000000
+     0.000000      0.000000      0.000000      0.000000 
+
+! phi = -75.0
+     0.000000      0.000000      0.000000      0.000000      0.000000
+     0.000000      0.000000      0.000000      0.000000      0.000000
+     0.000000      0.000000      0.000000      0.000000      0.000000
+     0.000000      0.000000      0.000000      0.000000      0.000000
+     0.000000      0.000000      0.000000      0.000000 
+
+! phi = -60.0
+     0.000000      0.000000      0.000000      0.000000      0.000000
+     0.000000      0.000000      0.000000      0.000000      0.000000
+     0.000000      0.000000      0.000000      0.000000      0.000000
+     0.000000      0.000000      0.000000      0.000000      0.000000
+     0.000000      0.000000      0.000000      0.000000 
+
+! phi = -45.0
+     0.000000      0.000000      0.000000      0.000000      0.000000
+     0.000000      0.000000      0.000000      0.000000      0.000000
+     0.000000      0.000000      0.000000      0.000000      0.000000
+     0.000000      0.000000      0.000000      0.000000      0.000000
+     0.000000      0.000000      0.000000      0.000000 
+
+! phi = -30.0
+     7.548800      7.977800      3.474200      2.327600      2.199900
+     2.055600      1.522700      0.815300      0.978300      2.491300
+     3.113400      3.210000      3.266000      2.939300      2.394400
+     2.150900      2.565500      3.223200      2.733300      1.318700
+     0.444500      0.955200      2.747000      5.095500 
+
+! phi = -15.0
+     6.639500      4.915000      3.039100      2.555600      2.051200
+     1.631400      1.322300      1.557900      2.562100      2.917100
+     2.662400      2.795200      2.820200      2.395400      1.777400
+     1.578600      2.178600      2.442300      1.505400      0.888300
+     1.078400      1.952700      3.252300      5.177400 
+
+! phi = 0.0
+     8.085900      4.853100      2.794900      1.494200      0.792600
+     0.958600      2.082200      3.615600      4.069900      3.472300
+     3.374500      3.543500      3.467500      2.921300      2.188400
+     1.945200      2.039300      1.456300      1.566200      2.192500
+     2.836100      3.450800      5.023600      8.051100 
+
+! phi = 15.0
+     3.061500      5.031900      3.212300      1.669800      1.357100
+     2.569400      4.759500      6.169000      5.943300      5.641600
+     5.694800      5.728800      5.337500      4.443600      3.562100
+     3.145900      2.291600      2.461500      3.705600      4.826500
+     5.323400      6.295200     12.179500      5.603800 
+
+! phi = 30.0
+     5.466700      3.860800      1.955800      1.064900      1.719800
+     3.751300      5.833400      6.646400      6.488900      6.191100
+     6.229300      6.422600      6.214900      5.451700      4.485300
+     3.023700      2.674800      4.193100      6.031600      7.047000
+     7.413500      8.347200      8.908800      7.116000 
+
+! phi = 45.0
+     6.913200      5.435200      4.215800      3.830500      4.680400
+     6.320500      7.642700      8.082200      7.878100      7.512500
+     7.438700      7.598500      7.565400      7.118800      5.793100
+     4.742700      5.456400      7.297900      8.828800      9.408400
+     9.388500      9.316600      8.610800      7.937400 
+
+! phi = 60.0
+     8.422900      7.746300      6.802500      6.317000      6.651800
+     7.436800      8.055600      8.291000      8.192900      7.988200
+     8.103500      8.512000      8.786400      8.222400      7.038700
+     6.624600      7.566000      9.283500     11.510800     11.025900
+    10.239400      9.306400      8.608500      8.529200 
+
+! phi = 75.0
+    10.955200      9.894000      8.498100      7.612400      7.872500
+     8.795900      9.282800      8.664700      7.504000      6.733700
+     6.616400      7.104500      8.009800      7.871600      6.267600
+     5.102700      5.361500      6.965100      9.279600     10.044500
+    10.062400     10.428700     11.173300     11.455400 
+
+! phi = 90.0
+     9.335600      8.570700      7.391700      6.579300      6.404700
+     6.449700      6.347300      6.227500      6.242000      6.529900
+     7.407200      8.295000      8.195300      7.484700      6.651300
+     6.474200      7.306500      8.429100      8.737100      8.212200
+     7.885100      8.010200      8.564600      9.208000 
+
+! phi = 105.0
+     9.249700      8.192800      6.651500      5.581700      5.710100
+     6.625400      7.196700      6.652400      5.540200      5.248700
+     5.842000      6.885600      6.537600      5.100300      3.464800
+     2.640300      3.320600      5.287600      6.822100      6.834600
+     7.003200      7.525300      8.668500      9.483000 
+
+! phi = 120.0
+     8.115600      6.931500      5.284900      4.094600      4.066800
+     4.872300      5.716700      5.820200      5.512200      5.726100
+     6.217600      6.055500      5.018000      3.359900      1.769300
+     1.257800      2.336100      4.421200      4.929000      4.964300
+     5.537900      6.585000      7.754300      8.477200 
+
+! phi = 135.0
+     7.627800      6.311700      4.617700      3.449800      3.495500
+     4.292100      4.918000      5.211000      5.588500      5.988600
+     5.830800      5.274900      3.932900      2.152300      0.790000
+     0.776300      2.222200      4.442800      4.551500      4.433400
+     4.799200      5.893500      7.342500      8.153400 
+
+! phi = 150.0
+     6.752800      5.624800      4.060200      3.031800      3.099200
+     3.849600      4.549500      4.837200      4.702100      4.546200
+     4.603600      4.362800      3.778300      3.162200      2.838100
+     3.010000      3.303500      3.442400      3.832800      4.046000
+     4.438600      5.389800      6.444300      6.973200 
+
+! phi = 165.0
+     5.674100      4.339800      2.517100      1.422700      1.647200
+     2.547600      3.232900      3.328500      3.016100      2.869000
+     2.989100      2.799500      2.113200      1.437400      1.142700
+     1.468400      1.661400      2.311200      2.848600      3.008800
+     3.390800      4.467300      5.562700      6.011400 
+
+NONBONDED nbxmod  5 atom cdiel fshift vatom vdistance vfswitch - 
+cutnb 14.0 ctofnb 12.0 ctonnb 10.0 eps 1.0 e14fac 1.0 wmin 1.5 
+                !adm jr., 2013 correction
+! 
+!V(Lennard-Jones) = Eps,i,j[(Rmin,i,j/ri,j)**12 - 2(Rmin,i,j/ri,j)**6] 
+! 
+!epsilon: kcal/mole, Eps,i,j = sqrt(eps,i * eps,j) 
+!Rmin/2: A, Rmin,i,j = Rmin/2,i + Rmin/2,j 
+! 
+!atom  ignored    epsilon      Rmin/2   ignored   eps,1-4       Rmin/2,1-4 
+! 
+!carbons 
+ 
+! Added CTD1 -- new atom type for alpha carbon for d-amino acid, necessary 
+! for CMAP.  Just duplicated the CT1 parameters.  AMG 2/27/08 
+ 
+CTD1    0.000000  -0.032000     2.000000   0.000000  -0.010000     1.900000 ! alkane, 4/07, viv
+CPD1    0.000000  -0.020000     2.275000   0.000000  -0.010000     1.900000 ! ALLOW   ALI 
+ 
+ 
+HBOND CUTHB 0.5  ! If you want to do hbond analysis (only), then use 
+                 ! READ PARAM APPEND CARD 
+                 ! to append hbond parameters from the file: par_hbond.inp 
+ 
+END 

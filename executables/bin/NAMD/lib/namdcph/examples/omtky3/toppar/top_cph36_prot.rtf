@@ -1,0 +1,741 @@
+*> CHARMM36 All-Hydrogen Topology File for Titratable Proteins <
+*>>>>>>>>>>>>>>>>>>>>>>>>>> Jun 2017 <<<<<<<<<<<<<<<<<<<<<<<<<<<
+*This supplements the CHARMM36 force field for making hybrid 
+*residues for single-topology/dual-coordinate simulations.
+*
+36   1
+
+MASS   131 HD     1.00800 ! polar H dummy
+MASS   132 HCD    1.00800 ! N-ter H dummy
+MASS   140 HSD    1.00800 ! thiol hydrogen dummy
+
+!==============================================================================
+! AA sidechain patches
+!==============================================================================
+!
+!     Constant pH simulations in NAMD make use of a mixed single/dual
+! coordinate system whereby titration moves take place through an auxillary
+! coordinate set for each sidechain. This works because the standard force
+! field is also supplemented by dummy atoms such that all protonation states
+! have the same atom count. Two kinds of patches are required:
+!
+! 1) state patches, which convert standard residue topologies to their dummy
+!   atom containing equivalent. These have the naming pattern XXXY, where XXX
+!   is the normal force field amino acid name and Y is the state label.
+!
+! 2) hybrid patches, which create a duplicate sidechain in order to enable a
+!   transition between two protonation states. These have the naming pattern 
+!   XXXHY, where the letter "H" just gives the "hybrid" designation.
+!
+! In general, state patches only need to be used during initialization. Because
+! they add bonds that might already exist, these should be used with caution.
+! If the state of a sidechain is to be changed, the best approach is to use a
+! hybrid patch, copy over the coordinates, velocities, and atom names and then
+! delete the original atoms. This is especially important when dealing with
+! improper torsion terms.
+!
+!==============================================================================
+! Aspartate - states: D, 1, 2
+!==============================================================================
+PRES ASPD        -1.00 ! deprotonated ASP, dummy protons @OD1/OD2
+GROUP
+ATOM CB   CT2A   -0.28
+ATOM HB1  HA2     0.09 !   HB1   OD1..HD1
+ATOM HB2  HA2     0.09 !   |    //
+ATOM CG   CC      0.62 ! --CB--CG  (-)
+ATOM OD1  OC     -0.76 !   |    \
+ATOM HD1  HD      0.00 !   HB2   OD2..HD2
+ATOM OD2  OC     -0.76
+ATOM HD2  HD      0.00
+BOND OD1 HD1 OD2 HD2
+IC CB   CG   OD1  HD1   1.5218 117.9900  180.0000 115.0000  0.9600
+IC CB   CG   OD2  HD2   1.5218 117.7000  180.0000 115.0000  0.9600
+
+PRES ASPHD       -1.00
+GROUP
+ATOM CA
+ATOM HA
+GROUP ! new atoms
+ATOM CB1  CT2A   -0.28
+ATOM HB11 HA2     0.09 !   HB11   OD11..HD11
+ATOM HB21 HA2     0.09 !   |     //
+ATOM CG1  CC      0.62 ! --CB1--CG1  (-)
+ATOM OD11 OC     -0.76 !   |     \
+ATOM HD11 HD      0.00 !   HB21   OD21..HD21
+ATOM OD21 OC     -0.76
+ATOM HD21 HD      0.00
+BOND CB1 CA   CG1 CB1  OD21 CG1
+BOND CB1 HB11 CB1 HB21
+DOUBLE CG1 OD11
+BOND OD11 HD11 OD21 HD21
+IMPR CG1 CB1 OD21 OD11
+IC N    C    *CA  CB1   1.4490 105.6300  122.3300 114.1000  1.5619
+IC N    CA   CB1  CG1   1.4490 111.1000  180.0000 112.6000  1.5218
+IC CG1  CA   *CB1 HB11  1.5218 112.6000  119.2200 109.2300  1.1086
+IC CG1  CA   *CB1 HB21  1.5218 112.6000 -121.6100 110.6400  1.1080
+IC CA   CB1  CG1  OD11  1.5619 112.6000  180.0000 117.9900  1.2565
+IC OD11 CB1  *CG1 OD21  1.2565 117.9900 -170.2300 117.7000  1.2541
+IC CB1  CG1  OD11 HD11  1.5218 117.9900  180.0000 115.0000  0.9600
+IC CB1  CG1  OD21 HD21  1.5218 117.7000  180.0000 115.0000  0.9600
+
+PRES ASP1         0.00 ! protonated ASP, proton @OD1, dummy proton @OD2 
+GROUP
+ATOM CB   CT2    -0.21
+ATOM HB1  HA2     0.09 !   HB1   OD1-HD1
+ATOM HB2  HA2     0.09 !   |    / 
+ATOM CG   CD      0.75 ! --CB--CG
+ATOM OD1  OH1    -0.61 !   |    \\
+ATOM HD1  H       0.44 !   HB2   OD2..HD2
+ATOM OD2  OB     -0.55
+ATOM HD2  HD      0.00
+BOND OD1 HD1 OD2 HD2
+IC CB   CG   OD1  HD1   1.5218 117.9900  180.0000 115.0000  0.9600
+IC CB   CG   OD2  HD2   1.5218 117.7000  180.0000 115.0000  0.9600
+
+PRES ASPH1        0.00
+GROUP
+ATOM CA
+ATOM HA
+GROUP ! new atoms
+ATOM CB1  CT2    -0.21
+ATOM HB11 HA2     0.09 !   HB11   OD11-HD11
+ATOM HB21 HA2     0.09 !   |     / 
+ATOM CG1  CD      0.75 ! --CB1--CG1
+ATOM OD11 OH1    -0.61 !   |     \\
+ATOM HD11 H       0.44 !   HB21   OD21..HD21
+ATOM OD21 OB     -0.55
+ATOM HD21 HD      0.00
+BOND CB1 CA   CG1 CB1  OD11 CG1
+BOND CB1 HB11 CB1 HB21
+DOUBLE CG1 OD21
+BOND OD11 HD11 OD21 HD21
+IMPR CG1 CB1 OD21 OD11
+IC N    C    *CA  CB1   1.4490 105.6300  122.3300 114.1000  1.5619
+IC N    CA   CB1  CG1   1.4490 111.1000  180.0000 112.6000  1.5218
+IC CG1  CA   *CB1 HB11  1.5218 112.6000  119.2200 109.2300  1.1086
+IC CG1  CA   *CB1 HB21  1.5218 112.6000 -121.6100 110.6400  1.1080
+IC CA   CB1  CG1  OD11  1.5619 112.6000  180.0000 117.9900  1.2565
+IC OD11 CB1  *CG1 OD21  1.2565 117.9900 -170.2300 117.7000  1.2541
+IC CB1  CG1  OD11 HD11  1.5218 117.9900  180.0000 115.0000  0.9600
+IC CB1  CG1  OD21 HD21  1.5218 117.7000  180.0000 115.0000  0.9600
+
+PRES ASP2         0.00 ! protonated ASP, proton @OD2, dummy proton @OD1 
+GROUP
+ATOM CB   CT2    -0.21
+ATOM HB1  HA2     0.09 !   HB1   OD1..HD1
+ATOM HB2  HA2     0.09 !   |    //
+ATOM CG   CD      0.75 ! --CB--CG
+ATOM OD1  OB     -0.55 !   |    \
+ATOM HD1  HD      0.00 !   HB2   OD2-HD2
+ATOM OD2  OH1    -0.61
+ATOM HD2  H       0.44
+BOND OD1 HD1 OD2 HD2
+IC CB   CG   OD1  HD1   1.5218 117.9900  180.0000 115.0000  0.9600
+IC CB   CG   OD2  HD2   1.5218 117.7000  180.0000 115.0000  0.9600
+
+PRES ASPH2        0.00
+GROUP
+ATOM CA
+ATOM HA
+GROUP ! new atoms
+ATOM CB1  CT2    -0.21
+ATOM HB11 HA2     0.09 !   HB11   OD11..HD11
+ATOM HB21 HA2     0.09 !   |     //
+ATOM CG1  CD      0.75 ! --CB1--CG1
+ATOM OD11 OB     -0.55 !   |     \
+ATOM HD11 HD      0.00 !   HB21   OD21-HD21
+ATOM OD21 OH1    -0.61
+ATOM HD21 H       0.44
+BOND CB1 CA   CG1 CB1  OD21 CG1
+BOND CB1 HB11 CB1 HB21
+DOUBLE CG1 OD11
+BOND OD11 HD11 OD21 HD21
+IMPR CG1 CB1 OD21 OD11
+IC N    C    *CA  CB1   1.4490 105.6300  122.3300 114.1000  1.5619
+IC N    CA   CB1  CG1   1.4490 111.1000  180.0000 112.6000  1.5218
+IC CG1  CA   *CB1 HB11  1.5218 112.6000  119.2200 109.2300  1.1086
+IC CG1  CA   *CB1 HB21  1.5218 112.6000 -121.6100 110.6400  1.1080
+IC CA   CB1  CG1  OD11  1.5619 112.6000  180.0000 117.9900  1.2565
+IC OD11 CB1  *CG1 OD21  1.2565 117.9900 -170.2300 117.7000  1.2541
+IC CB1  CG1  OD11 HD11  1.5218 117.9900  180.0000 115.0000  0.9600
+IC CB1  CG1  OD21 HD21  1.5218 117.7000  180.0000 115.0000  0.9600
+
+!==============================================================================
+! Glutamate - states: D, 1, 2
+!==============================================================================
+PRES GLUD        -1.00 ! deprotonated GLU, dummy protons @OE1/OE2
+GROUP
+ATOM CG   CT2    -0.28
+ATOM HG1  HA2     0.09 !   HG1   OE1..HE1
+ATOM HG2  HA2     0.09 !   |    //
+ATOM CD   CC      0.62 ! --CG--CD  (-)
+ATOM OE1  OC     -0.76 !   |    \
+ATOM HE1  HD      0.00 !   HG2   OE2..HE2
+ATOM OE2  OC     -0.76
+ATOM HE2  HD      0.00
+BOND OE1 HE1 OE2 HE2
+IC CG   CD   OE1  HE1   1.5307 114.9900  180.0000 115.0000  0.9600
+IC CG   CD   OE2  HE2   1.5307 120.0800  180.0000 115.0000  0.9600
+
+PRES GLUHD       -1.00
+GROUP
+ATOM CB
+ATOM HB1
+ATOM HB2
+GROUP ! new atoms
+ATOM CG1  CT2    -0.28
+ATOM HG11 HA2     0.09 !   HG11   OE11..HE11
+ATOM HG21 HA2     0.09 !   |     //
+ATOM CD1  CC      0.62 ! --CG1--CD1 (-)
+ATOM OE11 OC     -0.76 !   |     \
+ATOM HE11 HD      0.00 !   HG21   OE21..HE21
+ATOM OE21 OC     -0.76
+ATOM HE21 HD      0.00
+BOND CG1 CB   CD1 CG1  OE21 CD1     
+BOND CG1 HG11 CG1 HG21  
+DOUBLE CD1 OE11
+BOND OE11 HE11 OE21 HE21    
+IMPR CD1 CG1 OE21 OE11
+IC N    CA   CB   CG1   1.4512 111.0400  180.0000 115.6900  1.5557
+IC CG1  CA   *CB  HB1   1.5557 115.6900  121.2200 108.1600  1.1145
+IC CG1  CA   *CB  HB2   1.5557 115.6900 -123.6500 109.8100  1.1131
+IC CA   CB   CG1  CD1   1.5516 115.6900  180.0000 115.7300  1.5307
+IC CD1  CB   *CG1 HG11  1.5307 115.7300  117.3800 109.5000  1.1053
+IC CD1  CB   *CG1 HG21  1.5307 115.7300 -121.9600 111.0000  1.1081
+IC CB   CG1  CD1  OE11  1.5557 115.7300  180.0000 114.9900  1.2590
+IC OE11 CG1  *CD1 OE21  1.2590 114.9900 -179.1000 120.0800  1.2532
+IC CG1  CD1  OE11 HE11  1.5307 114.9900  180.0000 115.0000  0.9600
+IC CG1  CD1  OE21 HE21  1.5307 120.0800  180.0000 115.0000  0.9600
+
+PRES GLU1         0.00 ! protonated GLU, proton @OE1, dummy proton @OE2
+GROUP
+ATOM CG   CT2    -0.21
+ATOM HG1  HA2     0.09 !   HG1   OE1-HE1
+ATOM HG2  HA2     0.09 !   |    / 
+ATOM CD   CD      0.75 ! --CG--CD  
+ATOM OE1  OH1    -0.61 !   |    \\
+ATOM HE1  H       0.44 !   HG2   OE2..HE2
+ATOM OE2  OB     -0.55
+ATOM HE2  HD      0.00
+BOND OE1 HE1 OE2 HE2
+IC CG   CD   OE1  HE1   1.5307 114.9900  180.0000 115.0000  0.9600
+IC CG   CD   OE2  HE2   1.5307 120.0800  180.0000 115.0000  0.9600
+
+PRES GLUH1       -1.00
+GROUP
+ATOM CB
+ATOM HB1
+ATOM HB2
+GROUP ! new atoms
+ATOM CG1  CT2    -0.21 !
+ATOM HG11 HA2     0.09 !   HG11   OE11-HE11
+ATOM HG21 HA2     0.09 !   |     /
+ATOM CD1  CD      0.75 ! --CG1--CD1
+ATOM OE11 OH1    -0.61 !   |     \\
+ATOM HE11 H       0.44 !   HG21   OE21..HE21
+ATOM OE21 OB     -0.55
+ATOM HE21 HD      0.00
+BOND CG1 CB   CD1 CG1  OE21 CD1
+BOND CG1 HG11 CG1 HG21
+DOUBLE CD1 OE11
+BOND OE11 HE11 OE21 HE21
+IMPR CD1 CG1 OE21 OE11
+IC N    CA   CB   CG1   1.4512 111.0400  180.0000 115.6900  1.5557
+IC CG1  CA   *CB  HB1   1.5557 115.6900  121.2200 108.1600  1.1145
+IC CG1  CA   *CB  HB2   1.5557 115.6900 -123.6500 109.8100  1.1131
+IC CA   CB   CG1  CD1   1.5516 115.6900  180.0000 115.7300  1.5307
+IC CD1  CB   *CG1 HG11  1.5307 115.7300  117.3800 109.5000  1.1053
+IC CD1  CB   *CG1 HG21  1.5307 115.7300 -121.9600 111.0000  1.1081
+IC CB   CG1  CD1  OE11  1.5557 115.7300  180.0000 114.9900  1.2590
+IC OE11 CG1  *CD1 OE21  1.2590 114.9900 -179.1000 120.0800  1.2532
+IC CG1  CD1  OE11 HE11  1.5307 114.9900  180.0000 115.0000  0.9600
+IC CG1  CD1  OE21 HE21  1.5307 120.0800  180.0000 115.0000  0.9600
+
+PRES GLU2         0.00 ! protonated GLU, proton @OE2, dummy proton @OE1
+GROUP
+ATOM CG   CT2    -0.21
+ATOM HG1  HA2     0.09 !   HG1   OE1..HE1
+ATOM HG2  HA2     0.09 !   |    //
+ATOM CD   CD      0.75 ! --CG--CD  
+ATOM OE1  OB     -0.55 !   |    \
+ATOM HE1  HD      0.00 !   HG2   OE2-HE2
+ATOM OE2  OH1    -0.61
+ATOM HE2  H       0.44
+BOND OE1 HE1 OE2 HE2
+IC CG   CD   OE1  HE1   1.5307 114.9900  180.0000 115.0000  0.9600
+IC CG   CD   OE2  HE2   1.5307 120.0800  180.0000 115.0000  0.9600
+
+PRES GLUH2       -1.00
+GROUP
+ATOM CB
+ATOM HB1
+ATOM HB2
+GROUP ! new atoms
+ATOM CG1  CT2    -0.21
+ATOM HG11 HA2     0.09 !   HG11   OE11..HE11
+ATOM HG21 HA2     0.09 !   |     //
+ATOM CD1  CD      0.75 ! --CG1--CD1
+ATOM OE11 OB     -0.55 !   |     \ 
+ATOM HE11 HD      0.00 !   HG21   OE21-HE21
+ATOM OE21 OH1    -0.61
+ATOM HE21 H       0.44
+BOND CG1 CB   CD1 CG1  OE21 CD1
+BOND CG1 HG11 CG1 HG21
+DOUBLE CD1 OE11
+BOND OE11 HE11 OE21 HE21
+IMPR CD1 CG1 OE21 OE11
+IC N    CA   CB   CG1   1.4512 111.0400  180.0000 115.6900  1.5557
+IC CG1  CA   *CB  HB1   1.5557 115.6900  121.2200 108.1600  1.1145
+IC CG1  CA   *CB  HB2   1.5557 115.6900 -123.6500 109.8100  1.1131
+IC CA   CB   CG1  CD1   1.5516 115.6900  180.0000 115.7300  1.5307
+IC CD1  CB   *CG1 HG11  1.5307 115.7300  117.3800 109.5000  1.1053
+IC CD1  CB   *CG1 HG21  1.5307 115.7300 -121.9600 111.0000  1.1081
+IC CB   CG1  CD1  OE11  1.5557 115.7300  180.0000 114.9900  1.2590
+IC OE11 CG1  *CD1 OE21  1.2590 114.9900 -179.1000 120.0800  1.2532
+IC CG1  CD1  OE11 HE11  1.5307 114.9900  180.0000 115.0000  0.9600
+IC CG1  CD1  OE21 HE21  1.5307 120.0800  180.0000 115.0000  0.9600
+
+!==============================================================================
+! Histidine - states: D, E, P
+!==============================================================================
+!     Histidine is a strange edge case because the atom ordering for each state
+! is often different. For consistency, a new "HIS" residue has been copied
+! exactly from HSP and then edited to have a new atom order more in line with
+! HSD and HSE. The only downside to this is that the sidechain atoms are now
+! listed as a single charge group instead of two.
+!
+!     When building a constant pH topology one can either rename all histidine
+! residues to HIS or else alias the residue names and use hybid residues to
+! convert (this is the default in namdcph). 
+!
+RESI HIS          1.00  ! Protonated HIS with neutral atom ordering
+GROUP   
+ATOM N    NH1    -0.47  
+ATOM HN   H       0.31  
+ATOM CA   CT1     0.07  
+ATOM HA   HB1     0.09 
+GROUP                   
+ATOM CB   CT2A   -0.05
+ATOM HB1  HA2     0.09 !     |          HD1    HE1
+ATOM HB2  HA2     0.09 !  HN-N           |     /
+ATOM ND1  NR3    -0.51 !     |   HB1    ND1--CE1
+ATOM HD1  H       0.44 !     |   |     /      ||
+ATOM CG   CPH1    0.19 !  HA-CA--CB--CG       ||
+ATOM CE1  CPH2    0.32 !     |   |     \\     ||
+ATOM HE1  HR2     0.18 !     |   HB2    CD2--NE2(+)
+ATOM NE2  NR3    -0.51 !   O=C           |     \
+ATOM HE2  H       0.44 !     |          HD2    HE2
+ATOM CD2  CPH1    0.19
+ATOM HD2  HR1     0.13
+GROUP   
+ATOM C    C       0.51
+ATOM O    O      -0.51
+BOND CB  CA   CG  CB   ND1 CG   CE1 ND1   
+BOND NE2 CD2  N   HN   N   CA   
+BOND C   CA   C   +N  CA  HA  CB HB1   
+BOND CB  HB2  ND1 HD1  NE2 HE2  CD2 HD2 CE1 HE1
+DOUBLE  O   C   CD2 CG     NE2 CE1
+IMPR ND1 CG  CE1 HD1  ND1 CE1 CG  HD1
+IMPR NE2 CD2 CE1 HE2  NE2 CE1 CD2 HE2   
+IMPR N   -C  CA  HN   C   CA  +N  O   
+CMAP -C  N  CA  C   N  CA  C  +N
+DONOR HN N   
+DONOR HD1 ND1   
+DONOR HE2 NE2   
+ACCEPTOR O C   
+IC -C   CA   *N   HN    1.3489 123.9300  180.0000 118.8000  1.0041
+IC -C   N    CA   C     1.3489 123.9300  180.0000 112.0300  1.5225
+IC N    CA   C    +N    1.4548 112.0300  180.0000 116.4900  1.3464
+IC +N   CA   *C   O     1.3464 116.4900  180.0000 121.2000  1.2284
+IC CA   C    +N   +CA   1.5225 116.4900  180.0000 124.2400  1.4521
+IC N    C    *CA  CB    1.4548 112.0300  125.1300 109.3800  1.5533
+IC N    C    *CA  HA    1.4548 112.0300 -119.2000 106.7200  1.0832
+IC N    CA   CB   CG    1.4548 112.2500  180.0000 114.1800  1.5168
+IC CG   CA   *CB  HB1   1.5168 114.1800  122.5000 108.9900  1.1116
+IC CG   CA   *CB  HB2   1.5168 114.1800 -121.5100 108.9700  1.1132
+IC CA   CB   CG   ND1   1.5533 114.1800   90.0000 122.9400  1.3718
+IC ND1  CB   *CG  CD2   1.3718 122.9400 -165.2600 128.9300  1.3549
+IC CB   CG   ND1  CE1   1.5168 122.9400 -167.6200 108.9000  1.3262
+IC CB   CG   CD2  NE2   1.5168 128.9300  167.1300 106.9300  1.3727
+IC NE2  ND1  *CE1 HE1   1.3256 108.5000  178.3900 125.7600  1.0799
+IC CE1  CD2  *NE2 HE2   1.3256 108.8200 -172.9400 125.5200  1.0020
+IC CE1  CG   *ND1 HD1   1.3262 108.9000  171.4900 126.0900  1.0018
+IC NE2  CG   *CD2 HD2   1.3727 106.9300 -174.4900 128.4100  1.0867
+
+PRES HISD         0.00 ! neutral HIS, proton @ND1, dummy proton @NE2
+GROUP                 
+ATOM CB   CT2    -0.09
+ATOM HB1  HA2     0.09 !          HD1    HE1
+ATOM HB2  HA2     0.09 !           |     /
+ATOM ND1  NR1    -0.36 !   HB1    ND1--CE1
+ATOM HD1  H       0.32 !   |     /      ||
+ATOM CG   CPH1   -0.05 ! --CB--CG       ||
+ATOM CE1  CPH2    0.25 !   |     \\     ||
+ATOM HE1  HR1     0.13 !   HB2    CD2--NE2
+ATOM NE2  NR2    -0.70 !           |     : 
+ATOM HE2  HD      0.00 !          HD2    HE2
+ATOM CD2  CPH1    0.22
+ATOM HD2  HR3     0.10
+BOND NE2 HE2
+IC CE1  CG   *ND1 HD1   1.3549 107.0300 -174.6500 126.2600  1.0005
+IC CE1  CD2  *NE2 HE2   1.3539 107.1500 -178.6900 125.8600  0.9996
+
+PRES HISHD        0.00
+GROUP
+ATOM CA
+ATOM HA
+GROUP ! new atoms
+ATOM CB1  CT2    -0.09
+ATOM HB11 HA2     0.09 !           HD11    HE11
+ATOM HB21 HA2     0.09 !            |      /
+ATOM ND11 NR1    -0.36 !   HB11    ND11--CE1
+ATOM HD11 H       0.32 !   |      /       ||
+ATOM CG1  CPH1   -0.05 ! --CB1--CG1       ||
+ATOM CE11 CPH2    0.25 !   |      \\      ||
+ATOM HE11 HR1     0.13 !   HB21    CD21--NE2
+ATOM NE21 NR2    -0.70 !            |      : 
+ATOM HE21 HD      0.00 !           HD21    HE21
+ATOM CD21 CPH1    0.22
+ATOM HD21 HR3     0.10
+BOND CB1  CA   CG1  CB1  ND11 CG1   CE11 ND11   
+BOND NE21 CD21 CB1  HB11 CB1  HB21  ND11 HD11
+BOND CD21 HD21 CE11 HE11 NE21 HE21
+DOUBLE CG1  CD21   CE11  NE21 
+IMPR ND11 CG1 CE11 HD11  CD21 CG1  NE21 HD21  CE11 ND11 NE21 HE11   
+IMPR ND11 CE11 CG1 HD11  CD21 NE21 CG1  HD21  CE11 NE21 ND11 HE11
+IC N    C    *CA   CB1   1.4521 107.7000  122.4600 109.9900  1.5519
+IC N    CA   CB1   CG1   1.4521 112.1200  180.0000 114.0500  1.5041
+IC CG1  CA   *CB1  HB11  1.5041 114.0500  121.1700 109.0100  1.1118
+IC CG1  CA   *CB1  HB21  1.5041 114.0500 -122.3600 109.5300  1.1121
+IC CA   CB1  CG1   ND11  1.5519 114.0500   90.0000 124.1000  1.3783
+IC ND11 CB1  *CG1  CD21  1.3783 124.1000 -171.2900 129.6000  1.3597
+IC CB1  CG1  ND11  CE11  1.5041 124.1000 -173.2100 107.0300  1.3549
+IC CB1  CG1  CD21  NE21  1.5041 129.6000  171.9900 110.0300  1.3817
+IC NE21 ND11 *CE11 HE11  1.3166 111.6300 -179.6300 123.8900  1.0932
+IC CE11 CG1  *ND11 HD11  1.3549 107.0300 -174.6500 126.2600  1.0005
+IC NE21 CG1  *CD21 HD21  1.3817 110.0300 -177.8500 129.6300  1.0834
+IC CE11 CD21 *NE21 HE21  1.3539 107.1500 -178.6900 125.8600  0.9996
+
+PRES HISE         0.00 ! neutral HIS, proton @NE2, dummy proton @ND1
+GROUP                 
+ATOM CB   CT2    -0.08
+ATOM HB1  HA2     0.09 !          HD1    HE1
+ATOM HB2  HA2     0.09 !           : __  /
+ATOM ND1  NR2    -0.70 !   HB1    ND1--CE1
+ATOM HD1  HD      0.00 !   |     /      | 
+ATOM CG   CPH1    0.22 ! --CB--CG       | 
+ATOM CE1  CPH2    0.25 !   |     \\     | 
+ATOM HE1  HR1     0.13 !   HB2    CD2--NE2 
+ATOM NE2  NR1    -0.36 !           |     \ 
+ATOM HE2  H       0.32 !          HD2    HE2
+ATOM CD2  CPH1   -0.05
+ATOM HD2  HR3     0.09
+BOND ND1 HD1
+IC CE1  CG   *ND1 HD1   1.3549 107.0300 -174.6500 126.2600  1.0005
+IC CE1  CD2  *NE2 HE2   1.3539 107.1500 -178.6900 125.8600  0.9996
+
+PRES HISHE        0.00
+GROUP
+ATOM CA
+ATOM HA
+GROUP ! new atoms              
+ATOM CB1  CT2    -0.08
+ATOM HB11 HA2     0.09 !          HD11    HE11
+ATOM HB21 HA2     0.09 !           :   __ /
+ATOM ND11 NR2    -0.70 !   HB11    ND11--CE11
+ATOM HD11 HD      0.00 !   |      /       | 
+ATOM CG1  CPH1    0.22 ! --CB1--CG1       | 
+ATOM CE11 CPH2    0.25 !   |      \\      | 
+ATOM HE11 HR1     0.13 !   HB21    CD21--NE21
+ATOM NE21 NR1    -0.36 !           |      \ 
+ATOM HE21 H       0.32 !          HD21    HE21
+ATOM CD21 CPH1   -0.05
+ATOM HD21 HR3     0.09
+BOND CB1  CA   CG1  CB1  ND11 CG1
+BOND NE21 CD21 NE21 CE11 CB1  HB11
+BOND CB1  HB21 NE21 HE21 CD21 HD21  
+BOND CE11 HE11 ND11 HD11
+DOUBLE CD21 CG1  CE11 ND11
+IMPR NE21 CD21 CE11 HE21  CD21 CG1  NE21 HD21  CE11 ND11 NE21 HE11   
+IMPR NE21 CE11 CD21 HE21  CD21 NE21 CG1  HD21  CE11 NE21 ND11 HE11   
+IC N    C    *CA   CB1   1.4532 106.4300  123.5200 111.6700  1.5578
+IC N    CA   CB1   CG1   1.4532 112.8200  180.0000 116.9400  1.5109
+IC CG1  CA   *CB1  HB11  1.5109 116.9400  119.8000 107.9100  1.1114
+IC CG1  CA   *CB1  HB21  1.5109 116.9400 -124.0400 109.5000  1.1101
+IC CA   CB1  CG1   ND11  1.5578 116.9400   90.0000 120.1700  1.3859
+IC ND11 CB1  *CG1  CD21  1.3859 120.1700 -178.2600 129.7100  1.3596
+IC CB1  CG1  ND11  CE11  1.5109 120.1700 -179.2000 105.2000  1.3170
+IC CB1  CG1  CD21  NE21  1.5109 129.7100  178.6600 105.8000  1.3782
+IC NE21 ND11 *CE11 HE11  1.3539 111.7600  179.6900 124.5800  1.0929
+IC CE11 CD21 *NE21 HE21  1.3539 107.1500 -178.6900 125.8600  0.9996
+IC NE21 CG1  *CD21 HD21  1.3782 105.8000 -179.3500 129.8900  1.0809
+IC CE11 CG1  *ND11 HD11  1.3549 107.0300 -174.6500 126.2600  1.0005
+
+PRES HISP         1.00 ! protonated HIS, protons @ND1/NE2
+GROUP                 
+ATOM CB   CT2A   -0.05
+ATOM HB1  HA2     0.09 !          HD1    HE1
+ATOM HB2  HA2     0.09 !           |     /
+ATOM ND1  NR3    -0.51 !   HB1    ND1--CE1
+ATOM HD1  H       0.44 !   |     /      ||
+ATOM CG   CPH1    0.19 ! --CB--CG       ||
+ATOM CE1  CPH2    0.32 !   |     \\     ||
+ATOM HE1  HR2     0.18 !   HB2    CD2--NE2(+)
+ATOM NE2  NR3    -0.51 !           |     \
+ATOM HE2  H       0.44 !          HD2    HE2
+ATOM CD2  CPH1    0.19
+ATOM HD2  HR1     0.13
+IC CE1  CG   *ND1 HD1   1.3549 107.0300 -174.6500 126.2600  1.0005
+IC CE1  CD2  *NE2 HE2   1.3539 107.1500 -178.6900 125.8600  0.9996
+
+PRES HISHP        1.00
+GROUP
+ATOM CA
+ATOM HA
+GROUP ! new atoms     
+ATOM CB1  CT2A   -0.05
+ATOM HB11 HA2     0.09 !          HD11    HE11
+ATOM HB21 HA2     0.09 !           |      /
+ATOM ND11 NR3    -0.51 !   HB11    ND11--CE1
+ATOM HD11 H       0.44 !   |      /       ||
+ATOM CG1  CPH1    0.19 ! --CB1--CG1       ||
+ATOM CE11 CPH2    0.32 !   |      \\      ||
+ATOM HE11 HR2     0.18 !   HB21    CD21--NE21(+)
+ATOM NE21 NR3    -0.51 !           |      \
+ATOM HE21 H       0.44 !          HD21    HE21
+ATOM CD21 CPH1    0.19
+ATOM HD21 HR1     0.13
+BOND CB1  CA   CG1  CB1  ND11 CG1  CE11 ND11   
+BOND NE21 CD21 CB1  HB11 CB1  HB21 ND11 HD11 
+BOND NE21 HE21 CD21 HD21 CE11 HE11
+DOUBLE CD21 CG1  NE21 CE11
+IMPR ND11 CG1  CE11 HD11  ND11 CE11 CG1  HD11
+IMPR NE21 CD21 CE11 HE21  NE21 CE11 CD21 HE21
+IC N    C    *CA   CB1   1.4548 112.0300  125.1300 109.3800  1.5533
+IC N    CA   CB1   CG1   1.4548 112.2500  180.0000 114.1800  1.5168
+IC CG1  CA   *CB1  HB11  1.5168 114.1800  122.5000 108.9900  1.1116
+IC CG1  CA   *CB1  HB21  1.5168 114.1800 -121.5100 108.9700  1.1132
+IC CA   CB1  CG1   ND11  1.5533 114.1800   90.0000 122.9400  1.3718
+IC ND11 CB1  *CG1  CD21  1.3718 122.9400 -165.2600 128.9300  1.3549
+IC CB1  CG1  ND11  CE11  1.5168 122.9400 -167.6200 108.9000  1.3262
+IC CB1  CG1  CD21  NE21  1.5168 128.9300  167.1300 106.9300  1.3727
+IC NE21 ND11 *CE11 HE11  1.3256 108.5000  178.3900 125.7600  1.0799
+IC CE11 CD21 *NE21 HE21  1.3256 108.8200 -172.9400 125.5200  1.0020
+IC CE11 CG1  *ND11 HD11  1.3262 108.9000  171.4900 126.0900  1.0018
+IC NE21 CG1  *CD21 HD21  1.3727 106.9300 -174.4900 128.4100  1.0867
+
+!==============================================================================
+! Cysteine - states: N and M
+!==============================================================================
+PRES CYSN         0.00
+GROUP
+ATOM CB   CT2    -0.11  !   HB1
+ATOM HB1  HA2     0.09  !   |
+ATOM HB2  HA2     0.09  ! --CB--SG  
+ATOM SG   S      -0.23  !   |     \
+ATOM HG1  HS      0.16  !   HB2    HG1
+
+PRES CYSHN        0.00
+GROUP
+ATOM CA
+ATOM HA
+GROUP ! new atoms
+ATOM CB1  CT2    -0.11  !   HB11
+ATOM HB11 HA2     0.09  !   |
+ATOM HB21 HA2     0.09  ! --CB1--SG1
+ATOM SG1  S      -0.23  !   |      \
+ATOM HG11 HS      0.16  !   HB21    HG11
+BOND CB1 CA   SG1 CB1              
+BOND CB1 HB11 CB1 HB21  SG1 HG11
+IC N    C    *CA  CB1   1.4533 105.8900  121.7900 111.9800  1.5584
+IC N    CA   CB1  SG1   1.4533 111.5600  180.0000 113.8700  1.8359
+IC SG1  CA   *CB1 HB11  1.8359 113.8700  119.9100 107.2400  1.1134
+IC SG1  CA   *CB1 HB21  1.8359 113.8700 -125.3200 109.8200  1.1124
+IC CA   CB1  SG1  HG11  1.5584 113.8700  176.9600  97.1500  1.3341
+
+PRES CYSM        -1.00
+GROUP
+ATOM CB   CS     -0.38  !   HB1
+ATOM HB1  HA2     0.09  !   |
+ATOM HB2  HA2     0.09  ! --CB--SG      
+ATOM SG   SS     -0.80  !   |     :
+ATOM HG1  HSD     0.00  !   HB2    HG1
+IC CA   CB   SG   HG1   1.5584 113.8700  176.9600  97.1500  1.3341
+
+PRES CYSHM       -1.00
+ATOM CA
+ATOM HA
+GROUP ! new atoms
+ATOM CB1  CS     -0.38  !   HB11
+ATOM HB11 HA2     0.09  !   |
+ATOM HB21 HA2     0.09  ! --CB1--SG1
+ATOM SG1  SS     -0.80  !   |      :
+ATOM HG11 HSD     0.00  !   HB21    HG11
+BOND CB1 CA   SG1 CB1
+BOND CB1 HB11 CB1 HB21  SG1 HG11
+IC N    C    *CA  CB1   1.4533 105.8900  121.7900 111.9800  1.5584
+IC N    CA   CB1  SG1   1.4533 111.5600  180.0000 113.8700  1.8359
+IC SG1  CA   *CB1 HB11  1.8359 113.8700  119.9100 107.2400  1.1134
+IC SG1  CA   *CB1 HB21  1.8359 113.8700 -125.3200 109.8200  1.1124
+IC CA   CB1  SG1  HG11  1.5584 113.8700  176.9600  97.1500  1.3341
+
+!==============================================================================
+! Lysine - states: 1, 2, 3, P
+!==============================================================================
+PRES LYS1         0.00 ! neutral LYS
+GROUP
+ATOM CE   CT2     0.13
+ATOM HE1  HA2     0.075 !   HE1    HZ1
+ATOM HE2  HA2     0.075 !   |     :
+ATOM NZ   NH2    -0.96  ! --CE--NZ--HZ3
+ATOM HZ1  HCD     0.00  !   |     \ 
+ATOM HZ2  HC      0.34  !   HE2    HZ2
+ATOM HZ3  HC      0.34
+BOND NZ   HZ1
+IMPR NZ  HZ2 HZ3 HZ1
+IC HZ1  CE   *NZ  HZ3   1.0404 110.0200 -120.1300 109.4000  1.0401
+
+PRES LYSH1        0.00
+GROUP
+ATOM CD
+ATOM HD1
+ATOM HD2
+GROUP ! new atoms
+ATOM CE1  CT2     0.13
+ATOM HE11 HA2     0.075 !   HE11    HZ11
+ATOM HE21 HA2     0.075 !   |      /
+ATOM NZ1  NH2    -0.96  ! --CE1--NZ1..HZ31
+ATOM HZ11 HCD     0.00  !   |      \
+ATOM HZ21 HC      0.34  !   HE21    HZ21
+ATOM HZ31 HC      0.34
+BOND CE1 CD    NZ1 CE1
+BOND CE1 HE11  CE1 HE21
+BOND NZ1 HZ11  NZ1 HZ21  NZ1 HZ31
+IMPR NZ1  HZ21 HZ31 HZ11
+IC CB   CG   CD   CE1   1.5435 113.2800  180.0000 112.3300  1.5350
+IC CE1  CG   *CD  HD1   1.5350 112.3300  122.2500 108.4100  1.1141
+IC CE1  CG   *CD  HD2   1.5350 112.3300 -121.5900 108.1300  1.1146
+IC CG   CD   CE1  NZ1   1.5397 112.3300  180.0000 110.4600  1.4604
+IC NZ1  CD   *CE1 HE11  1.4604 110.4600  119.9100 110.5100  1.1128
+IC NZ1  CD   *CE1 HE21  1.4604 110.4600 -120.0200 110.5700  1.1123
+IC CD   CE1  NZ1  HZ11  1.5350 110.4600  179.9200 110.0200  1.0404
+IC HZ11 CE1  *NZ1 HZ21  1.0404 110.0200  120.2700 109.5000  1.0402
+IC HZ11 CE1  *NZ1 HZ31  1.0404 110.0200 -120.1300 109.4000  1.0401
+
+PRES LYS2         0.00 ! neutral LYS
+GROUP
+ATOM CE   CT2     0.13
+ATOM HE1  HA2     0.075 !   HE1    HZ1
+ATOM HE2  HA2     0.075 !   |     /
+ATOM NZ   NH2    -0.96  ! --CE--NZ--HZ3
+ATOM HZ1  HC      0.34  !   |     : 
+ATOM HZ2  HCD     0.00  !   HE2    HZ2
+ATOM HZ3  HC      0.34
+BOND NZ   HZ2
+IMPR NZ  HZ3 HZ1 HZ2
+IC HZ1  CE   *NZ  HZ2   1.0404 110.0200  120.2700 109.5000  1.0402
+
+PRES LYSH2        0.00
+GROUP
+ATOM CD
+ATOM HD1
+ATOM HD2
+GROUP ! new atoms
+ATOM CE1  CT2     0.13
+ATOM HE11 HA2     0.075 !   HE11    HZ11
+ATOM HE21 HA2     0.075 !   |      /
+ATOM NZ1  NH2    -0.96  ! --CE1--NZ1..HZ31
+ATOM HZ11 HC      0.34  !   |      \
+ATOM HZ21 HCD     0.00  !   HE21    HZ21
+ATOM HZ31 HC      0.34
+BOND CE1 CD    NZ1 CE1
+BOND CE1 HE11  CE1 HE21
+BOND NZ1 HZ11  NZ1 HZ21  NZ1 HZ31
+IMPR NZ1  HZ31 HZ11 HZ21
+IC CB   CG   CD   CE1   1.5435 113.2800  180.0000 112.3300  1.5350
+IC CE1  CG   *CD  HD1   1.5350 112.3300  122.2500 108.4100  1.1141
+IC CE1  CG   *CD  HD2   1.5350 112.3300 -121.5900 108.1300  1.1146
+IC CG   CD   CE1  NZ1   1.5397 112.3300  180.0000 110.4600  1.4604
+IC NZ1  CD   *CE1 HE11  1.4604 110.4600  119.9100 110.5100  1.1128
+IC NZ1  CD   *CE1 HE21  1.4604 110.4600 -120.0200 110.5700  1.1123
+IC CD   CE1  NZ1  HZ11  1.5350 110.4600  179.9200 110.0200  1.0404
+IC HZ11 CE1  *NZ1 HZ21  1.0404 110.0200  120.2700 109.5000  1.0402
+IC HZ11 CE1  *NZ1 HZ31  1.0404 110.0200 -120.1300 109.4000  1.0401
+
+PRES LYS3         0.00 ! neutral LYS
+GROUP
+ATOM CE   CT2     0.13 
+ATOM HE1  HA2     0.075 !   HE1    HZ1
+ATOM HE2  HA2     0.075 !   |     /
+ATOM NZ   NH2    -0.96  ! --CE--NZ..HZ3
+ATOM HZ1  HC      0.34  !   |     \ 
+ATOM HZ2  HC      0.34  !   HE2    HZ2
+ATOM HZ3  HCD     0.00
+BOND NZ   HZ3
+IMPR NZ  HZ1 HZ2 HZ3
+IC HZ1  CE   *NZ  HZ3   1.0404 110.0200 -120.1300 109.4000  1.0401
+
+PRES LYSH3        0.00
+GROUP
+ATOM CD
+ATOM HD1
+ATOM HD2
+GROUP ! new atoms
+ATOM CE1  CT2     0.13
+ATOM HE11 HA2     0.075 !   HE11    HZ11
+ATOM HE21 HA2     0.075 !   |      /
+ATOM NZ1  NH2    -0.96  ! --CE1--NZ1..HZ31
+ATOM HZ11 HC      0.34  !   |      \
+ATOM HZ21 HC      0.34  !   HE21    HZ21
+ATOM HZ31 HCD     0.00
+BOND CE1 CD    NZ1 CE1
+BOND CE1 HE11  CE1 HE21
+BOND NZ1 HZ11  NZ1 HZ21  NZ1 HZ31
+IMPR NZ1  HZ11 HZ21 HZ31
+IC CB   CG   CD   CE1   1.5435 113.2800  180.0000 112.3300  1.5350
+IC CE1  CG   *CD  HD1   1.5350 112.3300  122.2500 108.4100  1.1141
+IC CE1  CG   *CD  HD2   1.5350 112.3300 -121.5900 108.1300  1.1146
+IC CG   CD   CE1  NZ1   1.5397 112.3300  180.0000 110.4600  1.4604
+IC NZ1  CD   *CE1 HE11  1.4604 110.4600  119.9100 110.5100  1.1128
+IC NZ1  CD   *CE1 HE21  1.4604 110.4600 -120.0200 110.5700  1.1123
+IC CD   CE1  NZ1  HZ11  1.5350 110.4600  179.9200 110.0200  1.0404
+IC HZ11 CE1  *NZ1 HZ21  1.0404 110.0200  120.2700 109.5000  1.0402
+IC HZ11 CE1  *NZ1 HZ31  1.0404 110.0200 -120.1300 109.4000  1.0401
+
+PRES LYSP         1.00 ! protonated LYS
+GROUP
+ATOM CE   CT2     0.21
+ATOM HE1  HA2     0.05  !   HE1    HZ1
+ATOM HE2  HA2     0.05  !   |     /
+ATOM NZ   NH3    -0.30  ! --CE--NZ--HZ2
+ATOM HZ1  HC      0.33  !   |     \ 
+ATOM HZ2  HC      0.33  !   HE2    HZ3
+ATOM HZ3  HC      0.33
+
+PRES LYSHP        1.00
+GROUP
+ATOM CD
+ATOM HD1
+ATOM HD2
+GROUP ! new atoms
+ATOM CE1  CT2     0.21
+ATOM HE11 HA2     0.05  !   HE11    HZ11
+ATOM HE21 HA2     0.05  !   |      /
+ATOM NZ1  NH3    -0.30  ! --CE1--NZ1--HZ21
+ATOM HZ11 HC      0.33  !   |      \ 
+ATOM HZ21 HC      0.33  !   HE21    HZ31
+ATOM HZ31 HC      0.33
+BOND CE1 CD    NZ1 CE1
+BOND CE1 HE11  CE1 HE21
+BOND NZ1 HZ11  NZ1 HZ21  NZ1 HZ31
+IC CB   CG   CD   CE1   1.5435 113.2800  180.0000 112.3300  1.5350
+IC CE1  CG   *CD  HD1   1.5350 112.3300  122.2500 108.4100  1.1141
+IC CE1  CG   *CD  HD2   1.5350 112.3300 -121.5900 108.1300  1.1146
+IC CG   CD   CE1  NZ1   1.5397 112.3300  180.0000 110.4600  1.4604
+IC NZ1  CD   *CE1 HE11  1.4604 110.4600  119.9100 110.5100  1.1128
+IC NZ1  CD   *CE1 HE21  1.4604 110.4600 -120.0200 110.5700  1.1123
+IC CD   CE1  NZ1  HZ11  1.5350 110.4600  179.9200 110.0200  1.0404
+IC HZ11 CE1  *NZ1 HZ21  1.0404 110.0200  120.2700 109.5000  1.0402
+IC HZ11 CE1  *NZ1 HZ31  1.0404 110.0200 -120.1300 109.4000  1.0401
+
+END

@@ -1,0 +1,139 @@
+<tool id="charmm_minimizer" name="Energy Minimizer" version="0.1.3">
+    <description>Energy minimization with CHARMM</description>
+    <requirements>
+    </requirements>
+    <stdio>
+        <exit_code range="1:" />
+    </stdio>
+    <command interpreter="bash"><![CDATA[
+         #if $namdref.ref == 'yes'
+           #if $extraprm.extrain == 'yes'  
+           run_charmm.sh $crdin $psfin $structureprm $steps $namdref.ref $namdref.pro $namdref.sub1 $namdref.sub2 $namdref.sub3 $extraprm.extrain $extraprm.top $extraprm.par  $pdbout $crdout $psfout $xplorpsfout $pmespec $bbrmsd  $scrmsd $subsrmsd $output $__tool_directory__
+           #end if
+         #end if
+
+         
+         #if $namdref.ref == 'yes'
+           #if $extraprm.extrain == 'no'  
+           run_charmm.sh $crdin $psfin $structureprm $steps $namdref.ref $namdref.pro $namdref.sub1 $namdref.sub2 $namdref.sub3  $extraprm.extrain "NA" "NA"  $pdbout $crdout $psfout $xplorpsfout $pmespec $bbrmsd  $scrmsd $subsrmsd $output $__tool_directory__
+           #end if
+         #end if
+
+
+         #if $namdref.ref == 'no'
+           #if $extraprm.extrain == 'yes'  
+           run_charmm.sh $crdin $psfin $structureprm $steps $namdref.ref "NA" "NA" "NA" "NA"  $extraprm.extrain $extraprm.top $extraprm.par  $pdbout $crdout $psfout $xplorpsfout $pmespec $bbrmsd  $scrmsd $subsrmsd $output $__tool_directory__
+           #end if
+         #end if
+
+
+         #if $namdref.ref == 'no'
+           #if $extraprm.extrain == 'no'  
+           run_charmm.sh $crdin $psfin $structureprm $steps $namdref.ref "NA" "NA" "NA" "NA"  $extraprm.extrain "NA" "NA"  $pdbout $crdout $psfout $xplorpsfout $pmespec $bbrmsd  $scrmsd $subsrmsd $output $__tool_directory__
+           #end if
+         #end if
+    ]]></command>
+    <inputs>
+        <param format="crd" name="crdin" type="data" label="system_setup_crd"/>
+        <param format="psf" name="psfin" type="data" label="system_setup_psf"/>
+        <param format="txt" name="structureprm" type="data" label="waterbox parameters input"/>
+        <param name="steps"  type="integer" value="1000" label="Minimization steps"/>
+
+        <conditional name="namdref">
+          <param name="ref" type="select" label="Create reference structures for RMSD restraints for NAMD ?">
+            <option value="no">No</option>
+            <option value="yes">Yes</option>
+          </param>
+          <when value="yes">  
+            <param name="pro"  type="text" value="PRO" label="Protein Segid"/>
+            <param name="sub1"  type="text" value="DON" label="Substrate1 Segid"/>
+            <param name="sub2"  type="text" value="ACC" label="Substrate2 Segid"/>
+            <param name="sub3"  type="text" value="GLYC" label="Substrate3 Segid"/>
+          </when> 
+          <when value="no">  
+          </when> 
+        </conditional> 
+
+        <conditional name="extraprm">
+          <param name="extrain" type="select" label="Custom topology and parameter files for ligands">
+            <option value="no">No</option>
+            <option value="yes">Yes</option>
+          </param>
+          <when value="yes">
+            <param format="txt" name="top" type="data" label="Topology"/>
+            <param format="txt" name="par" type="data" label="Parameter"/>
+          </when>
+          <when value="no">  
+          </when> 
+        </conditional>
+
+    </inputs>
+    <outputs>
+        <data format="pdb" name="pdbout" label="minimizer_pdb"/>
+        <data format="crd" name="crdout" label="minimizer_crd"/>
+        <data format="psf" name="psfout" label="minimizer_psf"/>
+        <data format="psf" name="xplorpsfout" label="minimizer_xplor_psf"/>
+        <data format="txt" name="pmespec" label="PME grid specs"/>
+        <data format="txt" name="bbrmsd" label="backbone reference structure"/>
+        <data format="txt" name="scrmsd" label="side chain reference structure"/>     
+        <data format="txt" name="subsrmsd" label="substrate reference structure"/>   
+        <data format="txt" name="output" label="minimizer_output"/>
+    </outputs>
+    <tests>
+         <test>
+           <param name="crdin" value="system_setup_crd.crd"/>
+           <param name="psfin" value="system_setup_psf.psf"/>
+           <param name="structureprm" value="waterbox_parameters.txt"/>
+           <param name="steps" value="10"/>
+           <param name="ref" value="no"/>
+           <param name="extrain" value="no"/>
+           <output name="pdbout" file="minimizer_pdb.pdb"/>
+           <output name="pmespec" file="PME_grid_specs.txt"/>
+         </test>
+    </tests>
+    <help><![CDATA[
+.. class:: infomark
+
+**What it does**
+        
+This tool minimizes the energy of the system in preparation for molecular dynamics simulations.
+        
+       - Minimization of the energy using Steepest Decent followed by Adopted Basis Newton Raphson for the user defined number of steps.
+       - Setup periodic boundary conditions and generate parameters for Particle Mesh Ewald(PME) 
+       - Generate reference structures for using restraints in NAMD RMSD collective variables. 
+
+_____
+
+
+.. class:: infomark
+
+**Input**
+
+       - system_setup.crd file generated from the System Setup tool.
+       - system_setup.psf file generated from the System Setup tool.
+       - waterbox prm file generated from the System Setup tool.
+       - extra topology and parameter file.
+       - The number of steps for the minimization (default is set to 1000 steps)
+       - Segids of the protein and substrates (change the segids according to your system, do not leave any segid section empty)
+     
+_____
+
+        
+.. class:: infomark
+
+**Output**
+
+       - .pdb file of the prepared system for classical MD simulations.
+       - .crd file of the prepared system for classical MD simulations.
+       - .psf file of the prepared system for classical MD simulations.
+       - xplor.psf file of the prepared system for classical MD simulations.
+       - PME fft grid parameters.
+       - Backbone (bb), Side Chains (SC), and Substrates (subs) rmsd reference files for NAMD collective variables.
+       - CHARMM output file.
+
+
+    ]]></help>
+    <citations>
+      <citation type="doi">10.1002/jcc.21287</citation>
+    </citations>
+</tool>

@@ -1,0 +1,64 @@
+# protein backbone/sidechain RMSD restraint
+
+Colvarstrajfrequency    100
+Colvarsrestartfrequency 100
+
+colvar {
+   name bb_rmsd
+   rmsd {
+       atoms {
+          atomsFile          bbrmsd.pdb
+          atomsCol           B 
+          atomsColValue      1.0 
+       }
+       refPositionsFile      bbrmsd.pdb
+       refPositionsCol       B
+       refPositionsColValue  1.0
+   }
+}
+
+harmonic {
+   colvars bb_rmsd
+   centers 0
+   forceConstant $bb
+}
+
+colvar {
+    name sc_rmsd
+    rmsd {
+       atoms {
+          atomsFile          scrmsd.pdb
+          atomsCol           B 
+          atomsColValue      1.0 
+       }
+       refPositionsFile      scrmsd.pdb
+       refPositionsCol       B
+       refPositionsColValue  1.0
+    }
+}
+
+harmonic {
+  colvars sc_rmsd
+  centers 0
+  forceConstant $sc
+}
+
+colvar {
+    name subs_rmsd
+    rmsd {
+       atoms {
+          atomsFile          subsrmsd.pdb
+          atomsCol           B 
+          atomsColValue      1.0 
+       }
+       refPositionsFile      subsrmsd.pdb
+       refPositionsCol       B
+       refPositionsColValue  1.0
+    }
+}
+
+harmonic {
+  colvars subs_rmsd
+  centers 0
+  forceConstant $subs
+}

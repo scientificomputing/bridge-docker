@@ -1,0 +1,190 @@
+<tool id="namd_nvt" name="NAMD MD Simulator (NVT)" version="0.1.1">
+    <description>MD with constant volume using NAMD</description> 
+    <requirements>
+       <requirement type="package" version="2.12">namd</requirement>
+    </requirements>
+    <stdio>
+        <exit_code range="1:" />
+    </stdio>
+    <command interpreter="bash"><![CDATA[
+         #if $rst.restart == 'yes'
+            #if $rest.restraints == 'yes'
+             #if $extraprm.extrain == 'yes'
+             run_namd.sh $psfin $pdbin $pmeshspec $structureprm $temp $rst.restart $rst.coor $rst.vel $rst.xsc $rest.restraints $rest.bbrmsd $rest.scrmsd  $rest.subsrmsd $rest.bb $rest.sc $rest.subs $extraprm.extrain  $extraprm.par $dcd_freq $simulation_time $nproc $coorout $velout $xscout $dcdout $output $__tool_directory__
+             #end if
+             #end if
+           #end if
+
+
+         #if $rst.restart == 'yes'
+            #if $rest.restraints == 'no'
+             #if $extraprm.extrain == 'yes'    
+             run_namd.sh $psfin $pdbin $pmeshspec $structureprm $temp $rst.restart $rst.coor $rst.vel $rst.xsc $rest.restraints "NA" "NA" "NA" "NA" "NA" "NA" $extraprm.extrain  $extraprm.par $dcd_freq  $simulation_time $nproc $coorout $velout $xscout $dcdout $output $__tool_directory__
+             #end if
+             #end if
+           #end if
+
+
+         #if $rst.restart == 'yes'
+            #if $rest.restraints == 'yes'
+             #if $extraprm.extrain == 'no' 
+             run_namd.sh $psfin $pdbin $pmeshspec $structureprm $temp $rst.restart $rst.coor $rst.vel $rst.xsc $rest.restraints $rest.bbrmsd $rest.scrmsd  $rest.subsrmsd $rest.bb $rest.sc $rest.subs $extraprm.extrain "NA" $dcd_freq $simulation_time $nproc $coorout $velout $xscout $dcdout $output $__tool_directory__
+             #end if
+             #end if
+         #end if
+
+
+         #if $rst.restart == 'yes'
+            #if $rest.restraints == 'no'
+             #if $extraprm.extrain == 'no' 
+             run_namd.sh $psfin $pdbin $pmeshspec $structureprm $temp $rst.restart $rst.coor $rst.vel $rst.xsc $rest.restraints "NA" "NA" "NA" "NA" "NA" "NA" $extraprm.extrain  "NA" $dcd_freq $simulation_time $nproc $coorout $velout $xscout $dcdout $output $__tool_directory__
+             #end if
+             #end if
+         #end if
+
+         #if $rst.restart == 'no'
+            #if $rest.restraints == 'yes'
+             #if $extraprm.extrain == 'yes' 
+             run_namd.sh $psfin $pdbin $pmeshspec $structureprm $temp $rst.restart "NA" "NA" "NA" $rest.restraints $rest.bbrmsd $rest.scrmsd  $rest.subsrmsd $rest.bb $rest.sc $rest.subs $extraprm.extrain  $extraprm.par $dcd_freq $simulation_time $nproc $coorout $velout $xscout $dcdout $output $__tool_directory__
+             #end if
+             #end if
+         #end if
+
+
+         #if $rst.restart == 'no'
+            #if $rest.restraints == 'no'
+             #if $extraprm.extrain == 'yes' 
+             run_namd.sh $psfin $pdbin $pmeshspec $structureprm $temp $rst.restart "NA" "NA" "NA" $rest.restraints "NA" "NA" "NA" "NA" "NA" "NA" $extraprm.extrain  $extraprm.par $dcd_freq $simulation_time $nproc $coorout $velout $xscout $dcdout $output $__tool_directory__
+             #end if
+             #end if
+          #end if
+
+
+         #if $rst.restart == 'no'
+            #if $rest.restraints == 'yes'
+             #if $extraprm.extrain == 'no' 
+             run_namd.sh $psfin $pdbin $pmeshspec $structureprm $temp $rst.restart "NA" "NA" "NA" $rest.restraints $rest.bbrmsd $rest.scrmsd  $rest.subsrmsd $rest.bb $rest.sc $rest.subs $extraprm.extrain "NA" $dcd_freq $simulation_time $nproc $coorout $velout $xscout $dcdout $output $__tool_directory__
+             #end if
+             #end if
+           #end if
+
+           
+         #if $rst.restart == 'no'
+            #if $rest.restraints == 'no'
+             #if $extraprm.extrain == 'no' 
+             run_namd.sh $psfin $pdbin $pmeshspec $structureprm $temp $rst.restart "NA" "NA" "NA" $rest.restraints "NA" "NA" "NA" "NA" "NA" "NA" $extraprm.extrain "NA" $dcd_freq $simulation_time $nproc $coorout $velout $xscout $dcdout $output $__tool_directory__
+             #end if
+             #end if
+           #end if
+    ]]></command>
+    <inputs>
+        <param format="psf" name="psfin" type="data" label="xplor psf input"/>
+        <param format="pdb" name="pdbin" type="data" label="pdb input"/>
+        <param format="txt" name="pmeshspec" type="data" label="PME grid specs"/>
+        <param format="txt" name="structureprm" type="data" label="waterbox prm input"/>
+        <param name="temp"  type="float" value="300.0" label="Temperature (K)"/>
+      
+      <conditional name="rst">
+        <param name="restart" type="select" label="Are you restarting a simulation?">
+            <option value="no">No</option>
+            <option value="yes">Yes</option>
+        </param>
+        <when value="yes">
+            <param format="data" name="coor" type="data" label="coordinates from the previous simulation"/>
+            <param format="data" name="vel" type="data" label="velocities from the previous simulation"/>
+            <param format="txt" name="xsc" type="data" label="extended system of the previous simulation"/>
+        </when>
+        <when value="no">
+        </when>
+        </conditional>
+
+      <conditional name="rest">
+          <param name="restraints" type="select" label="Use Harmonic restraints simulation?">
+            <option value="no">No</option>
+            <option value="yes">Yes</option>
+          </param>
+        <when value="yes">
+          <param format="txt" name="bbrmsd" type="data" label="backbone reference input"/>
+          <param format="txt" name="scrmsd" type="data" label="side chains reference input"/>
+          <param format="txt" name="subsrmsd" type="data" label="substrate reference input"/> 
+          <param name="bb"  type="float" value="1.0" label="restraint force constant for the backbone"/>
+          <param name="sc"  type="float" value="0.1" label="restraint force constant for the side chains"/>
+          <param name="subs"  type="float" value="0.1" label="restraint force constant for the substrates"/>
+        </when>
+        <when value="no">
+        </when>
+        </conditional>
+
+      <conditional name="extraprm">
+        <param name="extrain" type="select" label="Custom parameter file for ligands">
+          <option value="no">No</option>
+          <option value="yes">Yes</option>
+          </param>
+        <when value="yes">
+          <param format="txt" name="par" type="data" label="Parameter"/>
+        </when>
+        <when value="no">
+        </when>
+      </conditional>
+        <param name="dcd_freq"  type="text" value="5" label="DCD Frequency (ps)"/>
+        <param name="simulation_time"  type="text" value="1000" label="Simulation Time (ps)"/>
+        <param name="nproc"  type="text" value="4" label="Number of processors"/>
+    </inputs>
+    <outputs>
+        <data format="data" name="coorout" label="final coordinates of the simulation"/>
+        <data format="data" name="velout" label="final velocities of the simulation"/>
+        <data format="txt" name="xscout" label="extended system of the simulation"/>
+      <data format="dcd" name="dcdout" label="dcd trajectory output"/>
+      <data format="txt" name="output" label="NAMD output (NVT)"/>
+    </outputs>
+    <tests>
+         <test>
+           <param name="pdbin" value="minimizer_pdb.pdb"/>
+         </test>
+    </tests>
+    <help><![CDATA[   
+.. class:: infomark
+
+**What it does**
+        
+This tool run classical molecular dynamics simulations in NAMD using an NVT ensemble. 
+User can run the simulation in small time intervals. 
+The coordinates, velocities and the extended system files can be use to restart the simulations.
+Harmonic restraints can be used. NAMD collective variable module is used to give RMSD harmonic restraints.  
+
+_____
+
+
+.. class:: infomark
+
+**Input**
+
+       - xplor.psf input file. 
+       - .pdb input file.
+       - PME grid specs generated from the minimizer tool.
+       - Temperature 
+       - coordinates , velocities and extended system file if you restarting the simulation.
+       - backbone , side chains and substrates reference structures if you want to give RMSD harmonic restraints.
+       - Force constants of the harmonic restraints
+       - extra topology and parameter file (if necessary).
+       - The simulation time in pico seconds (default is set to 1000 or 1 ns).
+       - The number of processors to run the simulation (default is set to 4).
+
+_____
+
+      
+.. class:: infomark
+
+**Output**
+
+       - coordinate file of the final system.
+       - velocities file of the final system.
+       - velocities file of the final system
+       - DCD trajectory output.
+       - NAMD output file.
+ 
+    ]]></help>
+    <citations>
+      <citation type="doi">10.1002/jcc.20289</citation>
+    </citations>
+</tool>

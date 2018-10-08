@@ -1,0 +1,38 @@
+---
+
+api_key: admin
+galaxy_instance: http://localhost:8080
+install_repository_dependencies: true
+install_resolver_dependencies: true
+install_tool_dependencies: true
+
+tools:
+  - name: gmx_npt
+    owner: chemteam
+    tool_panel_section_label: ChemicalToolBox
+
+  - name: gmx_setup
+    owner: chemteam
+    tool_panel_section_label: ChemicalToolBox
+
+  - name: gmx_em
+    owner: chemteam
+    tool_panel_section_label: ChemicalToolBox
+
+  - name: gmx_solvate
+    owner: chemteam
+    tool_panel_section_label: ChemicalToolBox
+
+  - name: gmx_md
+    owner: chemteam
+    tool_panel_section_label: ChemicalToolBox 
+
+  - name: gmx_nvt
+    owner: chemteam
+    tool_panel_section_label: ChemicalToolBox
+
+  - name: packmol
+    owner: chemteam
+    tool_panel_section_label: ChemicalToolBox
+
+# some tools not yet in the toolshed - these will be installed manually

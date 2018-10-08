@@ -1,0 +1,141 @@
+<tool id="SBMD" name="CHARMM SBMD Simulator " version="0.1.2">
+    <description>MD using stochastic boundary conditions</description> 
+    <requirements>
+    </requirements>
+    <stdio>
+        <exit_code range="1:" />
+    </stdio>
+    <command interpreter="bash"><![CDATA[
+
+         #if $rst.restart == 'yes'
+           #if $extraprm.extrain == 'yes'  
+           run_charmm.sh $crdin $psfin $wat $radius $buffer $temp $pro $sub1 $sub2 $sub3  $rst.restart $rst.rstin $extraprm.extrain $extraprm.top $extraprm.par $seed $dcd_freq $simulation_time $region $pdbout $crdout $rstout $dcdout $output $__tool_directory__
+           #end if
+         #end if
+
+         
+         #if $rst.restart == 'yes'
+           #if $extraprm.extrain == 'no'             
+           run_charmm.sh $crdin $psfin $wat $radius $buffer $temp $pro $sub1 $sub2 $sub3  $rst.restart $rst.rstin $extraprm.extrain "NA" "NA" $seed $dcd_freq $simulation_time $region $pdbout $crdout $rstout $dcdout $output $__tool_directory__
+           #end if
+         #end if
+
+
+         #if $rst.restart == 'no'
+           #if $extraprm.extrain == 'yes'  
+           run_charmm.sh $crdin $psfin $wat $radius $buffer $temp $pro $sub1 $sub2 $sub3  $rst.restart "NA" $extraprm.extrain  $extraprm.top $extraprm.par $seed $dcd_freq $simulation_time $region $pdbout $crdout $rstout $dcdout $output $__tool_directory__
+           #end if
+         #end if
+
+
+         #if $rst.restart == 'no'
+           #if $extraprm.extrain == 'no'   
+           run_charmm.sh $crdin $psfin $wat $radius $buffer $temp $pro $sub1 $sub2 $sub3  $rst.restart "NA" $extraprm.extrain "NA" "NA" $seed $dcd_freq $simulation_time $region $pdbout $crdout $rstout $dcdout $output $__tool_directory__
+           #end if
+         #end if
+    ]]></command>
+    <inputs>
+        <param format="crd" name="crdin" type="data" label="crd input"/>
+        <param format="psf" name="psfin" type="data" label="psf input"/>
+        <param format="txt" name="wat" type="data" label="Water potential"/>
+        <param name="radius" type="text" label="radius of the water sphere (Å)"/>
+        <param name="buffer" type="text" label="size of the buffer region (Å)"/>
+        <param name="temp"  type="float" value="300.0" label="Temperature (K)"/>
+        <param name="pro"  type="text" value="PRO" label="Protein Segid"/>
+        <param name="sub1"  type="text" value="DON" label="Substrate1 Segid"/>
+        <param name="sub2"  type="text" value="ACC" label="Substrate2 Segid"/>
+        <param name="sub3"  type="text" value="GLYC" label="Substrate3 Segid"/>
+
+        <conditional name="rst">
+          <param name="restart" type="select" label="Are you restarting a simulation?">
+            <option value="no">No</option>
+            <option value="yes">Yes</option>
+          </param>
+          <when value="yes">
+            <param format="txt" name="rstin" type="data" label="restart input"/>
+          </when>
+          <when value="no">
+          </when>
+        </conditional>
+      
+        <conditional name="extraprm">
+          <param name="extrain" type="select" label="Custom topology and parameter files for ligands">
+            <option value="no">No</option>
+            <option value="yes">Yes</option>
+          </param>
+          <when value="yes">
+            <param format="txt" name="top" type="data" label="Topology"/>
+            <param format="txt" name="par" type="data" label="Parameter"/>
+          </when>
+          <when value="no">
+          </when>
+        </conditional>
+        
+        <param name="seed"  type="text" value="12345" label="The seed for the random number generator used for assigning velocities"/>
+        <param name="dcd_freq"  type="text" value="1" label="DCD Freequency (ps)"/>
+        <param name="simulation_time"  type="text" value="1000" label="Simulation Time (ps)"/>  
+    </inputs>
+    <outputs>
+        <data format="txt" name="region" label="region setup"/>
+        <data format="pdb" name="pdbout" label="pdb output"/>
+        <data format="crd" name="crdout" label="crd output"/>
+        <data format="txt" name="rstout" label="restart output"/>
+        <data format="dcd" name="dcdout" label="dcd trajectory output"/> 
+        <data format="txt" name="output" label="CHARMM output (sbmd)"/>
+    </outputs>
+    <tests>
+         <test>
+           <param name="crdin" value="system_setup_crd.crd"/>
+         </test>
+    </tests>
+    <help><![CDATA[
+.. class:: infomark
+
+**What it does**
+        
+This tool runs classical molecular dynamics simulations in CHARMM using an using stochastic boundary.
+The boundary potential can be generated in the solvate in sphere tool.
+If you have a sphere with a radius less than 10 Å or greater than 50 Å, download the potential file from the mmtsb web service (http://www.mmtsb.org/webservices/sbmdpotential.html) and upload to Galaxy.
+User can run the simulation in small time intervals. 
+The restart file generated after each simulation can be used to restart the simulation.
+        
+      
+_____
+
+
+.. class:: infomark
+
+**Input**
+
+       - .crd input file 
+       - .psf input file
+       - SBMD water potential.
+       - Radius of the sphere.
+       - Size of the buffer region
+       - Temperature in Kelvin (default is set to 300.0).
+       - Segids of protein and substrates to define regions.
+       - If restarting a simulation the restart output file generated from the previous simulation.
+       - Custom topology and parameter file (if necessary).
+       - The simulation time required in picoseconds.
+
+_____
+
+        
+.. class:: infomark
+
+**Output**
+       
+       - the region setup file
+       - .pdb file after the  MD simulation.
+       - .crd file after MD simulation.
+       - restart file (if you need to continue the simulation).
+       - dcd trajectory output file of the MD simulation.
+       - CHARMM output file.
+
+    ]]></help>
+    <citations>
+      <citation type="doi">10.1002/jcc.21287</citation>
+      <citation type="doi">10.1063/1.445724</citation>
+      <citation type="doi">10.1016/0009-2614(84)80098-6</citation>
+    </citations>
+</tool>

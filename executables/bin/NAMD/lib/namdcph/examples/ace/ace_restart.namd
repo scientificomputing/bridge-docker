@@ -1,0 +1,51 @@
+source ../../namdcph.tcl
+
+paratypecharmm on
+parameters toppar/par_all36_cgenff.prm
+parameters toppar/par_cph36_cgenff.prm
+parameters toppar/par_all36_solvent.prm
+
+topology toppar/top_cph36_cgenff.rtf
+cphConfigFile toppar/conf_cph36_cgenff.json
+
+structure topology/ace.psf
+coordinates topology/ace.pdb
+binCoordinates test.coor
+binVelocities test.vel
+extendedSystem test.xsc
+
+outputname test 
+wrapWater on
+wrapAll on
+wrapNearest on
+outputenergies 2500
+DCDFreq 2500
+
+timestep 2.0
+fullElectFrequency 1
+rigidbonds ALL
+
+langevin on
+langevinTemp 298.0
+langevinDamping 1.0
+langevinHydrogen no
+
+switching on
+vdwForceSwitching on
+LJcorrection on
+switchdist 10.0
+cutoff 12.0
+pairlistdist 14.0
+exclude scaled1-4
+1-4scaling 1.0
+PME on
+PMEGridSizeX 36
+PMEGridSizeY 36
+PMEGridSizeZ 36
+
+pH 4.8
+# cphNumMinSteps 0
+cphMaxProposalAttempts 4
+cphRestartFile test.cphrst
+cphNumstepsPerSwitch 500
+cphRun 500 5

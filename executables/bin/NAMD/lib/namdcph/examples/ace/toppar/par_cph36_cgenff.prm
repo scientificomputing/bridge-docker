@@ -1,0 +1,45 @@
+*  --------------------------------------------------------------------------  *
+*         CGenFF: Parameters for the Charmm General Force Field v. 2b8         *
+*                    for Small Molecule Drug Design                            *
+*  --------------------------------------------------------------------------  *
+*  This supplements the CGenFF for making hybrid residues for
+*  single-topology/dual-coordinate simulations.
+*
+
+ATOMS 
+MASS  1266 HGP1D    1.00800  ! polar H dummy
+
+BONDS
+! carboxylates
+HGP1D  OG2D2   545.00     0.9600 ! same as HGP1-OG311
+HGP1D  OG2D1   545.00     0.9600 ! same as HGP1-OG311
+
+ANGLES
+! carboxylates
+CG2O3  OG2D2  HGP1D    55.00    115.00  ! same as CG2O2-OG311-HGP1
+CG2O2  OG2D1  HGP1D    55.00    115.00  ! same as CG2O2-OG311-HGP1
+
+DIHEDRALS
+! carboxylates
+CG331  CG2O3  OG2D2  HGP1D      0.8800  2   180.00 ! fit to ACEP pmf
+CG331  CG2O3  OG2D2  HGP1D      0.8800  1     0.00 !
+CG331  CG2O2  OG2D1  HGP1D      0.8800  2   180.00
+CG331  CG2O2  OG2D1  HGP1D      0.8800  1     0.00
+CG321  CG2O3  OG2D2  HGP1D      0.8800  2   180.00
+CG321  CG2O3  OG2D2  HGP1D      0.8800  1     0.00
+CG321  CG2O2  OG2D1  HGP1D      0.8800  2   180.00
+CG321  CG2O2  OG2D1  HGP1D      0.8800  1     0.00
+OG2D2  CG2O3  OG2D2  HGP1D      0.0000  2   180.00 ! dummy torsion 
+OG311  CG2O2  OG2D1  HGP1D      0.0000  2   180.00
+! missing from cgenff, which doesn't notice proximal methyl groups
+OG311  CG2O2  CG321  CG331      0.0000  6   180.00 ! same as OG311-CG2O2-CG321-CG311
+
+IMPROPERS
+! carboxylates
+CG2O2  CG331  OG311  OG2D1     65.0000  0     0.00 ! same as CG2O2-CG311-OG2D1-OG311
+CG2O2  CG321  OG311  OG2D1     65.0000  0     0.00 ! same as CG2O2-CG311-OG2D1-OG311
+
+NONBONDED
+HGP1D    0.0       -0.0000     0.2245 ! dummy, Rmin/2 from HGP1
+
+END

@@ -1,0 +1,17 @@
+  <section id="setup" name="System Setup">
+    <tool file="bridge/md_tools/CHARMM/SYSTEM_SETUP/setup.xml" />
+  </section>
+  <section id="pbcmd" name="Periodic Boundary Molecular Dynamics">
+    <tool file="bridge/md_tools/CHARMM/MINIMIZE/minimizer.xml" />
+    <tool file="bridge/md_tools/CHARMM/CHARMM_NVT/charmm_nvt.xml" />
+    <tool file="bridge/md_tools/CHARMM/CHARMM_NPT/charmm_npt.xml" />
+    <tool file="bridge/md_tools/NAMD/NAMD_NVT/namd_nvt.xml" />
+    <tool file="bridge/md_tools/NAMD/NAMD_NPT/namd_npt.xml" />
+  </section>
+  <section id="sbmd" name="Stochastic Boundary Molecular Dynamics">
+    <tool file="bridge/md_tools/CHARMM/SOLVATE_IN_SPHERE/solvate_sphere.xml" />
+    <tool file="bridge/md_tools/CHARMM/SBMD/sbmd.xml" />
+  </section>
+  <section id="analysis" name="Trajectory Analysis">
+    <tool file="bridge/analysis_tools/MDTraj/trajectory_converter.xml" />
+  </section>

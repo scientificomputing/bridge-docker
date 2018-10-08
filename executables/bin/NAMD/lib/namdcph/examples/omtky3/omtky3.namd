@@ -1,0 +1,53 @@
+source ../../namdcph.tcl
+cphConfigFile toppar/conf_cph36_prot.json
+
+paratypecharmm on
+parameters toppar/par_all36_prot.prm
+parameters toppar/par_all36_solvent.prm
+parameters toppar/par_cph36_prot.prm
+
+topology toppar/top_all36_prot.rtf
+topology toppar/top_cph36_prot.rtf
+
+
+structure topology/omtky3.hmr.psf
+coordinates topology/omtky3.pdb
+binCoordinates topology/omtky3.coor
+binVelocities topology/omtky3.vel
+extendedSystem topology/omtky3.xsc
+
+outputname test
+wrapWater on
+wrapAll on
+wrapNearest on
+outputEnergies 500
+DCDFreq 500
+
+timestep 2.0
+fullElectFrequency 2
+rigidBonds ALL
+langevin on
+langevinTemp 298.0 
+langevinDamping 1.0
+langevinHydrogen no
+
+switching on
+VDWForceSwitching on
+LJCorrection on
+switchDist 10.0
+cutoff 12.0
+pairlistDist 14.0
+exclude scaled1-4
+1-4scaling 1.0
+PME on
+PMEGridSizeX 80
+PMEGridSizeY 80
+PMEGridSizeZ 80
+
+pH 4.0
+cphNumstepsPerSwitch 2500
+cphNumMinSteps 100
+# Exclude disulfide linkages from protonation trials
+cphExcludeResidue PROA:24 PROA:56 PROA:8 PROA:38 PROA:16 PROA:35
+cphRun 2500 5
+

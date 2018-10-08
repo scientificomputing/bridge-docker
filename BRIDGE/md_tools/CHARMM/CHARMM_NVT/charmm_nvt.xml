@@ -1,0 +1,189 @@
+<tool id="charmm_nvt" name="CHARMM MD Simulator (NVT)" version="0.1.2">
+    <description>MD with constant volume using CHARMM</description>
+    <requirements>
+    </requirements>
+    <stdio>
+        <exit_code range="1:" />
+    </stdio>
+    <command interpreter="bash"><![CDATA[
+         #if $rst.restart == 'yes'
+            #if $rest.restraints == 'yes'
+               #if $extraprm.extrain == 'yes'
+               run_charmm.sh $crdin $psfin $structureprm $pmeshspec $temp $rst.restart $rst.rstin $rest.restraints $rest.pro $rest.sub1  $rest.sub2 $rest.sub3 $rest.bb $rest.sc $rest.subs $extraprm.extrain $extraprm.top $extraprm.par $seed $dcd_freq $simulation_time $dcdoutput $pdbout $crdout $rstout $dcdout $output $__tool_directory__
+               #end if
+             #end if
+           #end if
+
+
+         #if $rst.restart == 'yes'
+            #if $rest.restraints == 'no'
+               #if $extraprm.extrain == 'yes'
+               run_charmm.sh $crdin $psfin $structureprm $pmeshspec $temp $rst.restart $rst.rstin $rest.restraints "NA" "NA" "NA" "NA" "NA" "NA" "NA" $extraprm.extrain $extraprm.top $extraprm.par $seed $dcd_freq  $simulation_time $dcdoutput $pdbout $crdout $rstout $dcdout $output $__tool_directory__
+               #end if
+             #end if
+           #end if
+
+
+         #if $rst.restart == 'yes'
+            #if $rest.restraints == 'yes'
+               #if $extraprm.extrain == 'no'
+               run_charmm.sh $crdin $psfin $structureprm $pmeshspec $temp $rst.restart $rst.rstin $rest.restraints $rest.pro $rest.sub1  $rest.sub2 $rest.sub3 $rest.bb $rest.sc $rest.subs $extraprm.extrain "NA" "NA" $seed $dcd_freq $simulation_time $dcdoutput $pdbout $crdout $rstout $dcdout $output $__tool_directory__
+               #end if
+             #end if
+           #end if
+
+
+         #if $rst.restart == 'yes'
+            #if $rest.restraints == 'no'
+               #if $extraprm.extrain == 'no'
+               run_charmm.sh $crdin $psfin $structureprm $pmeshspec $temp $rst.restart $rst.rstin $rest.restraints "NA" "NA"  "NA" "NA" "NA" "NA" "NA" $extraprm.extrain "NA" "NA" $seed $dcd_freq $simulation_time $dcdoutput $pdbout $crdout $rstout $dcdout $output $__tool_directory__
+               #end if
+             #end if
+           #end if
+
+         #if $rst.restart == 'no'
+            #if $rest.restraints == 'yes'
+               #if $extraprm.extrain == 'yes'
+               run_charmm.sh $crdin $psfin $structureprm $pmeshspec $temp $rst.restart "NA" $rest.restraints $rest.pro $rest.sub1  $rest.sub2 $rest.sub3 $rest.bb $rest.sc $rest.subs $extraprm.extrain $extraprm.top $extraprm.par $seed $dcd_freq $simulation_time $dcdoutput $pdbout $crdout $rstout $dcdout $output $__tool_directory__
+               #end if
+             #end if
+           #end if
+
+
+         #if $rst.restart == 'no'
+            #if $rest.restraints == 'no'
+               #if $extraprm.extrain == 'yes'
+               run_charmm.sh $crdin $psfin $structureprm $pmeshspec $temp $rst.restart "NA" $rest.restraints "NA" "NA" "NA" "NA" "NA" "NA" "NA" $extraprm.extrain $extraprm.top $extraprm.par $seed $dcd_freq  $simulation_time $dcdoutput $pdbout $crdout $rstout $dcdout $output $__tool_directory__
+               #end if
+             #end if
+            #end if
+
+
+         #if $rst.restart == 'no'
+            #if $rest.restraints == 'yes'
+               #if $extraprm.extrain == 'no'
+               run_charmm.sh $crdin $psfin $structureprm $pmeshspec $temp $rst.restart "NA" $rest.restraints $rest.pro $rest.sub1  $rest.sub2 $rest.sub3 $rest.bb $rest.sc $rest.subs $extraprm.extrain "NA" "NA" $seed $dcd_freq $simulation_time $dcdoutput $pdbout $crdout $rstout $dcdout $output $__tool_directory__
+               #end if
+             #end if
+             #end if
+
+             
+         #if $rst.restart == 'no'
+            #if $rest.restraints == 'no'
+               #if $extraprm.extrain == 'no'
+               run_charmm.sh $crdin $psfin $structureprm $pmeshspec $temp $rst.restart "NA" $rest.restraints "NA" "NA"  "NA" "NA" "NA" "NA" "NA" $extraprm.extrain "NA" "NA" $seed  $dcd_freq $simulation_time $dcdoutput $pdbout $crdout $rstout $dcdout $output $__tool_directory__
+               #end if
+             #end if
+           #end if
+    ]]></command>
+    <inputs>
+        <param format="crd" name="crdin" type="data" label="crd input"/>
+        <param format="psf" name="psfin" type="data" label="psf input"/>
+        <param format="txt" name="structureprm" type="data" label="waterbox prm input"/>
+        <param format="txt" name="pmeshspec" type="data" label="PME grid specs"/>
+        <param name="temp"  type="float" value="300.0" label="Temperature (K)"/>
+ 
+        <conditional name="rst">
+          <param name="restart" type="select" label="Are you restarting a simulation?">
+            <option value="no">No</option>
+            <option value="yes">Yes</option>
+          </param>
+          <when value="yes">
+            <param format="txt" name="rstin" type="data" label="restart input"/>
+          </when>
+          <when value="no">
+          </when>
+        </conditional>
+
+        <conditional name="rest">
+          <param name="restraints" type="select" label="Use harmonic restraints in the simulation">
+            <option value="yes">Yes</option>
+            <option value="no">No</option>
+          </param>
+          <when value="yes">  
+            <param name="pro"  type="text" value="PRO" label="Protein Segid"/>
+            <param name="sub1"  type="text" value="DON" label="Substrate1 Segid"/>
+            <param name="sub2"  type="text" value="ACC" label="Substrate2 Segid"/>
+            <param name="sub3"  type="text" value="GLYC" label="Substrate3 Segid"/>
+            <param name="bb"  type="float" value="1.0" label="restraint force constant for the backbone"/>
+            <param name="sc"  type="float" value="0.1" label="restraint force constant for the side chains"/>
+            <param name="subs"  type="float" value="0.1" label="restraint force constant for the substrates"/>
+          </when>
+          <when value="no">
+          </when>
+        </conditional>
+
+        <conditional name="extraprm">
+          <param name="extrain" type="select" label="Custom topology and parameter files for ligands">
+            <option value="no">No</option>
+            <option value="yes">Yes</option>
+          </param>
+          <when value="yes">
+            <param format="txt" name="top" type="data" label="Topology"/>
+            <param format="txt" name="par" type="data" label="Parameter"/>
+          </when>
+          <when value="no">
+          </when>
+        </conditional>
+        <param name="seed"  type="text" value="12345" label="The seed for the random number generator used for assigning velocities"/>
+        <param name="dcd_freq"  type="text" value="1" label="DCD Frequency (ps)"/>
+        <param name="simulation_time"  type="text" value="1000" label="Simulation Time (ps)"/>
+        <param name="dcdoutput" type="boolean" truevalue="TRUE" falsevalue="FALSE" checked="true" label="Save dcd trajectory output?"/>  
+    </inputs>
+    <outputs>
+        <data format="pdb" name="pdbout" label="pdb output"/>
+        <data format="crd" name="crdout" label="crd output"/>
+        <data format="txt" name="rstout" label="restart output"/>
+        <data format="dcd" name="dcdout" label="dcd trajectory output"/> 
+        <data format="txt" name="output" label="CHARMM output (NVT)"/>
+    </outputs>
+    <tests>
+         <test>
+           <param name="crdin" value="system_setup_crd.crd"/>
+         </test>
+    </tests>
+    <help><![CDATA[
+.. class:: infomark
+
+**What it does**
+        
+This tool run classical molecular dynamics simulations in CHARMM using an NVT ensemble. 
+User can run the simulation in small time intervals. 
+The restart file generated after each simulation can be used to restart the simulation.
+        
+      
+_____
+
+
+.. class:: infomark
+
+**Input**
+
+       - .crd input file 
+       - .psf input file
+       - Water box parameters file generated from the System Setup tool.
+       - PME grid specs generated from the minimizer tool.
+       - Temperature in Kelvin (default is set to 300.0).
+       - If restarting a simulation the restart output file generated from the previous simulation.
+       - Segids of Protein and substrates and force constants  if restraints needed to be applied in the simulation.
+       - Custom topology and parameter file (if necessary).
+       - The simulation time required in picoseconds.
+
+_____
+
+        
+.. class:: infomark
+
+**Output**
+
+       - .pdb file after the  MD simulation.
+       - .crd file after MD simulation.
+       - restart file (if you need to continue the simulation).
+       - dcd trajectory output file of the MD simulation .
+       - CHARMM output file.
+
+    ]]></help>
+    <citations>
+      <citation type="doi">10.1002/jcc.21287</citation>
+    </citations>
+</tool>

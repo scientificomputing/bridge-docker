@@ -1,0 +1,25 @@
+read rtf card append
+* QM/MM link atom
+*
+27 2
+MASS 500 QQH1 1.00800 ! Link atom for QM/MM  
+end
+
+
+read param card flex append
+* Parameters
+*
+ATOMS
+MASS 500 QQH1 1.00800 
+! You must not have VdW parameters for the link atom
+
+BONDS 
+QQH1 CN8B      0.000  1.5380
+CN7 QQH1      0.000  1.5380
+QQH1  CT1     0.000  1.5160
+CT2 QQH1      0.000  1.5160
+
+ANGLES
+QQH1     CT2      CT1    0.0000 0.000 
+QQH1     CN8B     CN7    0.0000 0.000
+end

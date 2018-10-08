@@ -1,0 +1,92 @@
+*> CHARMM36 All-Hydrogen Parameter File for Titratable Proteins <<
+*>>>>>>>>>>>>>>>>>>>>>>>>>>> Jun 2017 <<<<<<<<<<<<<<<<<<<<<<<<<<<<
+*This supplements the CHARMM36 force field for making hybrid
+*residues for single-topology/dual-coordinate simulations.
+*
+
+ATOMS
+MASS   131 HD     1.00800 ! polar H dummy
+MASS   132 HCD    1.00800 ! N-ter H dummy
+MASS   140 HSD    1.00800 ! thiol hydrogen dummy
+
+BONDS
+! carboxylates
+OC   HD    545.000     0.9600 ! same as OH1-H
+OB   HD    545.000     0.9600 ! same as OH1-H
+! histdine
+NR2  HD    466.000     1.0000 ! same as NR1-H
+! cysteine
+SS   HSD   275.000     1.3250 ! same as S-HS
+! lysine
+NH2  HCD   403.000     1.0400 ! same as NH3-HC
+
+ANGLES
+! Intermolecular alchemical bonds (needed for proper build in CHARMM)
+CT2  CT1  CT2A   0.000     0.00 ! angles btwn alchemical sidechains
+CT2  CT1  CT2    0.000     0.00 ! e.g. beta-alp-beta or gam-beta-gam
+CT2  CT2A CT2    0.000     0.00
+CS   CT1  CT2    0.000     0.00
+! carboxylates
+HD   OC   CC    55.000   115.00 ! same as H-OH1-CD
+HD   OB   CD    55.000   115.00 ! same as H-OH1-CD
+! histidine 
+!     Each dummy has two possible angle terms. It is most rigorous to retain 
+! one only and there is no obvious _a priori_ way to choose which is "better." 
+! Fortunately, all results are theoretically independent of the choice of 
+! these parameters.
+HD   NR2  CPH1  50.000    126.00 ! from HSP/TIP3P PMF of HD1/HE2
+HD   NR2  CPH2   0.000      0.00 ! dummy angle
+! HD   NR2  CPH2  52.200    124.20 ! alt. fit to PMF
+! HD   NR2  CPH1   0.000      0.00 ! dummy angle
+! cysteine
+HSD  SS   CS     38.800    95.0000 ! same as HS-S-CT2
+! lysine
+HCD  NH2  CT2     0.000   111.0000 ! dummy angle 
+HCD  NH2  HC     39.000   106.5000 ! same as HC-NH2-HC
+
+DIHEDRALS
+! Intermolecular alchemical bonds (will suppress warnings from NAMD)
+CT2  CT1  CT2A CC       0.0000  0     0.00 ! ASP (beta-alpha-beta-X)
+CT2  CT1  CT2A HA2      0.0000  0     0.00
+X    CT1  X    CD       0.0000  0     0.00
+CT2  CT2A CT2  CC       0.0000  0     0.00 ! GLU (gamma-beta-gamma-X)
+CT2  CT2A CT2  CD       0.0000  0     0.00
+CT2  CT2A CT2  HA2      0.0000  0     0.00
+CPH1 CT2A CT1  CT2      0.0000  0     0.00 ! HIS (gamma-beta-alpha-beta)
+HA2  CS   CT1  CT2      0.0000  0     0.00 ! CYS 
+SS   CS   CT1  CT2      0.0000  0     0.00
+! carboxylates
+CT2  CD   OB   HD       0.8800  2   180.00 ! from ACEH/TIP3P PMF of HO1/HO2
+CT2  CD   OB   HD       0.8800  1     0.00 !  -- produces ~93:7 syn/anti pop.
+CT2  CC   OC   HD       0.8800  2   180.00
+CT2  CC   OC   HD       0.8800  1     0.00
+CT2A CC   OC   HD       0.8800  2   180.00 
+CT2A CC   OC   HD       0.8800  1     0.00
+OC   CC   OC   HD       0.0000  0   180.00 ! dummy torsions
+OH1  CD   OB   HD       0.0000  0   180.00 
+! histidine
+CPH1 CPH1 NR2  HD      12.0000  0   180.00 ! from HSP/TIP3P PMF of HD1/HE2
+CT2  CPH1 NR2  HD       0.0000  0   180.00 ! dummy torsions 
+NR1  CPH2 NR2  HD       0.0000  0   180.00
+HR1  CPH2 NR2  HD       0.0000  0   180.00
+HR3  CPH1 NR2  HD       0.0000  0   180.00
+! cysteine
+CT1  CS   SS   HSD      0.2000  1     0.00 ! same as CT1-CT2-S-HS
+CT1  CS   SS   HSD      0.6500  2     0.00
+CT1  CS   SS   HSD      0.2200  3     0.00
+HA2  CS   SS   HSD      0.0000  0     0.00 ! dummy torsions
+! lysine
+CT2  CT2  NH2  HCD      0.0000  3     0.00 ! all torsions are dummy
+HA2  CT2  NH2  HCD      0.0000  3     0.00
+
+IMPROPERS
+! carboxylates
+OH1  X    X    CD    100.0000         0      0.0000 ! same as OB-X-X-CD
+NH2  HC   HC   HCD   200.0000         0     37.0000 ! from LYS/TIP3P PMF of HZ3
+
+NONBONDED
+HD     0.000000  -0.000000     0.224500 ! dummy, Rmin/2 from H
+HCD    0.000000  -0.000000     0.224500 ! dummy, Rmin/2 from HC
+HSD    0.000000  -0.000000     0.450000 ! dummy, Rmin/2 from HS
+
+END

@@ -1,0 +1,153 @@
+* This stream file is for setting up a hybrid molecule
+*
+
+ioformat extend
+read rtf card append 
+* Compounds for FEP and simulation of sialic acid with CMP
+*
+31 1
+
+! NUCLEIC ACID FORCE FIELD
+! CYTOSINE FOR CMP
+! CHARGE OF CMP IS NOW -1
+RESI CMP         -1.00
+ATOM P    P       1.10  ! !CHARGES WERE MODIFIED FOR THIS GROUP
+ATOM O1P  ON3    -0.82  !                      H42  H41
+ATOM O2P  ON3    -0.82  !                        \  /    
+ATOM O5'  ON2    -0.56  !                         N4
+ATOM C5'  CN8B   -0.08  !                         |
+ATOM H5'  HN8     0.09  !                         C4
+ATOM H5'' HN8     0.09  !                        /  \\
+GROUP                   !                    H5-C5   N3
+ATOM C4'  CN7     0.16  !                       ||   |
+ATOM H4'  HN7     0.09  !                    H6-C6   C2
+ATOM O4'  ON6B   -0.50  !                        \  / \\
+ATOM C1'  CN7B    0.16  !                         N1   O2
+ATOM H1'  HN7     0.09  !                          \
+GROUP                   !                           \
+ATOM N1   NN2    -0.13  !                            \ 
+ATOM C6   CN3     0.05  !        O1P    H5' H4'  O4'  \
+ATOM H6   HN3     0.17  !         |      |    \ /   \  \
+ATOM C5   CN3    -0.13  !        -P-O5'-C5'---C4'    C1'
+ATOM H5   HN3     0.07  !         |      |     \     / \
+ATOM C2   CN1     0.52  !        O2P    H5''   C3'--C2' H1'
+ATOM O2   ON1C   -0.49  !                     / \   / \ 
+ATOM N3   NN3    -0.66  !                  O3' H3' O2' H2'' 
+ATOM C4   CN2     0.65  !                   |       |
+ATOM N4   NN1    -0.75  !                  H3''     H2'
+ATOM H41  HN1     0.37  
+ATOM H42  HN1     0.33  
+GROUP
+ATOM C2'  CN7B    0.14
+ATOM H2'' HN7     0.09
+ATOM O2'  ON5    -0.66
+ATOM H2'  HN5     0.43 
+GROUP
+ATOM C3'  CN7     0.14
+ATOM H3'  HN7     0.09
+ATOM O3'  ON5    -0.66
+ATOM H3'' HN5     0.43   !CHARGES COPIED FROM ABOVE
+
+
+BOND P    O1P       P    O2P       P     O5'
+BOND O5'  C5'       C5'  C4'       C4'  O4'       C4'  C3'       O4'  C1'
+BOND C1'  N1        C1'  C2'       N1   C2        N1   C6
+BOND C2   N3        C4   N4        N4   H41       N4   H42
+BOND C4   C5        C2'  C3'       C3'  O3'       
+BOND C2'  O2'       O2'  H2'
+BOND C1'  H1'       C2'  H2''      C3'  H3'       C4'  H4'       C5'  H5'
+BOND C5'  H5''      C5   H5        C6   H6
+BOND O3'  H3''      !WC added
+DOUBLE   C2   O2    C5   C6        N3   C4
+IMPR C2   N1   N3   O2        C4   N3   C5   N4
+IMPR N4   C4   H41  H42      
+DONO H42  N4   
+DONO H2'  O2'
+DONO H41  N4   
+ACCE O2   C2
+ACCE N3     
+ACCE O1P  P
+ACCE O2P  P       
+ACCE O2'
+ACCE O3'
+ACCE O4'
+ACCE O5'
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+! PATCH TO PATCH THE CMP TO NEUAC
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+PRES CMPP -2.0
+GROUP
+ATOM 1C1   CC2O2     0.300  ! 
+ATOM 1O11  OC2D2    -0.600  ! 
+ATOM 1O12  OC2D2    -0.600  ! 
+ATOM 1C2   CC3062    0.42  !  WAs 0.330 CHANGE to 0.42
+ATOM 1O2   ON2      -0.57  !     ! THIS IS TOO HIGH SHOULD BE -0.57   ADD 0.42    
+ATOM 1C6   CC3163    0.11  !   Was 0.11 
+ATOM 1H6   HCA1      0.090  !   
+ATOM 1O6   OC3C61   -0.400  ! 
+!TOTAL=-1.25
+GROUP
+ATOM 2P    P       1.35  ! !CHARGES WERE MODIFIED FOR THIS GROUP
+ATOM 2O1P  ON3    -0.82  !                      H42  H41
+ATOM 2O2P  ON3    -0.82  !                        \  /    
+ATOM 2O5'  ON2    -0.56  !                         N4
+ATOM 2C5'  CN8B   -0.08  !                         |
+ATOM 2H5'  HN8     0.09  !                         C4
+ATOM 2H5'' HN8     0.09  !                        /  \\
+
+!TOTAL -0.75
+DELE ATOM 1HO2
+BOND 1O2 2P
+autogenerate angles dihedrals
+END
+
+read param card flex append
+* Parameters
+*
+
+BONDS
+CC3062  ON2    310.0            1.433  !copied from par_wc_lipid.prm CTS OPL 
+ANGLES
+ON2  CC3062  OC3C61     37.4370  112.1882 !Copied from OPL CTS OES 
+CC2O2   CC3062  ON2    45.00    109.00 ! CC321 CC3163 OC3C61 optimize on PROA, gk (not affected by mistake) cgenff 
+ON2  CC3062  CC3261     115.0     109.7 ! Differentiate from pr. par file Copied from NA CN7 CN7 ON2 
+CC3062  ON2  P     20.000    120.0000  35.00  2.33 !Copied from CN7 ON2 P nucleic acids Added Urey Bradley which were missing 4/8/09
+DIHEDRALS
+P        ON2      CC3062   CC2O2       0.000  3      0.0  ! copied from dmp P ON2 CN7 HN7     
+P        ON2      CC3062   OC3C61      0.0500   6  180.00 !copied from HAS CTS CC O   
+
+P        ON2      CC3062   CC3261    0.6      5  0.0!Copied from PL OSL CTS CTS
+P        ON2      CC3062   CC3261   0.2      4  0.0!Copied from PL OSL CTS CTS
+P        ON2      CC3062   CC3261    0.0      3  180.0!Copied from PL OSL CTS CTS
+P        ON2      CC3062   CC3261    0.4      2   0.0!Copied from PL OSL CTS CTS
+P        ON2      CC3062   CC3261    1.9      1   180.0!Copied from PL OSL CTS CTS
+
+
+ON3  P  ON2  CC3062        0.10   3      0.0 !dmp, eps From NA file O2L P ON2 CN7 
+
+ON2  P   ON2  CC3062      1.20    1  180.0 !Copied from ON2 P ON2 CN8B
+ON2  P   ON2  CC3062      0.10    2  180.0 !Copied from above 
+ON2  P   ON2  CC3062      0.10    3  180.0 !
+ON2  P   ON2  CC3062      0.00    6   0.0 !GOOD 
+
+OC2D2    CC2O2    CC3062   ON2  0.0500   6  180.00 !copied from HAS CTS CC O   
+
+ON2      CC3062   OC3C61   CC3163   0.1948  1    0.0!Copied from OES CTS OES CTS 
+ON2      CC3062   OC3C61   CC3163  0.9778  2    0.0         
+ON2      CC3062   OC3C61   CC3163 0.9115  3    0.0!MEDIUM  
+
+
+ON2      CC3062   CC3261   HCA2     0.0000  1     0.0! copied from OES CTS CTS HAS  
+ON2      CC3062   CC3261   HCA2    0.0000  2     0.0!
+ON2      CC3062   CC3261   HCA2   0.1686  3     0.0!
+
+
+ON2      CC3062   CC3261   CC3161   0.20  3    0.0     !copied from   
+!CC3062  CC3261  CC3161  OC311    0.20  3    0.0 ! par27 X CTL1 CTL2 X
+
+
+END
+
