@@ -9,30 +9,38 @@ install_tool_dependencies: true
 tools:
   - name: gmx_npt
     owner: chemteam
-    tool_panel_section_label: ChemicalToolBox
+    tool_panel_section_label: BRIDGE&ChemicalToolBox
 
   - name: gmx_setup
     owner: chemteam
-    tool_panel_section_label: ChemicalToolBox
+    tool_panel_section_label: BRIDGE&ChemicalToolBox
 
   - name: gmx_em
     owner: chemteam
-    tool_panel_section_label: ChemicalToolBox
+    tool_panel_section_label: BRIDGE&ChemicalToolBox
 
   - name: gmx_solvate
     owner: chemteam
-    tool_panel_section_label: ChemicalToolBox
+    tool_panel_section_label: BRIDGE&ChemicalToolBox
 
   - name: gmx_md
     owner: chemteam
-    tool_panel_section_label: ChemicalToolBox 
+    tool_panel_section_label: BRIDGE&ChemicalToolBox 
 
   - name: gmx_nvt
     owner: chemteam
-    tool_panel_section_label: ChemicalToolBox
+    tool_panel_section_label: BRIDGE&ChemicalToolBox
 
   - name: packmol
     owner: chemteam
-    tool_panel_section_label: ChemicalToolBox
+    tool_panel_section_label: BRIDGE&ChemicalToolBox
+
+  - name: suite_mdanalysis
+    owner: chemteam
+    tool_panel_section_label: BRIDGE&ChemicalToolBox
+
+  - name: suite_bio3d
+    owner: chemteam
+    tool_panel_section_label: BRIDGE&ChemicalToolBox
 
 # some tools not yet in the toolshed - these will be installed manually
