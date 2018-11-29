@@ -14,4 +14,9 @@
   </section>
   <section id="analysis" name="Trajectory Analysis">
     <tool file="bridge/analysis_tools/MDTraj/trajectory_converter.xml" />
+    <tool file="bridge/analysis_tools/MDAnalysis/hbonds.xml" /> 
+    <tool file="bridge/analysis_tools/MDAnalysis/ramachandran.xml" />  
+    <tool file="bridge/analysis_tools/MDAnalysis/pca_cosine.xml" />
+    <tool file="bridge/analysis_tools/Bio3D/visualize_pc.xml" /> 
+    <tool file="bridge/analysis_tools/Bio3D/dccm.xml" />
   </section>

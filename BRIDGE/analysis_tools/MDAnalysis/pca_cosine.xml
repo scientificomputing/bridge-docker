@@ -1,0 +1,61 @@
+<tool id="mda_cosine_analysis" name="Cosine Content" version="0.1.2">
+    <description>Measure the cosine content of the PCA projection</description>
+    <requirements>
+          <requirement type="package" version="0.18.0">mdanalysis</requirement>
+    </requirements>
+    <stdio>
+        <exit_code range="1:" />
+    </stdio>
+    <command interpreter='python'>
+<![CDATA[ 
+   pca_cosine.py 
+        --idcd $dcdin 
+        --ipdb $pdbin
+        --icomponents $components
+        --iindex $index 
+        --output $output 
+        --cosout $cosout
+    2>&1
+]]></command>
+    <inputs>
+        <param format="dcd" name="dcdin" type="data" label="dcd trajectory input"/>
+        <param format="pdb" name="pdbin" type="data" label="pdb input"/>
+        <param name="components"  type="text" value="3" label="Number of components"/>
+        <param name="index"  type="text" value="0" label="The index of the PCA component projection to be analyzed"/>
+    </inputs>
+    <outputs>
+        <data format="csv" name="output" label="PCA Analysis raw data"/>
+        <data format="txt" name="cosout" label="Cosine content of the PCA projection"/>
+    </outputs>
+    <help><![CDATA[
+.. class:: infomark
+
+**What it does**
+        
+The cosine content of the principal components is a good indicator for bad sampling.
+This tool can calculate the cosine content of a user define PCA projection.
+This tool use zero based indexes (0 is PC1)      
+_____
+
+
+.. class:: infomark
+
+**Input**
+
+       - .pdb input file 
+       - .dcd input file
+_____
+
+        
+.. class:: infomark
+
+**Output**
+
+       - .txt file with the cosine content value.
+       - .csv of raw data.
+    ]]></help>
+    <citations>
+      <citation type="doi">10.1002/jcc.21787</citation>
+      <citation type="doi">0.1103/PhysRevE.65.031910</citation>
+    </citations>
+</tool>
