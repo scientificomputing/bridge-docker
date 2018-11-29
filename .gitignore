@@ -1,0 +1,4 @@
+# never commit or distribute these
+#
+executables/bin/CHARMM/
+executables/bin/NAMD 

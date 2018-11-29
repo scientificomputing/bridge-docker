@@ -35,4 +35,12 @@ tools:
     owner: chemteam
     tool_panel_section_label: ChemicalToolBox
 
+  - name: suite_mdanalysis
+    owner: chemteam
+    tool_panel_section_label: ChemicalToolBox
+
+  - name: suite_bio3d
+    owner: chemteam
+    tool_panel_section_label: ChemicalToolBox
+
 # some tools not yet in the toolshed - these will be installed manually
