@@ -80,7 +80,7 @@
     <inputs>
         <param format="psf" name="psfin" type="data" label="xplor psf input"/>
         <param format="pdb" name="pdbin" type="data" label="pdb input"/>
-        <param format="txt" name="pmeshspec" type="data" label="pmesh_spec input"/>
+        <param format="txt" name="pmeshspec" type="data" label="PME grid specs"/>
         <param format="txt" name="structureprm" type="data" label="waterbox prm input"/>
         <param name="temp"  type="float" value="300.0" label="Temperature (K)"/>
         <param name="pressure"  type="float" value="1.01325" label="Pressure (bar)"/>
