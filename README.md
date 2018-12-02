@@ -4,7 +4,12 @@
 [BRIDGE](https://github.com/scientificomputing/BRIDGE) is a flavour of the Galaxy platform to run and analyze molecular dynamics simulations.
 
 ## Get from Dockerhub
-`docker pull scientificomputing/bridge`
+```
+docker pull scientificomputing/bridge
+docker run -d -p 8080:80 scientificomputing/bridge
+```
+
+For more run options see [docker-galaxy-stable](https://github.com/bgruening/docker-galaxy-stable).
 
 ## Quick start with custom Galaxy Docker
 - Build: `docker build -t bridge .`
