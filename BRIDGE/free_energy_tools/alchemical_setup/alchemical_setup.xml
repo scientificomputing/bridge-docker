@@ -1,0 +1,186 @@
+<tool id="alchemical_setup" name="Alchemical Setup" version="1.1.0">
+    <description>Setup alchemical free energy calculations</description> 
+    <requirements>
+         <requirement type="package" version="1.1.0">protocaller</requirement>
+         <requirement type="package" version="2019.1">gromacs</requirement>
+    </requirements>
+    <command detect_errors="exit_code">
+<![CDATA[
+     #if $method.upload_files == "yes":
+         ln -s $method.pdb_upload ./pro.pdb &&
+         ln -s $method.ligref_upload ./lig.sdf &&
+         ln -s $method.lig1_upload ./lig1.sdf &&
+         ln -s $method.lig2_upload ./lig2.sdf &&
+     #end if
+     python '$protocaller_inp' &>> '$report' 
+    ]]></command>
+    <configfiles>
+         <configfile name="protocaller_inp">
+import ProtoCaller
+import logging
+logging.basicConfig(level=logging.INFO)
+from ProtoCaller.Utils.fileio import Dir
+from ProtoCaller.Ensemble import Ligand, Protein, Ensemble
+
+with Dir("RESULTS", overwrite=True):
+#if $method.upload_files == "no":
+    protein = Protein('$pdbin', ligand_ref='$method.refin', workdir="Protein")
+    lig1 = Ligand('$method.lig1', name="lig1", workdir="Ligands")
+    lig2 = Ligand('$method.lig2', name="lig2", workdir="Ligands")
+#end if
+
+#if $method.upload_files == "yes":
+    lig_ref = Ligand("../../lig.sdf", workdir="Ligands", name="lig_ref")
+    protein = Protein('$pdbin', pdb_file="../../pro.pdb", ligand_ref=lig_ref)
+    lig1 = Ligand("../../lig1.sdf", workdir="Ligands", name="lig1")
+    lig2 = Ligand("../../lig2.sdf",  workdir="Ligands", name="lig2")
+#end if
+
+    protein.pdb_obj[0].chainID = '$chain_id'
+
+#if $meth == "yes":
+    for residue in protein.pdb_obj.modified_residues:
+        residue.resName = "MET"
+        for atom in residue:
+            if atom.name == "SE":
+                atom.name = "SD"
+                atom.element = "S"
+#end if
+#if $atloc == "yes":
+    for chain in protein.pdb_obj:
+        for residue in chain:
+            atoms_to_purge = [x for x in residue if x.altLoc == "B"]
+            residue.purgeAtoms(atoms_to_purge, "discard")
+    protein.pdb_obj.writePDB()
+#end if
+
+    morphs = [[lig1, lig2], [lig2, lig1]]
+    system = Ensemble("GROMACS", protein=protein, morphs=morphs,
+                      box_length_complex=$box_d, box_length_morph=$box_l, protein_ff='$pro_ff', ligand_ff='$lig_ff',
+                      ion_conc='$ion_c', workdir=protein.workdir.path)
+    system.protein.filter(ligands=None, waters="all")
+    system.protein.prepare()
+    system.prepareComplexes()
+         </configfile> 
+    </configfiles>    
+    <inputs>
+        <param name="pdbin" type="text" value="181L" label="PDBID"/>
+        <conditional name="method">
+             <param name="upload_files" type="select" label="Upload files?">
+                 <option value="no">No</option>
+                 <option value="yes">Yes</option>
+             </param>
+             <when value="no">
+                 <param name="refin" type="integer"  value="400" label="Ligand Reference"/>
+                 <param name="lig1" type="text" value="C1=CC=CC=C1" label="Ligand 1 SMILE or InChI string"/>
+                 <param name="lig2" type="text"  value="CC1=CC=CC=C1C" label="Ligand 2 SMILE or InChI string"/>
+             </when>
+             <when value="yes">
+                 <param format="pdb" name="pdb_upload" type="data" label="pdb input"/>
+                 <param format="sdf" name="ligref_upload" type="data" label="Reference Ligand (as a SDF)"/>
+                 <param format="sdf" name="lig1_upload" type="data" label="Ligand 1 (as a SDF)"/>
+                 <param format="sdf" name="lig2_upload" type="data" label="Ligand 2 (as a SDF)"/>
+             </when>
+        </conditional>
+        <param name="chain_id" type="text" value="A" label="PDB chain ID"/>
+        <param name="pro_ff" type="select" label="Protein force field">
+            <option value="ff14SB" selected="true">ff14SB</option>
+            <option value="ff99SB">ff99SB</option>
+            <option value="ff15ipq">ff15ipq</option>
+            <option value="fb15">fb15</option>
+            <option value="ff03.r1">ff03.r1</option>
+            <option value="ff03ua">ff03ua</option>
+`1        </param>
+        <param name="meth" type="select" label="Change the selenomethionine residues to methionine">
+            <option value="yes" selected="true">Yes</option>
+            <option value="no">No</option>
+        </param>
+        <param name="atloc" type="select" label="delete any atoms with alternate locations (altLoc B)">
+            <option value="yes" selected="true">Yes</option>
+            <option value="no">no</option>
+        </param>
+
+        <param name="lig_ff" type="select" label="Ligand force field">
+            <option value="gaff">gaff</option>
+            <option value="gaff2" selected="true">gaff2</option>
+        </param>
+        <param name="box_d" type="float" label="Box dimensions in nanometers for protein-ligand system (nm)" value="7.0" min="0.0" max="25.0"/>
+        <param name="box_l" type="float" label="Box dimensions in nanometers for ligand morph (nm)" value="4.0" min="0.0" max="25.0"/>
+        <param name="ion_c" type="text" value="0.154" label="Concentration of the ions (mol/L)"/>
+    </inputs>
+    <outputs>
+      <data name="report" format="txt" label="Report"/> 
+      <data name="progro1" format="gro" from_work_dir="./RESULTS/Protein/lig1~lig2/complex_final.gro" label="Lig1 to Lig2 In Protein Structure"/>
+      <data name="protop1" format="txt" from_work_dir="./RESULTS/Protein/lig1~lig2/complex_final.top" label="Lig1 to Lig2 In Protein Topology"/>  
+      <data name="watgro1" format="gro" from_work_dir="./RESULTS/Protein/lig1~lig2/morph.gro"  label="Lig1 to Lig2 In Water Structure"/> 
+      <data name="wattop1" format="txt" from_work_dir="./RESULTS/Protein/lig1~lig2/morph.top"  label="Lig1 to Lig2 In Water Topology"/> 
+      <data name="progro2" format="gro" from_work_dir="./RESULTS/Protein/lig2~lig1/complex_final.gro" label="Lig2 to Lig1 In Protein Structure"/>
+      <data name="protop2" format="txt" from_work_dir="./RESULTS/Protein/lig2~lig1/complex_final.top" label="Lig2 to Lig1 In Protein Topology"/>  
+      <data name="watgro2" format="gro" from_work_dir="./RESULTS/Protein/lig2~lig1/morph.gro"  label="Lig2 to Lig1 In Water Structure"/> 
+      <data name="wattop2" format="txt" from_work_dir="./RESULTS/Protein/lig2~lig1/morph.top"  label="Lig2 to Lig1 In Water Topology"/>     
+    </outputs>
+  <tests>
+         <test>
+            <param name="pdbin" value="181L" />
+            <param name="upload_files" value="No"/>
+            <param name="refin" value="400"/>
+            <param name="lig1" value="C1=CC=CC=C1"/>
+            <param name="lig2" value="CC1=CC=CC=C1C"/>
+            <param name="chain_id" value="A"/>
+            <param name="pro_ff" value="ff14SB"/>
+            <param name="meth" value="Yes"/> 
+            <param name="atloc" value="Yes"/>
+            <param name="lig_ff" value="gaff2"/>
+            <param name="box_d" value="7.0"/>
+            <param name="box_l" value="4.0"/>
+            <param name="ion_c" value="0.154"/>
+            <output name="progro1" file="Lig1_to_Lig2_In_Protein_Structure.gro" />
+        </test>
+    </tests>    
+
+    <help><![CDATA[   
+.. class:: infomark
+ 
+**What it does**
+        
+This tool can setup alchemical simulations. 
+
+_____
+
+
+.. class:: infomark
+
+**Input**
+
+       - PDBID - can be obtained from https://www.rcsb.org/
+       - Residue ID of the ligand to map the ligands
+       - SMILE strings of ligands or upload protein (as PDB files) and ligands (as SDF files)
+
+_____
+
+       
+.. class:: infomark
+
+**Output**
+
+       - Report
+       - Gromacs .GRO and .TOP files for the protein ligand system in water and ligands in water setups.
+
+_____
+
+       
+.. class:: infomark
+
+**Note**
+
+The time to run this tool will depending on the size of the ligands. 
+Be patient !!
+
+If the SMILE strings does not work try InChI strings.
+Cnversion can be done here http://www.cheminfo.org/Chemistry/Cheminformatics/FormatConverter/index.html
+
+    ]]></help>
+    <citations>
+      <citation type="doi">10.1016/j.softx.2015.06.001</citation>
+    </citations>
+</tool>
