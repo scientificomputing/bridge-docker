@@ -43,6 +43,12 @@ options:
 #if $ensemble == "nvt":
   pressure:  null
 #end if
+#if $lig_ch == "yes":
+  alchemical_pme_treatment: exact
+#end if
+#if $lig_ch == "no":
+  alchemical_pme_treatment: direct-space
+#end if
 
 #if $method == "mcmc":
 mcmc_moves:
@@ -115,7 +121,7 @@ experiments:
     </configfiles>  
     <inputs>
         <param format="pdb" name="proin" type="data" label="Protein structure (PDB) file."/>
-        <param format="txt" name="ligin" type="data" label="Ligand structure (MOL2) file."/>
+        <param format="mol" name="ligin" type="data" label="Ligand structure (MOL2) file."/>
         <param name="iter"  type="integer" value="1000" label="Number of iterations"/>
         <param name="steps"  type="integer" value="500" label="Number of steps per iteration"/>
         <param name="tstep"  type="float" value="2.0" label="Time step"/>
@@ -156,6 +162,10 @@ experiments:
         <param name="lig_ff" type="select" label="Ligand force field">
             <option value="gaff">gaff</option>
             <option value="gaff2" selected="true">gaff2</option>
+        </param>
+        <param name="lig_ch" type="select" label="Using a charged ligand?">
+            <option value="yes">Yes</option>
+            <option value="no" selected="true">No</option>
         </param>
         <param name="water" type="select" label="Select the water model">
             <option value="tip4pew">tip4pew</option>

@@ -111,13 +111,13 @@ with Dir("RESULTS", overwrite=True):
     <outputs>
       <data name="report" format="txt" label="Report"/> 
       <data name="progro1" format="gro" from_work_dir="./RESULTS/Protein/lig1~lig2/complex_final.gro" label="Lig1 to Lig2 In Protein Structure"/>
-      <data name="protop1" format="txt" from_work_dir="./RESULTS/Protein/lig1~lig2/complex_final.top" label="Lig1 to Lig2 In Protein Topology"/>  
+      <data name="protop1" format="top" from_work_dir="./RESULTS/Protein/lig1~lig2/complex_final.top" label="Lig1 to Lig2 In Protein Topology"/>  
       <data name="watgro1" format="gro" from_work_dir="./RESULTS/Protein/lig1~lig2/morph.gro"  label="Lig1 to Lig2 In Water Structure"/> 
-      <data name="wattop1" format="txt" from_work_dir="./RESULTS/Protein/lig1~lig2/morph.top"  label="Lig1 to Lig2 In Water Topology"/> 
+      <data name="wattop1" format="top" from_work_dir="./RESULTS/Protein/lig1~lig2/morph.top"  label="Lig1 to Lig2 In Water Topology"/> 
       <data name="progro2" format="gro" from_work_dir="./RESULTS/Protein/lig2~lig1/complex_final.gro" label="Lig2 to Lig1 In Protein Structure"/>
-      <data name="protop2" format="txt" from_work_dir="./RESULTS/Protein/lig2~lig1/complex_final.top" label="Lig2 to Lig1 In Protein Topology"/>  
+      <data name="protop2" format="top" from_work_dir="./RESULTS/Protein/lig2~lig1/complex_final.top" label="Lig2 to Lig1 In Protein Topology"/>  
       <data name="watgro2" format="gro" from_work_dir="./RESULTS/Protein/lig2~lig1/morph.gro"  label="Lig2 to Lig1 In Water Structure"/> 
-      <data name="wattop2" format="txt" from_work_dir="./RESULTS/Protein/lig2~lig1/morph.top"  label="Lig2 to Lig1 In Water Topology"/>     
+      <data name="wattop2" format="top" from_work_dir="./RESULTS/Protein/lig2~lig1/morph.top"  label="Lig2 to Lig1 In Water Topology"/>     
     </outputs>
   <tests>
          <test>
