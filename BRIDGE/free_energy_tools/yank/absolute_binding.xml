@@ -1,0 +1,272 @@
+<tool id="abbfe" name="Absolute Binding Free Energy" version="0.24.1">
+    <description>Absolute binding free energy simulations using Yank</description> 
+    <requirements>
+         <requirement type="package" version="3.0.3">pymbar</requirement>
+         <requirement type="package" version="0.18.3">openmmtools</requirement>
+         <requirement type="package" version="0.24.1">yank</requirement>
+         <requirement type="package" version="0.9.0">seaborn</requirement>
+    </requirements>
+<command detect_errors="exit_code"><![CDATA[ 
+    ln -s '$yank_inp' ./yank_input.yaml &&
+    ln -s '$proin' ./protein.pdb &&
+    ln -s '$ligin' ./ligand.mol2 &&
+    #if $input_fep == 'perform':
+      yank script --yaml=yank_input.yaml &>> '$report' &&
+      tar cf experiments.tar  experiments / 
+    #end if
+    #if $input_fep == 'generate':
+       mkdir -p input_files &&
+       cp ./yank_input.yaml input_files/ &&
+       cp ./protein.pdb input_files/ &&
+       cp ./ligand.mol2 input_files/ &&
+       tar cf input_files.tar input_files/
+    #end if
+    ]]></command>
+     <configfiles>
+         <configfile name="yank_inp">
+options:
+  platform: $platform
+  minimize: yes
+  verbose: yes
+  resume_setup: yes
+  resume_simulation: yes
+  output_dir: .
+#if $equil == "yes":
+  default_nsteps_per_iteration: $equil.eq_tstep
+  default_number_of_iterations: $equil.eq_iter
+#end if
+  temperature: $temperature *kelvin
+  default_timestep: $tstep *femtosecond
+#if $ensemble == "npt":
+  pressure:  $ensemble.pressure *atmosphere
+#end if
+#if $ensemble == "nvt":
+  pressure:  null
+#end if
+#if $lig_ch == "yes":
+  alchemical_pme_treatment: exact
+#end if
+#if $lig_ch == "no":
+  alchemical_pme_treatment: direct-space
+#end if
+
+#if $method == "mcmc":
+mcmc_moves:
+  langevin:
+    type: LangevinSplittingDynamicsMove
+    n_steps: $steps
+    timestep: $tstep *femtosecond
+    collision_rate: 1.0/picosecond
+    reassign_velocities: no
+    splitting: 'V R O R V'
+    n_restart_attempts: 6
+
+samplers:
+  repex:
+    type: ReplicaExchangeSampler
+    mcmc_moves: langevin
+    number_of_iterations: $iter
+#end if
+
+solvents:
+  pme:
+    nonbonded_method: PME
+    nonbonded_cutoff: 11*angstroms
+    ewald_error_tolerance: 1.0e-4
+    clearance: 12*angstroms
+    positive_ion: Na+
+    negative_ion: Cl-
+    ionic_strength: 100*millimolar
+    solvent_model: $water
+    leap:
+      parameters: [leaprc.water.$water]
+
+molecules:
+  protein:
+    filepath: protein.pdb
+  ligand:
+    filepath: ligand.mol2
+    antechamber:
+      charge_method: bcc
+
+systems:
+  protein-ligand:
+    receptor: protein
+    ligand: ligand
+    solvent: pme
+    leap:
+      parameters: [leaprc.protein.$pro_ff, leaprc.$lig_ff, leaprc.water.$water]
+
+protocols:
+  absolute-binding:
+    complex:
+      alchemical_path:
+        lambda_electrostatics: [$coul]
+        lambda_sterics:        [$steric]
+        lambda_restraints:     [$rest]
+    solvent:
+      alchemical_path:
+        lambda_electrostatics: [$coul]
+        lambda_sterics:        [$steric]
+    
+experiments:
+  system: protein-ligand
+  protocol: absolute-binding
+#if $method == "mcmc":
+  sampler: repex
+#end if
+  restraint:
+    type: $restraints
+                 </configfile>
+    </configfiles>  
+    <inputs>
+        <param format="pdb" name="proin" type="data" label="Protein structure (PDB) file."/>
+        <param format="mol" name="ligin" type="data" label="Ligand structure (MOL2) file."/>
+        <param name="iter"  type="integer" value="1000" label="Number of iterations"/>
+        <param name="steps"  type="integer" value="500" label="Number of steps per iteration"/>
+        <param name="tstep"  type="float" value="2.0" label="Time step"/>
+        <param name="temperature" type="float" value="300.0" label="Temperature /K" />
+        <conditional name="ensemble">
+            <param name="ens" type="select" label="Select the ensemble to use">
+                <option value="npt">Isothermal–isobaric ensemble (NPT)</option>
+                <option value="nvt">Canonical ensemble (NVT)</option>
+            </param>
+            <when value="nvt"/>
+            <when value="npt">
+            <param name="pressure" type="float" value="1.0" label="Pressure /bar" />
+            </when>
+        </conditional>
+        <conditional name="equil">
+            <param name="preequil" type="select" label="Add a pre-equilibration?">
+                <option value="no">No</option>
+                <option value="yes">Yes</option>
+            </param>
+            <when value="no"/>
+            <when value="yes">
+            <param name="eq_iter" type="integer" value="10" label="Number of iterations used for equilibration" />
+            <param name="eq_tstep" type="float" value="1.0" label="Time step used for equilibration" />
+            </when>
+        </conditional>
+        <param name="method" type="select" label="Simulation method">
+            <option value="mcmc">Markov chain Monte Carlo</option>
+            <option value="md">Molecular Dynamics</option>
+        </param>
+        <param name="pro_ff" type="select" label="Protein force field">
+            <option value="ff14SB" selected="true">ff14SB</option>
+            <option value="ff99SB">ff99SB</option>
+            <option value="ff15ipq">ff15ipq</option>
+            <option value="fb15">fb15</option>
+            <option value="ff03.r1">ff03.r1</option>
+            <option value="ff03ua">ff03ua</option>
+        </param>
+        <param name="lig_ff" type="select" label="Ligand force field">
+            <option value="gaff">gaff</option>
+            <option value="gaff2" selected="true">gaff2</option>
+        </param>
+        <param name="lig_ch" type="select" label="Using a charged ligand?">
+            <option value="yes">Yes</option>
+            <option value="no" selected="true">No</option>
+        </param>
+        <param name="water" type="select" label="Select the water model">
+            <option value="tip4pew">tip4pew</option>
+            <option value="tip3p">tip3p</option>
+            <option value="tip3pfb">tip3pfb</option>
+            <option value="tip4pfb">tip4pfb</option>
+            <option value="tip5p">tip5p</option>
+            <option value="spce">spce</option>
+            <option value="swm4ndp">swm4ndp</option>
+        </param>
+        <param name="restraints" type="select" label="Restraints between protein and ligand">
+            <option value="Harmonic">Harmonic</option>
+            <option value="FlatBottom">FlatBottom</option>
+            <option value="Boresch">Boresch</option>
+            <option value="RMSD">RMSD</option>
+        </param>
+        <param name="platform" type="select" label="Select the OpenMM platform used to run the calculations">
+            <option value="CUDA">GPU (CUDA)</option>
+            <option value="OpenCL">GPU (OpenCL)</option>
+            <option value="CPU">CPU</option>
+            <option value="Reference">CPU (Reference)</option>
+        </param>
+        <param name="coul"  type="text" value="1.00, 1.00, 1.00, 1.00, 1.00, 0.90, 0.80, 0.70, 0.60, 0.50, 0.40, 0.30, 0.20, 0.10, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00" label="Lambda electrostatics" help="Values must be between 0 and 1 and , separated."/>
+       <param name="steric" type="text" value="1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 0.90, 0.80, 0.70, 0.60, 0.50, 0.40, 0.30, 0.20, 0.10, 0.00" label="Lambda sterics" help="Values must be between 0 and 1 and , separated."/>
+       <param name="rest"   type="text" value="0.00, 0.25, 0.50, 0.75, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00" label="Lambda restraints" help="Values must be between 0 and 1 and , separated."/>
+       
+        <param name="input_fep" type="select" label="Perform simulation or only generate input files?">
+            <option value="perform">Perform simulation</option>
+            <option value="generate">Only generate input files</option>
+        </param>
+    </inputs>
+    <outputs>
+        <data name="abfeinpout" format="tar" from_work_dir="input_files.tar" label="Input files">
+             <filter>input_fep == 'generate'</filter>
+        </data>
+        <data name="output" format="tar" from_work_dir="experiments.tar" label="experiments">
+             <filter>input_fep == 'perform'</filter>
+        </data>
+        <data name="report" format="txt" label="Report">
+             <filter>input_fep == 'perform'</filter>
+        </data>
+    </outputs>
+    <tests>
+         <test>
+            <param name="proin" value="181L.pdbfixer.pdb" ftype="pdb"/>
+            <param name="ligin" value="benzene.mol2" ftype="txt"/>
+            <param name="iter" value="1000"/>
+            <param name="steps" value="500"/>
+            <param name="tstep" value="2.0"/>
+            <param name="temperature" value="300.0"/>
+            <param name="ensemble" value="npt"/>
+            <param name="equil" value="no"/>
+            <param name="pressure" value="1.0"/> 
+            <param name="method" value="mcmc"/>
+            <param name="pro_ff" value="ff14SB"/>
+            <param name="lig_ff" value="gaff"/>
+            <param name="water" value="tip4pew"/>
+            <param name="restraints" value="Harmonic"/>
+            <param name="platform" value="CUDA"/>
+            <param name="input_fep" value="generate"/>
+            <output name="abfeinpout" file="Input_files.tar" />
+        </test>
+    </tests>    
+    <help><![CDATA[   
+.. class:: infomark
+ 
+**What it does**
+        
+
+ Calculate the absolute binding free energy of protein-ligand binding.
+
+_____
+
+
+.. class:: infomark
+
+**Input**
+
+       - Protein structure (PDB) file 
+       - Ligand structure (MOL2) file
+
+_____
+
+       
+.. class:: infomark
+
+**Output**
+
+       - Results from the experiment (experiments.tar)
+       - Output log file (Report)
+
+       or
+
+       - Input files 
+
+
+    ]]></help>
+    <citations>
+      <citation type="doi">10.1002/jcc.21209</citation>
+      <citation type="doi">10.1109/MCSE.2010.27</citation>
+      <citation type="doi">10.1002/jcc.21413</citation>
+      <citation type="doi">10.1063/1.3660669</citation>
+    </citations>
+</tool>

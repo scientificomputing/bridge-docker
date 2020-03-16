@@ -20,3 +20,11 @@
     <tool file="bridge/analysis_tools/Bio3D/visualize_pc.xml" /> 
     <tool file="bridge/analysis_tools/Bio3D/dccm.xml" />
   </section>
+  <section id="free_energy" name="Free Energy Tools">
+    <tool file="bridge/free_energy_tools/alchemical_setup/alchemical_setup.xml" />
+    <tool file="bridge/free_energy_tools/alchemical_run/gmx_fep.xml" /> 
+    <tool file="bridge/free_energy_tools/alchemical_analysis/alchemical_analysis.xml" /> 
+    <tool file="bridge/free_energy_tools/yank/absolute_binding.xml" />
+    <tool file="bridge/free_energy_tools/yank/absolute_solvation.xml" />
+    <tool file="bridge/free_energy_tools/yank/yank_analysis.xml" />
+  </section>
