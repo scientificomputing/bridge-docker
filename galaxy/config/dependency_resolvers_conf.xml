@@ -7,7 +7,7 @@
        in Galaxy's config/galaxy.ini -->
   <galaxy_packages />
   <!-- check whether the correct version has been installed via conda -->
-  <conda auto_install="True" auto_init="True" ensure_channels="bioconda,r,conda-forge,anaconda,defaults,iuc,cbarnett,omnia"/>
+  <conda auto_install="True" auto_init="True" ensure_channels="essexlab,michellab,bioconda,r,conda-forge,anaconda,defaults,iuc,cbarnett,omnia"/>
   <!-- look for a "default" symlink pointing to a directory containing an
        env.sh file for the package in the "galaxy packages" schema -->
   <galaxy_packages versionless="true" />
