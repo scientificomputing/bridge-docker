@@ -1,6 +1,6 @@
 # Galaxy for BRIDGE
 # VERSION       0.2
-FROM bgruening/galaxy-stable
+FROM bgruening/galaxy-stable:19.05.1
 LABEL \
   description="Galaxy BRIDGE" \
   maintainer="chrisbarnettster@gmail.com, snptha002@myuct.ac.za"
