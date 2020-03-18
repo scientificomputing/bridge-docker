@@ -8,11 +8,11 @@ LABEL \
 ENV GALAXY_CONFIG_BRAND BRIDGE
 
 # Install Tools & Data types
-ADD bridgetoolbox_tools.yml $GALAXY_ROOT/tools.yaml
-RUN install-tools $GALAXY_ROOT/tools.yaml && \
-    /tool_deps/_conda/bin/conda clean --tarballs --yes > /dev/null && \
-    rm /export/galaxy-central/ -rf && \
-    mkdir -p $GALAXY_HOME/workflows
+#ADD bridgetoolbox_tools.yml $GALAXY_ROOT/tools.yaml
+#RUN install-tools $GALAXY_ROOT/tools.yaml && \
+#    /tool_deps/_conda/bin/conda clean --tarballs --yes > /dev/null && \
+#    rm /export/galaxy-central/ -rf && \
+#    mkdir -p $GALAXY_HOME/workflows
 
 
 # --- This section to be removed soon, as tools get added to the Galaxy Toolshed #
