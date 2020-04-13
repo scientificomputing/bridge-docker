@@ -1,7 +1,7 @@
-<tool id="alchemical_setup" name="Alchemical Setup" version="1.1.0">
+<tool id="alchemical_setup" name="Alchemical Setup" version="1.1.2">
     <description>Setup alchemical free energy calculations</description> 
     <requirements>
-         <requirement type="package" version="1.1.0">protocaller</requirement>
+         <requirement type="package" version="1.1.2">protocaller</requirement>
          <requirement type="package" version="2019.1">gromacs</requirement>
     </requirements>
     <command detect_errors="exit_code">
