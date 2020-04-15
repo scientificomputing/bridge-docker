@@ -31,12 +31,14 @@ with Dir("RESULTS", overwrite=True):
 
 #if $method.upload_files == "yes":
     lig_ref = Ligand("../../lig.sdf", workdir="Ligands", name="lig_ref")
-    protein = Protein('$pdbin', pdb_file="../../pro.pdb", ligand_ref=lig_ref)
+    protein = Protein('$pdbin', pdb_file="../../pro.pdb", ligand_ref=lig_ref, workdir="Protein")
     lig1 = Ligand("../../lig1.sdf", workdir="Ligands", name="lig1")
     lig2 = Ligand("../../lig2.sdf",  workdir="Ligands", name="lig2")
 #end if
 
-    protein.pdb_obj[0].chainID = '$chain_id'
+#if $chain.single_chain == "yes":
+    protein.pdb_obj[0].chainID = '$chain.chain_id'
+#end if
 
 #if $meth == "yes":
     for residue in protein.pdb_obj.modified_residues:
@@ -58,7 +60,12 @@ with Dir("RESULTS", overwrite=True):
     system = Ensemble("GROMACS", protein=protein, morphs=morphs,
                       box_length_complex=$box_d, box_length_morph=$box_l, protein_ff='$pro_ff', ligand_ff='$lig_ff',
                       ion_conc='$ion_c', workdir=protein.workdir.path)
+#if $chain.single_chain == "yes":
+    system.protein.filter(ligands=None, waters="all", chains=['$chain.chain_id'])
+#end if
+#if $chain.single_chain == "no":
     system.protein.filter(ligands=None, waters="all")
+#end if
     system.protein.prepare()
     system.prepareComplexes()
          </configfile> 
@@ -82,7 +89,16 @@ with Dir("RESULTS", overwrite=True):
                  <param format="sdf" name="lig2_upload" type="data" label="Ligand 2 (as a SDF)"/>
              </when>
         </conditional>
-        <param name="chain_id" type="text" value="A" label="PDB chain ID"/>
+         <conditional name="chain">
+             <param name="single_chain" type="select" label="Use a single chain?">
+                 <option value="no">No</option>
+                 <option value="yes">Yes</option>
+             </param>
+             <when value="yes">
+                 <param name="chain_id" type="text" value="A" label="PDB chain ID"/>
+             </when>
+        </conditional>
+        
         <param name="pro_ff" type="select" label="Protein force field">
             <option value="ff14SB" selected="true">ff14SB</option>
             <option value="ff99SB">ff99SB</option>
