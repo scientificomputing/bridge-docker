@@ -212,7 +212,20 @@ _____
 
        or
 
-       - Input files 
+       - Input files
+
+_____
+
+       
+.. class:: infomark
+
+**Running Simulations**
+
+YANK uses OpenMM as its simulation engine, which runs fastest on modern GPUs using either the CUDA or OpenCL.
+
+If you don’t have a GPU, the OpenMM CPU platform will run in multithreaded mode by default (see Selecting a platform). While not as fast as gromacs, running on the CPU can still let you explore the features of YANK without needing a GPU. You can also use CPUs acting as OpenCL devices utilizing the AMD OpenCL APP SDK or the Intel OpenCL SDK, though this has not been extensively tested.
+
+You need a GPU to run the production run. If you using the docker to run the simuation makesure you login to the docker and install correct CUDA drivers before you start the simulation. 
 
 
     ]]></help>

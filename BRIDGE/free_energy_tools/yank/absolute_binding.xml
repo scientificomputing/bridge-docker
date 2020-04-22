@@ -1,4 +1,4 @@
-<tool id="abbfe" name="Absolute Binding Free Energy" version="0.24.1">
+<tool id="abbfe" name="Absolute Binding Free Energy" version="0.24.1.1">
     <description>Absolute binding free energy simulations using Yank</description> 
     <requirements>
          <requirement type="package" version="3.0.3">pymbar</requirement>
@@ -259,7 +259,21 @@ _____
 
        or
 
-       - Input files 
+       - Input files
+
+_____
+
+       
+.. class:: infomark
+
+**Running Simulations**
+
+YANK uses OpenMM as its simulation engine, which runs fastest on modern GPUs using either the CUDA or OpenCL.
+
+If you do not have a GPU, the OpenMM CPU platform will run in multithreaded mode by default (see Selecting a platform). While not as fast as GROMACS, running on the CPU can still let you explore the features of YANK without needing a GPU. You can also use CPUs acting as OpenCL devices utilizing the AMD OpenCL APP SDK or the Intel OpenCL SDK, though this has not been extensively tested.
+
+You will need a GPU to run the production run. If you are using the Docker image to run the simulation, make sure to login to the Docker and install the correct CUDA drivers before starting the simulation (For example access the Docker container: docker exec -it containerid /bin/bash)
+
 
 
     ]]></help>
